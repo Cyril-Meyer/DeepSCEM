@@ -28,6 +28,14 @@ def read_image(filename, dtype=np.float32, normalize=False):
     return data
 
 
+def read_dataset(filename):
+    """
+    read a dataset file into a h5py object.
+    """
+    file = h5py.File(filename, 'r')
+    return file
+
+
 def create_sample(filename, image, labels=None):
     data_image = read_image(image, normalize=True)
     data_shape = data_image.shape
