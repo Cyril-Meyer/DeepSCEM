@@ -10,4 +10,7 @@
     <file>icons/outline_save_alt_black_48dp.png</file>
     <file>icons/outline_save_black_48dp.png</file>
   </qresource>
+  <qresource prefix="logo">
+    <file>icons/logo.png</file>
+  </qresource>
 </RCC>

@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>DeepSCEM</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="mainwindow.qrc">
+    <normaloff>:/logo/icons/logo.png</normaloff>:/logo/icons/logo.png</iconset>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout_4">
     <item>
@@ -127,7 +131,7 @@
        </layout>
       </item>
       <item>
-       <widget class="QTreeWidget" name="treeWidge_dataset">
+       <widget class="QTreeWidget" name="treeWidget_dataset">
         <column>
          <property name="text">
           <string>Dataset</string>
