@@ -1,0 +1,13 @@
+<RCC>
+  <qresource prefix="icons">
+    <file>icons/outline_delete_black_48dp.png</file>
+    <file>icons/outline_playlist_remove_black_48dp.png</file>
+    <file>icons/outline_add_black_48dp.png</file>
+    <file>icons/outline_add_photo_alternate_black_48dp.png</file>
+    <file>icons/outline_dataset_black_48dp.png</file>
+    <file>icons/outline_library_add_black_48dp.png</file>
+    <file>icons/outline_playlist_add_black_48dp.png</file>
+    <file>icons/outline_save_alt_black_48dp.png</file>
+    <file>icons/outline_save_black_48dp.png</file>
+  </qresource>
+</RCC>
