@@ -36,35 +36,20 @@ def read_dataset(filename):
     return file
 
 
-def create_sample(filename, image, labels=None):
-    data_image = read_image(image, normalize=True)
-    data_shape = data_image.shape
+def create_dataset(name):
+    filename = name + '.hdf5'
+    file = h5py.File(filename, 'w')
 
-    with h5py.File(filename + '.hdf5', 'w') as f:
-        image_group = f.create_group('image')
-        image_group.create_dataset('data', data=data_image)
-        image_group.attrs['shape'] = data_shape
-        labels_group = f.create_group('labels')
+    file.attrs['name'] = name
+    # file.create_dataset('name', data=name)
 
-        for i, label in enumerate(labels):
-            data_label = read_image(label, np.uint8)
-            if data_label.shape != data_shape:
-                raise ValueError('shapes does not match')
-            labels_group.create_dataset(f'label_{i}', data=data_label)
+    return file
 
 
-def create_dataset(filename, samples=None):
-    with h5py.File(filename + '.hdf5', 'w') as f:
-        images_group = f.create_group('images')
-        labels_group = f.create_group('labels')
+def add_sample_to_dataset(dataset, name, image, labels=None):
+    sample_group = dataset.create_group(name)
+    sample_group.attrs['shape'] = image.shape
+    sample_group.create_dataset('image', data=image)
 
-        for i, sample in enumerate(samples):
-            with h5py.File(sample + '.hdf5', 'r') as sample_file:
-                image_data = sample_file['image/data'][:]
-                image_shape = sample_file['image'].attrs['shape']
-                images_group.create_dataset(f'image_{i}', data=image_data)
-                images_group.attrs[f'image_{i}_shape'] = image_shape
-
-                for j, label_name in enumerate(sample_file['labels']):
-                    label_data = sample_file[f'labels/{label_name}'][:]
-                    labels_group.create_dataset(f'label_{i}_{j}', data=label_data)
+    for i, label in enumerate(labels):
+        sample_group.create_dataset(f'label_{i:04}', data=label)

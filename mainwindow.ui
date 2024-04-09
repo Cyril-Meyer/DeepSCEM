@@ -261,8 +261,25 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButton_sample_add</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>sample_add_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>310</x>
+     <y>42</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>313</x>
+     <y>60</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>dataset_load_clicked()</slot>
+  <slot>sample_add_clicked()</slot>
  </slots>
 </ui>
