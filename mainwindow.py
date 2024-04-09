@@ -1,8 +1,5 @@
 import time
 
-import numpy as np
-
-import data
 import manager
 
 from PyQt5 import QtCore, QtGui, QtWidgets
@@ -40,8 +37,17 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         except Exception as e:
             QMessageBox.critical(self, 'Error', f'Dataset load error.\n{e}')
 
+    def dataset_unload_clicked(self):
+        return
+
+    def dataset_saveas_clicked(self):
+        return
+
     def sample_add_clicked(self):
         self.sample_add_wizard()
+
+    def sample_remove_clicked(self):
+        return
 
     def sample_add_wizard(self):
         # Select destination dataset or create a new one
@@ -57,48 +63,34 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             if len(choice_dataset) < 1:
                 choice_dataset = f'{time.time():.4f}'.replace('.', '_')
 
-        # Select new sample
+        # Add new sample
         choice_sample, ok = QInputDialog.getText(self, 'Add sample', 'Sample name')
         if not ok:
             return
         if len(choice_sample) < 1:
             choice_sample = f'{time.time():.4f}'.replace('.', '_')
-
+        # Select sample image
         choice_image, _ = QFileDialog.getOpenFileName(self, 'Select sample image', '', 'Sample (*.tif *.tiff *.npy)')
         if choice_image == '':
             return
-        # read the image
-        try:
-            # todo: move to manager
-            sample_image = data.read_image(choice_image, dtype=np.float32, normalize=True)
-        except Exception as e:
-            QMessageBox.critical(self, 'Error', f'Sample load error.\n{e}')
-            return
-
+        # Select sample labels
         choice_number_label, ok = QInputDialog.getInt(self, 'Sample labels', 'Number of labels for sample', 1, 0, 1000)
         if not ok:
             return
-        sample_labels = []
+        choice_labels = []
         for i in range(choice_number_label):
             choice_label, _ = QFileDialog.getOpenFileName(self, f'Select sample label {i}. '
                                                                 f'No file will be considered a blank label.',
                                                           '', 'Sample (*.tif *.tiff *.npy)')
-            if choice_label == '':
-                sample_label = np.zeros(sample_image.shape, dtype=np.uint8)
-            else:
-                try:
-                    # todo: move to manager
-                    sample_label = data.read_image(choice_label, dtype=np.uint8)
-                    if not sample_image.shape == sample_label.shape:
-                        QMessageBox.critical(self, 'Error', f'Label shape does not match image shape.')
-                        return
-                except Exception as e:
-                    QMessageBox.critical(self, 'Error', f'Sample load error.\n{e}')
-                    return
-            sample_labels.append(sample_label)
+            choice_labels.append(choice_label)
 
         # Create everything for real
-        self.manager.new_dataset(choice_dataset)
-        self.manager.add_sample(choice_dataset, choice_sample, sample_image, sample_labels)
+        try:
+            self.manager.new_dataset(choice_dataset)
+            self.manager.add_sample(choice_dataset, choice_sample, choice_image, choice_labels)
+        except Exception as e:
+            QMessageBox.critical(self, 'Error', f'{e}')
+            self.manager.remove_dataset(choice_dataset)
+
         # Update view
         self.dataset_update()

@@ -277,9 +277,60 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButton_dataset_unload</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>dataset_unload_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>283</x>
+     <y>41</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>276</x>
+     <y>61</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_sample_remove</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>sample_remove_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>356</x>
+     <y>41</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>364</x>
+     <y>26</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_dataset_saveas</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>dataset_saveas_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>385</x>
+     <y>45</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>397</x>
+     <y>44</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>dataset_load_clicked()</slot>
   <slot>sample_add_clicked()</slot>
+  <slot>dataset_unload_clicked()</slot>
+  <slot>sample_remove_clicked()</slot>
+  <slot>dataset_saveas_clicked()</slot>
  </slots>
 </ui>

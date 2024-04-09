@@ -120,6 +120,9 @@ class Ui_MainWindow(object):
         self.pushButton_dataset_load.clicked.connect(MainWindow.dataset_load_clicked) # type: ignore
         self.actionLoad_dataset.triggered.connect(MainWindow.dataset_load_clicked) # type: ignore
         self.pushButton_sample_add.clicked.connect(MainWindow.sample_add_clicked) # type: ignore
+        self.pushButton_dataset_unload.clicked.connect(MainWindow.dataset_unload_clicked) # type: ignore
+        self.pushButton_sample_remove.clicked.connect(MainWindow.sample_remove_clicked) # type: ignore
+        self.pushButton_dataset_saveas.clicked.connect(MainWindow.dataset_saveas_clicked) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
