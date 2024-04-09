@@ -33,15 +33,21 @@ def read_dataset(filename):
     read a dataset file into a h5py object.
     """
     file = h5py.File(filename, 'r')
+
+    if 'name' not in file.attrs:
+        raise ValueError
+
     return file
 
 
-def create_dataset(name):
-    filename = name + '.hdf5'
+def create_dataset(name, filename=None):
+    if filename is None:
+        filename = name + '.hdf5'
     file = h5py.File(filename, 'w')
 
     file.attrs['name'] = name
     # file.create_dataset('name', data=name)
+    file.flush()
 
     return file
 
@@ -53,3 +59,5 @@ def add_sample_to_dataset(dataset, name, image, labels=None):
 
     for i, label in enumerate(labels):
         sample_group.create_dataset(f'label_{i:04}', data=label)
+
+    dataset.flush()
