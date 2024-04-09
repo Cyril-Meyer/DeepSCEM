@@ -21,6 +21,7 @@ Deep Segmentation for Cellular Electron Microscopy
 #### User Interface
 
 * CLI
+  * Repair or remove the broken dataset and sample creation
   * argparse to run with arguments
     * replace current second stage parser with subparser
 * UI
