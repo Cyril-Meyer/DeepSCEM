@@ -18,15 +18,17 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def dataset_update(self):
         self.treeWidget_dataset.clear()
-        for dataset in self.manager.get_dataset_index():
+        for dataset in self.manager.get_datasets_index():
             dataset_item = QTreeWidgetItem(self.treeWidget_dataset, [dataset])
-            # todo: make it work using manager
-            '''
-            for data in dataset:
-                QTreeWidgetItem(dataset_item, [data])
-            '''
+            for sample, samples_data in self.manager.get_dataset_samples(dataset):
+                sample_item = QTreeWidgetItem(dataset_item, [sample])
+                for i, sample_data in enumerate(samples_data):
+                    item = QTreeWidgetItem(sample_item, [sample_data])
+                    item.setFlags(item.flags() | Qt.ItemIsUserCheckable)
+                    item.setCheckState(0, i == 0)
 
             self.treeWidget_dataset.addTopLevelItem(dataset_item)
+        self.treeWidget_dataset.expandAll()
 
     def dataset_load_clicked(self):
         filenames, _ = QFileDialog.getOpenFileNames(self, 'Select datasets', '', 'Datasets (*.h5 *.hdf5)')
@@ -38,6 +40,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             QMessageBox.critical(self, 'Error', f'Dataset load error.\n{e}')
 
     def dataset_unload_clicked(self):
+        self.dataset_update()
         return
 
     def dataset_saveas_clicked(self):
@@ -51,11 +54,13 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def sample_add_wizard(self):
         # Select destination dataset or create a new one
-        dataset_list = ['Create new dataset'] + self.manager.get_dataset_index()
+        dataset_list = ['Create new dataset'] + self.manager.get_datasets_index()
         choice_dataset, ok = QInputDialog.getItem(self, 'Add sample', 'Add sample to Dataset', dataset_list, editable=False)
         if not ok:
             return
+        new_dataset = False
         if choice_dataset == 'Create new dataset':
+            new_dataset = True
             choice_dataset, ok = QInputDialog.getText(self, 'Add sample',
                                                       'Dataset name (empty will create a name for you)')
             if not ok:
@@ -86,7 +91,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         # Create everything for real
         try:
-            self.manager.new_dataset(choice_dataset)
+            if new_dataset:
+                self.manager.new_dataset(choice_dataset)
             self.manager.add_sample(choice_dataset, choice_sample, choice_image, choice_labels)
         except Exception as e:
             QMessageBox.critical(self, 'Error', f'{e}')

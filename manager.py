@@ -7,11 +7,17 @@ class Manager:
     def __init__(self):
         self.datasets = dict()
 
-    def get_dataset_index(self):
+    def get_datasets_index(self):
         """
         return a list of existing datasets.
         """
         return list(self.datasets.keys())
+
+    def get_dataset_samples(self, name):
+        sample_info = []
+        for sample in list(self.datasets[name].keys()):
+            sample_info.append((sample, list(self.datasets[name][sample].keys())))
+        return sample_info
 
     def load_dataset(self, filename):
         """
