@@ -207,21 +207,39 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
      <string>File</string>
     </property>
+    <addaction name="actionNew_dataset"/>
     <addaction name="actionLoad_dataset"/>
+    <addaction name="actionSave_dataset"/>
+   </widget>
+   <widget class="QMenu" name="menuView">
+    <property name="title">
+     <string>View</string>
+    </property>
    </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuView"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionLoad_dataset">
    <property name="text">
     <string>Load dataset</string>
+   </property>
+  </action>
+  <action name="actionNew_dataset">
+   <property name="text">
+    <string>New dataset</string>
+   </property>
+  </action>
+  <action name="actionSave_dataset">
+   <property name="text">
+    <string>Save dataset</string>
    </property>
   </action>
  </widget>
@@ -325,6 +343,38 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionNew_dataset</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>dataset_new_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSave_dataset</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>dataset_saveas_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>399</x>
+     <y>298</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>dataset_load_clicked()</slot>
@@ -332,5 +382,6 @@
   <slot>dataset_unload_clicked()</slot>
   <slot>sample_remove_clicked()</slot>
   <slot>dataset_saveas_clicked()</slot>
+  <slot>dataset_new_clicked()</slot>
  </slots>
 </ui>

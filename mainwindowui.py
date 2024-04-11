@@ -103,18 +103,27 @@ class Ui_MainWindow(object):
         self.horizontalLayout_4.addLayout(self.gridLayout)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 21))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 20))
         self.menubar.setObjectName("menubar")
         self.menuFile = QtWidgets.QMenu(self.menubar)
         self.menuFile.setObjectName("menuFile")
+        self.menuView = QtWidgets.QMenu(self.menubar)
+        self.menuView.setObjectName("menuView")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
         self.actionLoad_dataset = QtWidgets.QAction(MainWindow)
         self.actionLoad_dataset.setObjectName("actionLoad_dataset")
+        self.actionNew_dataset = QtWidgets.QAction(MainWindow)
+        self.actionNew_dataset.setObjectName("actionNew_dataset")
+        self.actionSave_dataset = QtWidgets.QAction(MainWindow)
+        self.actionSave_dataset.setObjectName("actionSave_dataset")
+        self.menuFile.addAction(self.actionNew_dataset)
         self.menuFile.addAction(self.actionLoad_dataset)
+        self.menuFile.addAction(self.actionSave_dataset)
         self.menubar.addAction(self.menuFile.menuAction())
+        self.menubar.addAction(self.menuView.menuAction())
 
         self.retranslateUi(MainWindow)
         self.pushButton_dataset_load.clicked.connect(MainWindow.dataset_load_clicked) # type: ignore
@@ -123,6 +132,8 @@ class Ui_MainWindow(object):
         self.pushButton_dataset_unload.clicked.connect(MainWindow.dataset_unload_clicked) # type: ignore
         self.pushButton_sample_remove.clicked.connect(MainWindow.sample_remove_clicked) # type: ignore
         self.pushButton_dataset_saveas.clicked.connect(MainWindow.dataset_saveas_clicked) # type: ignore
+        self.actionNew_dataset.triggered.connect(MainWindow.dataset_new_clicked) # type: ignore
+        self.actionSave_dataset.triggered.connect(MainWindow.dataset_saveas_clicked) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -143,5 +154,8 @@ class Ui_MainWindow(object):
         self.label_model.setText(_translate("MainWindow", "Models"))
         self.label_mainview.setText(_translate("MainWindow", "MainView"))
         self.menuFile.setTitle(_translate("MainWindow", "File"))
+        self.menuView.setTitle(_translate("MainWindow", "View"))
         self.actionLoad_dataset.setText(_translate("MainWindow", "Load dataset"))
+        self.actionNew_dataset.setText(_translate("MainWindow", "New dataset"))
+        self.actionSave_dataset.setText(_translate("MainWindow", "Save dataset"))
 import mainwindow_rc
