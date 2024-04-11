@@ -13,6 +13,9 @@ class Manager:
         """
         return list(self.datasets.keys())
 
+    def get_datasets_number_labels(self, name):
+        return self.datasets[name].attrs['labels']
+
     def get_dataset_samples(self, name):
         sample_info = []
         for sample in list(self.datasets[name].keys()):
@@ -26,11 +29,11 @@ class Manager:
         dataset = data.read_dataset(filename)
         self.datasets[dataset.attrs['name']] = dataset
 
-    def new_dataset(self, name, filename=None):
+    def new_dataset(self, name, labels=0, filename=None):
         """
         create a new dataset.
         """
-        self.datasets[name] = data.create_dataset(name, filename)
+        self.datasets[name] = data.create_dataset(name, labels, filename)
 
     def add_sample(self, name, sample_name, sample_image_filename, sample_labels_filenames):
         """

@@ -16,6 +16,16 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self.manager = manager.Manager()
 
+    def dataset_get_selection(self):
+        current_item = self.treeWidget_dataset.currentItem()
+        text = None
+        index = -1
+        while current_item is not None:
+            text = current_item.text(0)
+            index = self.treeWidget_dataset.indexOfTopLevelItem(current_item)
+            current_item = current_item.parent()
+        return text, index
+
     def dataset_update(self):
         self.treeWidget_dataset.clear()
         for dataset in self.manager.get_datasets_index():
@@ -30,6 +40,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.treeWidget_dataset.addTopLevelItem(dataset_item)
         self.treeWidget_dataset.expandAll()
 
+    def dataset_new_clicked(self):
+        choice_dataset, choice_number_label, ok = self.dataset_new_wizard()
+        if ok:
+            self.dataset_new_manager(choice_dataset, choice_number_label)
+            self.dataset_update()
+
     def dataset_load_clicked(self):
         filenames, _ = QFileDialog.getOpenFileNames(self, 'Select datasets', '', 'Datasets (*.h5 *.hdf5)')
         try:
@@ -41,9 +57,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def dataset_unload_clicked(self):
         self.dataset_update()
-        return
 
     def dataset_saveas_clicked(self):
+        self.dataset_get_selection()
         return
 
     def sample_add_clicked(self):
@@ -52,21 +68,37 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def sample_remove_clicked(self):
         return
 
+    def dataset_new_wizard(self):
+        choice_dataset, ok = QInputDialog.getText(self, 'New Dataset',
+                                                  'Dataset name (empty will create a name for you)')
+        if not ok:
+            return None, None, ok
+        if len(choice_dataset) < 1:
+            choice_dataset = f'{time.time():.4f}'.replace('.', '_')
+
+        choice_number_label, ok = QInputDialog.getInt(self, 'New Dataset', 'Number of labels per sample', 1, 0, 1000)
+
+        if not ok:
+            return None, None, ok
+
+        return choice_dataset, choice_number_label, ok
+
     def sample_add_wizard(self):
         # Select destination dataset or create a new one
         dataset_list = ['Create new dataset'] + self.manager.get_datasets_index()
-        choice_dataset, ok = QInputDialog.getItem(self, 'Add sample', 'Add sample to Dataset', dataset_list, editable=False)
+        text, index = self.dataset_get_selection()
+        choice_dataset, ok = QInputDialog.getItem(self, 'Add sample', 'Add sample to Dataset', dataset_list,
+                                                  current=index+1, editable=False)
         if not ok:
             return
         new_dataset = False
         if choice_dataset == 'Create new dataset':
             new_dataset = True
-            choice_dataset, ok = QInputDialog.getText(self, 'Add sample',
-                                                      'Dataset name (empty will create a name for you)')
+            choice_dataset, choice_number_label, ok = self.dataset_new_wizard()
             if not ok:
                 return
-            if len(choice_dataset) < 1:
-                choice_dataset = f'{time.time():.4f}'.replace('.', '_')
+        else:
+            choice_number_label = self.manager.get_datasets_number_labels(choice_dataset)
 
         # Add new sample
         choice_sample, ok = QInputDialog.getText(self, 'Add sample', 'Sample name')
@@ -79,9 +111,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         if choice_image == '':
             return
         # Select sample labels
-        choice_number_label, ok = QInputDialog.getInt(self, 'Sample labels', 'Number of labels for sample', 1, 0, 1000)
-        if not ok:
-            return
         choice_labels = []
         for i in range(choice_number_label):
             choice_label, _ = QFileDialog.getOpenFileName(self, f'Select sample label {i}. '
@@ -92,11 +121,15 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # Create everything for real
         try:
             if new_dataset:
-                self.manager.new_dataset(choice_dataset)
+                self.manager.new_dataset(choice_dataset, choice_number_label)
             self.manager.add_sample(choice_dataset, choice_sample, choice_image, choice_labels)
         except Exception as e:
             QMessageBox.critical(self, 'Error', f'{e}')
             self.manager.remove_dataset(choice_dataset)
 
-        # Update view
-        self.dataset_update()
+    def sample_add_manager(self):
+        # todo: put code at the end of the wizard here
+        return
+
+    def dataset_new_manager(self, choice_dataset, choice_number_label):
+        self.manager.new_dataset(choice_dataset, choice_number_label)

@@ -12,9 +12,9 @@ def read_image(filename, dtype=np.float32, normalize=False):
     if filename.endswith('.tif') or filename.endswith('.tiff'):
         data = tifffile.imread(filename).astype(dtype)
     elif filename.endswith('.npy'):
-        raise NotImplementedError
+        raise NotImplementedError('NotImplementedError')
     else:
-        raise NotImplementedError
+        raise NotImplementedError('NotImplementedError')
     # normalize value in range [0, 1].
     if normalize:
         data = (data - data.min()) / (data.max() - data.min())
@@ -23,7 +23,7 @@ def read_image(filename, dtype=np.float32, normalize=False):
         data = np.expand_dims(data, axis=0)
     # check that output is 3D array.
     if len(data.shape) != 3:
-        raise NotImplementedError
+        raise NotImplementedError('NotImplementedError')
 
     return data
 
@@ -35,17 +35,20 @@ def read_dataset(filename):
     file = h5py.File(filename, 'r')
 
     if 'name' not in file.attrs:
-        raise ValueError
+        raise ValueError('missing name attribute')
+    if 'labels' not in file.attrs:
+        raise ValueError('missing labels attribute')
 
     return file
 
 
-def create_dataset(name, filename=None):
+def create_dataset(name, labels=0, filename=None):
     if filename is None:
         filename = name + '.hdf5'
     file = h5py.File(filename, 'w')
 
     file.attrs['name'] = name
+    file.attrs['labels'] = labels
     # file.create_dataset('name', data=name)
     file.flush()
 
