@@ -57,9 +57,10 @@ Deep Segmentation for Cellular Electron Microscopy
 * TensorFlow tensorflow-2.10.1 or tensorflow-2.10.1
   * `pip install tensorflow==2.10.1` : deep learning framework
   * TensorFlow 2.10 is the last TensorFlow release that supported GPU on native-Windows.
-* `pip install h5py PyQt5 pyqt5-tools tifffile numpy`
+* `pip install h5py PyQt5 pyqt5-tools tifffile numpy imagecodecs`
   * `numpy` : linear algebra = array
   * `tifffile` : read and write `.tif` and `.tiff` files
+  * `imagecodecs` : codecs for images
   * `h5py` : read and write HDF5 files
   * `PyQt5` : graphical user interface
   * `pyqt5-tools` : PyQt5 tools (designer)
