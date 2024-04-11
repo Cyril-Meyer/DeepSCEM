@@ -31,6 +31,8 @@ Deep Segmentation for Cellular Electron Microscopy
 * data
   * code (sample and dataset) need comments and cleaning
   * need to set number of labels in the dataset file attribute
+    * added, but not checked yet.
+  * probably missing write rights after read of an existing dataset
 
 
 ## Keywords
