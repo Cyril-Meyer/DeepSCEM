@@ -182,7 +182,7 @@
     <item>
      <layout class="QGridLayout" name="gridLayout">
       <item row="0" column="0">
-       <widget class="QLabel" name="label_mainview">
+       <widget class="InteractiveQLabel" name="label_mainview">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
           <horstretch>5</horstretch>
@@ -194,6 +194,13 @@
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QSlider" name="horizontalSlider_z">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
         </property>
        </widget>
       </item>
@@ -243,6 +250,19 @@
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>InteractiveQLabel</class>
+   <extends>QLabel</extends>
+   <header>customQtWidgets</header>
+   <slots>
+    <signal>mousePress(QMouseEvent)</signal>
+    <signal>mouseRelease(QMouseEvent)</signal>
+    <signal>mouseMove(QMouseEvent)</signal>
+    <signal>wheel(QWheelEvent)</signal>
+   </slots>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="mainwindow.qrc"/>
  </resources>
@@ -366,12 +386,60 @@
    <slot>dataset_saveas_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>399</x>
-     <y>298</y>
+     <x>-1</x>
+     <y>-1</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
      <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>label_mainview</sender>
+   <signal>mouseMove(QMouseEvent)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>mainview_mouse_event()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>766</x>
+     <y>552</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>776</x>
+     <y>577</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>label_mainview</sender>
+   <signal>mousePress(QMouseEvent)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>mainview_mouse_event()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>746</x>
+     <y>551</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>747</x>
+     <y>576</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>label_mainview</sender>
+   <signal>mouseRelease(QMouseEvent)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>mainview_mouse_event()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>712</x>
+     <y>559</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>724</x>
+     <y>575</y>
     </hint>
    </hints>
   </connection>
@@ -383,5 +451,6 @@
   <slot>sample_remove_clicked()</slot>
   <slot>dataset_saveas_clicked()</slot>
   <slot>dataset_new_clicked()</slot>
+  <slot>mainview_mouse_event()</slot>
  </slots>
 </ui>

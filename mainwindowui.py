@@ -91,7 +91,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_4.addLayout(self.verticalLayout)
         self.gridLayout = QtWidgets.QGridLayout()
         self.gridLayout.setObjectName("gridLayout")
-        self.label_mainview = QtWidgets.QLabel(self.centralwidget)
+        self.label_mainview = InteractiveQLabel(self.centralwidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(5)
         sizePolicy.setVerticalStretch(5)
@@ -100,6 +100,10 @@ class Ui_MainWindow(object):
         self.label_mainview.setAlignment(QtCore.Qt.AlignCenter)
         self.label_mainview.setObjectName("label_mainview")
         self.gridLayout.addWidget(self.label_mainview, 0, 0, 1, 1)
+        self.horizontalSlider_z = QtWidgets.QSlider(self.centralwidget)
+        self.horizontalSlider_z.setOrientation(QtCore.Qt.Horizontal)
+        self.horizontalSlider_z.setObjectName("horizontalSlider_z")
+        self.gridLayout.addWidget(self.horizontalSlider_z, 1, 0, 1, 1)
         self.horizontalLayout_4.addLayout(self.gridLayout)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
@@ -134,6 +138,9 @@ class Ui_MainWindow(object):
         self.pushButton_dataset_saveas.clicked.connect(MainWindow.dataset_saveas_clicked) # type: ignore
         self.actionNew_dataset.triggered.connect(MainWindow.dataset_new_clicked) # type: ignore
         self.actionSave_dataset.triggered.connect(MainWindow.dataset_saveas_clicked) # type: ignore
+        self.label_mainview.mouseMove['QMouseEvent'].connect(MainWindow.mainview_mouse_event) # type: ignore
+        self.label_mainview.mousePress['QMouseEvent'].connect(MainWindow.mainview_mouse_event) # type: ignore
+        self.label_mainview.mouseRelease['QMouseEvent'].connect(MainWindow.mainview_mouse_event) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -158,4 +165,5 @@ class Ui_MainWindow(object):
         self.actionLoad_dataset.setText(_translate("MainWindow", "Load dataset"))
         self.actionNew_dataset.setText(_translate("MainWindow", "New dataset"))
         self.actionSave_dataset.setText(_translate("MainWindow", "Save dataset"))
+from customQtWidgets import InteractiveQLabel
 import mainwindow_rc

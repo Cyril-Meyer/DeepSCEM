@@ -16,6 +16,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self.manager = manager.Manager()
 
+    def mainview_mouse_event(self, event):
+        print(event)
+        return
+
     def dataset_get_selection(self):
         current_item = self.treeWidget_dataset.currentItem()
         text = None
