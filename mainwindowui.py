@@ -101,6 +101,7 @@ class Ui_MainWindow(object):
         self.label_mainview.setObjectName("label_mainview")
         self.gridLayout.addWidget(self.label_mainview, 0, 0, 1, 1)
         self.horizontalSlider_z = QtWidgets.QSlider(self.centralwidget)
+        self.horizontalSlider_z.setMaximum(0)
         self.horizontalSlider_z.setOrientation(QtCore.Qt.Horizontal)
         self.horizontalSlider_z.setObjectName("horizontalSlider_z")
         self.gridLayout.addWidget(self.horizontalSlider_z, 1, 0, 1, 1)
@@ -125,14 +126,11 @@ class Ui_MainWindow(object):
         self.actionNew_dataset.setObjectName("actionNew_dataset")
         self.actionSave_dataset = QtWidgets.QAction(MainWindow)
         self.actionSave_dataset.setObjectName("actionSave_dataset")
-        self.actionReset_view = QtWidgets.QAction(MainWindow)
-        self.actionReset_view.setObjectName("actionReset_view")
         self.actionAbout = QtWidgets.QAction(MainWindow)
         self.actionAbout.setObjectName("actionAbout")
         self.menuFile.addAction(self.actionNew_dataset)
         self.menuFile.addAction(self.actionLoad_dataset)
         self.menuFile.addAction(self.actionSave_dataset)
-        self.menuView.addAction(self.actionReset_view)
         self.menuHelp.addAction(self.actionAbout)
         self.menubar.addAction(self.menuFile.menuAction())
         self.menubar.addAction(self.menuView.menuAction())
@@ -153,6 +151,7 @@ class Ui_MainWindow(object):
         self.treeWidget_dataset.itemSelectionChanged.connect(MainWindow.dataset_item_selection_changed) # type: ignore
         self.actionAbout.triggered.connect(MainWindow.menu_help_about_triggered) # type: ignore
         self.treeWidget_dataset.itemChanged['QTreeWidgetItem*','int'].connect(MainWindow.dataset_item_selection_changed) # type: ignore
+        self.horizontalSlider_z.valueChanged['int'].connect(MainWindow.mainview_slider_changed) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -181,8 +180,6 @@ class Ui_MainWindow(object):
         self.actionNew_dataset.setShortcut(_translate("MainWindow", "Ctrl+N"))
         self.actionSave_dataset.setText(_translate("MainWindow", "Save dataset as"))
         self.actionSave_dataset.setShortcut(_translate("MainWindow", "Ctrl+S"))
-        self.actionReset_view.setText(_translate("MainWindow", "Reset view"))
-        self.actionReset_view.setShortcut(_translate("MainWindow", "Ctrl+R"))
         self.actionAbout.setText(_translate("MainWindow", "About"))
         self.actionAbout.setShortcut(_translate("MainWindow", "Ctrl+Space"))
 from customQtWidgets import InteractiveQLabel

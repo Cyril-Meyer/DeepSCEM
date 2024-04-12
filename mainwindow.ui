@@ -199,6 +199,9 @@
       </item>
       <item row="1" column="0">
        <widget class="QSlider" name="horizontalSlider_z">
+        <property name="maximum">
+         <number>0</number>
+        </property>
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
@@ -229,7 +232,6 @@
     <property name="title">
      <string>View</string>
     </property>
-    <addaction name="actionReset_view"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -264,14 +266,6 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+S</string>
-   </property>
-  </action>
-  <action name="actionReset_view">
-   <property name="text">
-    <string>Reset view</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+R</string>
    </property>
   </action>
   <action name="actionAbout">
@@ -524,6 +518,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>horizontalSlider_z</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>mainview_slider_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>448</x>
+     <y>557</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>429</x>
+     <y>576</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>dataset_load_clicked()</slot>
@@ -535,5 +545,6 @@
   <slot>mainview_mouse_event()</slot>
   <slot>dataset_item_selection_changed()</slot>
   <slot>menu_help_about_triggered()</slot>
+  <slot>mainview_slider_changed()</slot>
  </slots>
 </ui>
