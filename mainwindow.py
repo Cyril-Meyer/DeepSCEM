@@ -14,6 +14,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self, *args, obj=None, **kwargs):
         super(MainWindow, self).__init__(*args, **kwargs)
         self.setupUi(self)
+        self.mainLayout.setStretch(0, 0)
+        self.mainLayout.setStretch(1, 4)
         self.manager = manager.Manager()
         self.view_selection = None
 
@@ -27,6 +29,44 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     # Widgets update
     # ----------------------------------------
     def mainview_update(self):
+        import numpy as np
+        if self.view_selection is None:
+            return
+        data, selection = self.view_selection
+        if len(selection) <= 0:
+            return
+        # todo: add a check to know if redraw is needed if nothing changed
+
+        # The first selected element is the most important element. Others elements are draw over.
+        data_view = data[selection[0]]
+        # z selection
+        z = 0
+        data_view = data_view[z]
+        # data convert [0, 1] -> [0, 255]
+        data_view = (data_view * 255).astype(np.uint8)
+
+        try:
+            self.label_mainview.setMaximumSize(800, 800)
+            view_1 = QImage(data_view.data, data_view.shape[1], data_view.shape[0], QImage.Format_Grayscale8)
+            w = self.label_mainview.width()
+            h = self.label_mainview.height()
+            print(w, h)
+            qImg = QPixmap(view_1)
+            # qImg = QPixmap(view_1).scaled(w, h, Qt.KeepAspectRatio)
+            # Grayscale to RGB
+            '''
+            data_view = np.stack([data_view, data_view, data_view], axis=-1)
+            print(data_view.shape, data_view.dtype)
+            qImg = QPixmap(QImage(data_view.data, data_view.shape[0], data_view.shape[1], QImage.Format_RGB888))
+            '''
+            # qImg = QPixmap(QImage(data_view.data, data_view.shape[0], data_view.shape[1], QImage.Format_Grayscale8))
+
+        except Exception as e:
+            print(e)
+
+        self.label_mainview.setPixmap(qImg)
+        # self.label_mainview.setAlignment(Qt.AlignCenter)
+
         return
 
     def dataset_update(self):
@@ -94,9 +134,11 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             sample_view = []
 
             for i in range(sample.childCount()):
-                sample_view.append(sample.child(i).checkState(0) != 0)
+                if sample.child(i).checkState(0) != 0:
+                    sample_view.append(sample.child(i).text(0))
 
             self.view_selection = (sample_data, sample_view)
+        self.mainview_update()
 
     # ----------------------------------------
     # User events on buttons and menus
