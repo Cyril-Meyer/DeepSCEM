@@ -18,6 +18,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.mainLayout.setStretch(1, 4)
         self.manager = manager.Manager()
         self.view_selection = None
+        self.flag_disable_ui_events = False
 
     # ----------------------------------------
     # Debug call (future "about" messagebox)
@@ -70,6 +71,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         return
 
     def dataset_update(self):
+        self.flag_disable_ui_events = True
         self.treeWidget_dataset.clear()
         for dataset in self.manager.get_datasets_index():
             dataset_item = QTreeWidgetItem(self.treeWidget_dataset, [dataset])
@@ -82,6 +84,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
             self.treeWidget_dataset.addTopLevelItem(dataset_item)
         self.treeWidget_dataset.expandAll()
+        self.flag_disable_ui_events = False
 
     # ----------------------------------------
     # Widgets information processing (input)
@@ -117,6 +120,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         return
 
     def dataset_item_selection_changed(self):
+        if self.flag_disable_ui_events:
+            return
         _, _, selection = self.dataset_get_selection_hierarchy()
         # nothing selected
         if len(selection) < 1:
