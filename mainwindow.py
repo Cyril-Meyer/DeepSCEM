@@ -234,6 +234,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def model_pred_clicked(self):
         return
 
+    def model_save_clicked(self):
+        return
+
     # ----------------------------------------
     # Wizards (multi-step user input)
     # ----------------------------------------

@@ -202,15 +202,15 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_model_use">
+         <widget class="QPushButton" name="pushButton_model_train">
           <property name="toolTip">
-           <string>Use model</string>
+           <string>Train model</string>
           </property>
           <property name="statusTip">
-           <string>Use model</string>
+           <string>Train model</string>
           </property>
           <property name="text">
-           <string/>
+           <string>Train</string>
           </property>
           <property name="icon">
            <iconset resource="mainwindow.qrc">
@@ -219,7 +219,27 @@
          </widget>
         </item>
         <item>
+         <widget class="QPushButton" name="pushButton_model_predict">
+          <property name="toolTip">
+           <string>Use model for prediction</string>
+          </property>
+          <property name="statusTip">
+           <string>Use model for prediction</string>
+          </property>
+          <property name="text">
+           <string>Predict</string>
+          </property>
+          <property name="icon">
+           <iconset resource="mainwindow.qrc">
+            <normaloff>:/icons/icons/outline_play_arrow_black_48dp.png</normaloff>:/icons/icons/outline_play_arrow_black_48dp.png</iconset>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QPushButton" name="pushButton_model_save">
+          <property name="toolTip">
+           <string>Save model as...</string>
+          </property>
           <property name="text">
            <string/>
           </property>
@@ -233,24 +253,6 @@
       </item>
       <item>
        <widget class="QListWidget" name="listWidget_model"/>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_train_pred">
-        <item>
-         <widget class="QPushButton" name="pushButton_train">
-          <property name="text">
-           <string>Train</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="pushButton_predict">
-          <property name="text">
-           <string>Predict</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
       </item>
      </layout>
     </item>
@@ -302,6 +304,9 @@
     <addaction name="actionNew_dataset"/>
     <addaction name="actionLoad_dataset"/>
     <addaction name="actionSave_dataset"/>
+    <addaction name="separator"/>
+    <addaction name="actionNew_model"/>
+    <addaction name="actionLoad_model"/>
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
@@ -351,6 +356,16 @@
     <string>Ctrl+Space</string>
    </property>
   </action>
+  <action name="actionNew_model">
+   <property name="text">
+    <string>New model</string>
+   </property>
+  </action>
+  <action name="actionLoad_model">
+   <property name="text">
+    <string>Load model</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
@@ -374,9 +389,10 @@
   <tabstop>treeWidget_dataset</tabstop>
   <tabstop>pushButton_model_load</tabstop>
   <tabstop>pushButton_model_new</tabstop>
+  <tabstop>pushButton_model_train</tabstop>
+  <tabstop>pushButton_model_predict</tabstop>
+  <tabstop>pushButton_model_save</tabstop>
   <tabstop>listWidget_model</tabstop>
-  <tabstop>pushButton_train</tabstop>
-  <tabstop>pushButton_predict</tabstop>
   <tabstop>horizontalSlider_z</tabstop>
  </tabstops>
  <resources>
@@ -630,8 +646,8 @@
    <slot>model_load_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>344</x>
-     <y>326</y>
+     <x>164</x>
+     <y>370</y>
     </hint>
     <hint type="destinationlabel">
      <x>268</x>
@@ -646,8 +662,8 @@
    <slot>model_new_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>384</x>
-     <y>331</y>
+     <x>198</x>
+     <y>370</y>
     </hint>
     <hint type="destinationlabel">
      <x>331</x>
@@ -656,34 +672,82 @@
    </hints>
   </connection>
   <connection>
-   <sender>pushButton_predict</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>model_pred_clicked()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>318</x>
-     <y>553</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>329</x>
-     <y>545</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pushButton_train</sender>
+   <sender>pushButton_model_train</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
    <slot>model_train_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>104</x>
-     <y>552</y>
+     <x>250</x>
+     <y>365</y>
     </hint>
     <hint type="destinationlabel">
-     <x>86</x>
-     <y>542</y>
+     <x>252</x>
+     <y>371</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_model_predict</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>model_pred_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>359</x>
+     <y>353</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>365</x>
+     <y>377</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_model_save</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>model_save_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>377</x>
+     <y>363</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>369</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionNew_model</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>model_new_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionLoad_model</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>model_load_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
     </hint>
    </hints>
   </connection>
@@ -703,5 +767,6 @@
   <slot>model_new_clicked()</slot>
   <slot>model_train_clicked()</slot>
   <slot>model_pred_clicked()</slot>
+  <slot>model_save_clicked()</slot>
  </slots>
 </ui>
