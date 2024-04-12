@@ -15,10 +15,20 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         super(MainWindow, self).__init__(*args, **kwargs)
         self.setupUi(self)
         self.manager = manager.Manager()
+        self.view_selection = None
+
+    # ----------------------------------------
+    # Debug call (future "about" messagebox)
+    # ----------------------------------------
+    def menu_help_about_triggered(self, event):
+        self.dataset_item_selection_changed()
 
     # ----------------------------------------
     # Widgets update
     # ----------------------------------------
+    def mainview_update(self):
+        return
+
     def dataset_update(self):
         self.treeWidget_dataset.clear()
         for dataset in self.manager.get_datasets_index():
@@ -40,11 +50,13 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         current_item = self.treeWidget_dataset.currentItem()
         texts = []
         indexes = []
+        items = []
         while current_item is not None:
+            items.append(current_item)
             texts.append(current_item.text(0))
             indexes.append(self.treeWidget_dataset.indexOfTopLevelItem(current_item))
             current_item = current_item.parent()
-        return texts, indexes
+        return texts, indexes, items
 
     def dataset_get_selection(self):
         # todo: refactor: use dataset_get_selection_hierarchy
@@ -64,8 +76,27 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         print(event)
         return
 
-    def dataset_view_changed(self):
-        return
+    def dataset_item_selection_changed(self):
+        _, _, selection = self.dataset_get_selection_hierarchy()
+        # nothing selected
+        if len(selection) < 1:
+            self.view_selection = None
+        # dataset selected
+        elif len(selection) == 1:
+            # print(selection[0].child(0).text(0))
+            self.view_selection = None
+        # sample selected
+        else:
+            sample = selection[-2]
+            dataset_name = selection[-1].text(0)
+            sample_name = sample.text(0)
+            sample_data = self.manager.get_sample(dataset_name, sample_name)
+            sample_view = []
+
+            for i in range(sample.childCount()):
+                sample_view.append(sample.child(i).checkState(0) != 0)
+
+            self.view_selection = (sample_data, sample_view)
 
     # ----------------------------------------
     # User events on buttons and menus
@@ -108,7 +139,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.dataset_update()
 
     def sample_remove_clicked(self):
-        texts, indexes = self.dataset_get_selection_hierarchy()
+        texts, indexes, items = self.dataset_get_selection_hierarchy()
         if len(indexes) < 2:
             QMessageBox.information(self, 'Warning', f'No sample selected.')
         else:

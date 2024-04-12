@@ -16,6 +16,9 @@ class Manager:
     def get_datasets_number_labels(self, name):
         return self.datasets[name].attrs['labels']
 
+    def get_sample(self, dataset, sample):
+        return self.datasets[dataset][sample]
+
     def get_dataset_samples(self, name):
         sample_info = []
         for sample in list(self.datasets[name].keys()):
