@@ -5,36 +5,41 @@ Deep Segmentation for Cellular Electron Microscopy
 ## Work in progress
 #### Essential modules
 
-* data
-  * [x] data load
-  * [ ] dataset creation
-* train
-  * model creation
-  * model training
-  * patch generation
-  * loss functions
-* inference (predict)
-  * model load
-  * predict
-  * image prediction with overlap
+* [x] data
+  * [x] data I/O
+  * [x] dataset creation
+* [ ] train
+  * [ ] model creation
+  * [ ] model training
+  * [ ] patch generation
+  * [ ] loss functions
+* [ ] inference (predict)
+  * [ ] model load
+  * [ ] predict
+  * [ ] image prediction with overlap
 
 #### User Interface
 
 * CLI
-  * Repair or remove the broken dataset and sample creation
-  * argparse to run with arguments
-    * replace current second stage parser with subparser
+  * replace current second stage parser with subparser
+  * [x] data
+  * [ ] train
+  * [ ] predict
 * UI
+  * [x] data
+  * [x] view
+  * [ ] train
+  * [ ] predict
 
 #### Refactoring
 
 * data
-  * code (sample and dataset) need comments and cleaning
   * need to set number of labels in the dataset file attribute
     * added, but not checked yet.
-  * probably missing write rights after read of an existing dataset
 * UI
   * Better handling of long operation (using thread)
+* Current code is prone to user input error
+
 
 ## Keywords
 * Image : A 3D or 2D grayscale image (.tif, .tiff or .npy)
@@ -48,11 +53,12 @@ Deep Segmentation for Cellular Electron Microscopy
 
 
 ## Examples
-* Create samples
-  * `--create-sample name1 image1 label11 label12 --create-sample name2 image2 label21 label22 --create-sample name3 image3`
-  * `--create-sample i31 i3_1.tif i3_label_11.tif i3_label_12.tif --create-sample i32 i3_2.tif i3_label_21.tif i3_label_22.tif`
-* Create datasets
-  * `--create-dataset i3 i31 i32`
+* Create an empty dataset `I3_EXAMPLE.hdf5` with name **I3** and requiring **2** labels per sample
+  * `--create-dataset I3_EXAMPLE.hdf5 I3 2`
+* Add sample **i31** to dataset `I3_EXAMPLE.hdf5`
+  * `--add-sample I3_EXAMPLE.hdf5 i31 i3_1.tif i3_label_11.tif i3_label_12.tif `
+* Create dataset with samples
+  * `--create-dataset I3_EXAMPLE.hdf5 I3 2 --add-sample I3_EXAMPLE.hdf5 i31 i3_1.tif i3_label_11.tif i3_label_12.tif --add-sample I3_EXAMPLE.hdf5 i32 i3_2.tif i3_label_21.tif i3_label_22.tif`
 
 
 ### Requirements
