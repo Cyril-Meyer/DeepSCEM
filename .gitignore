@@ -162,3 +162,8 @@ cython_debug/
 
 # working dir
 working_dir/
+
+# generated files
+mainwindow_rc.py
+mainwindowui.py
+window_newmodelui.py
