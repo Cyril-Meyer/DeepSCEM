@@ -168,7 +168,30 @@
          </spacer>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_model_add">
+         <widget class="QPushButton" name="pushButton_model_load">
+          <property name="toolTip">
+           <string>Load model</string>
+          </property>
+          <property name="statusTip">
+           <string>Load model</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="mainwindow.qrc">
+            <normaloff>:/icons/icons/outline_folder_open_black_48dp.png</normaloff>:/icons/icons/outline_folder_open_black_48dp.png</iconset>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_model_new">
+          <property name="toolTip">
+           <string>New model</string>
+          </property>
+          <property name="statusTip">
+           <string>New model</string>
+          </property>
           <property name="text">
            <string/>
           </property>
@@ -178,10 +201,45 @@
           </property>
          </widget>
         </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_model_use">
+          <property name="toolTip">
+           <string>Use model</string>
+          </property>
+          <property name="statusTip">
+           <string>Use model</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="mainwindow.qrc">
+            <normaloff>:/icons/icons/outline_video_library_black_48dp.png</normaloff>:/icons/icons/outline_video_library_black_48dp.png</iconset>
+          </property>
+         </widget>
+        </item>
        </layout>
       </item>
       <item>
        <widget class="QListWidget" name="listWidget_model"/>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_train_pred">
+        <item>
+         <widget class="QPushButton" name="pushButton_train">
+          <property name="text">
+           <string>Train</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_predict">
+          <property name="text">
+           <string>Predict</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
      </layout>
     </item>
@@ -296,6 +354,20 @@
    </slots>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>pushButton_dataset_load</tabstop>
+  <tabstop>pushButton_dataset_unload</tabstop>
+  <tabstop>pushButton_sample_add</tabstop>
+  <tabstop>pushButton_sample_remove</tabstop>
+  <tabstop>pushButton_dataset_saveas</tabstop>
+  <tabstop>treeWidget_dataset</tabstop>
+  <tabstop>pushButton_model_load</tabstop>
+  <tabstop>pushButton_model_new</tabstop>
+  <tabstop>listWidget_model</tabstop>
+  <tabstop>pushButton_train</tabstop>
+  <tabstop>pushButton_predict</tabstop>
+  <tabstop>horizontalSlider_z</tabstop>
+ </tabstops>
  <resources>
   <include location="mainwindow.qrc"/>
  </resources>
@@ -540,6 +612,70 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButton_model_load</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>model_load_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>344</x>
+     <y>326</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>268</x>
+     <y>327</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_model_new</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>model_new_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>384</x>
+     <y>331</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>331</x>
+     <y>344</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_predict</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>model_pred_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>318</x>
+     <y>553</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>329</x>
+     <y>545</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_train</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>model_train_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>104</x>
+     <y>552</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>86</x>
+     <y>542</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>dataset_load_clicked()</slot>
@@ -552,5 +688,9 @@
   <slot>dataset_item_selection_changed()</slot>
   <slot>menu_help_about_triggered()</slot>
   <slot>mainview_slider_changed()</slot>
+  <slot>model_load_clicked()</slot>
+  <slot>model_new_clicked()</slot>
+  <slot>model_train_clicked()</slot>
+  <slot>model_pred_clicked()</slot>
  </slots>
 </ui>

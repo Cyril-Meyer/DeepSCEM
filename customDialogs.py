@@ -10,3 +10,11 @@ class DialogNewModel(QtWidgets.QDialog, Ui_Dialog):
     def __init__(self, *args, obj=None, **kwargs):
         super(DialogNewModel, self).__init__(*args, **kwargs)
         self.setupUi(self)
+
+    def get(self):
+        return (self.comboBox_dimension.currentText(),
+                self.comboBox_architecture.currentText(),
+                self.spinBox_block.value(),
+                self.spinBox_depth.value(),
+                self.spinBox_outputs.value(),
+                self.comboBox_output_activation.currentText())

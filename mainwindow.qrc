@@ -1,5 +1,10 @@
 <RCC>
   <qresource prefix="icons">
+    <file>icons/outline_close_black_48dp.png</file>
+    <file>icons/outline_play_arrow_black_48dp.png</file>
+    <file>icons/outline_stop_black_48dp.png</file>
+    <file>icons/outline_video_library_black_48dp.png</file>
+    <file>icons/outline_folder_open_black_48dp.png</file>
     <file>icons/outline_delete_black_48dp.png</file>
     <file>icons/outline_playlist_remove_black_48dp.png</file>
     <file>icons/outline_add_black_48dp.png</file>

@@ -9,6 +9,7 @@ from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
 from mainwindowui import Ui_MainWindow
+from customDialogs import DialogNewModel
 
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
@@ -209,6 +210,28 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             except Exception as e:
                 QMessageBox.critical(self, 'Error', f'{e}')
         self.dataset_update()
+
+    def model_load_clicked(self):
+        '''
+        filenames, _ = QFileDialog.getOpenFileNames(self, 'Select models', '', 'Model (*.h5)')
+        try:
+            for filename in filenames:
+                self.manager.load_model(filename)
+        except Exception as e:
+            QMessageBox.critical(self, 'Error', f'Dataset load error.\n{e}')
+        '''
+        return
+
+    def model_new_clicked(self):
+        dialog = DialogNewModel()
+        if dialog.exec() == 1:
+            dim, archi, block, depth, outputs, acti = dialog.get()
+
+    def model_train_clicked(self):
+        return
+
+    def model_pred_clicked(self):
+        return
 
     # ----------------------------------------
     # Wizards (multi-step user input)
