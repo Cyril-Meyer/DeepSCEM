@@ -20,8 +20,8 @@ class Ui_MainWindow(object):
         MainWindow.setWindowIcon(icon)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
-        self.horizontalLayout_4 = QtWidgets.QHBoxLayout(self.centralwidget)
-        self.horizontalLayout_4.setObjectName("horizontalLayout_4")
+        self.mainLayout = QtWidgets.QHBoxLayout(self.centralwidget)
+        self.mainLayout.setObjectName("mainLayout")
         self.verticalLayout = QtWidgets.QVBoxLayout()
         self.verticalLayout.setObjectName("verticalLayout")
         self.horizontalLayout_dataset = QtWidgets.QHBoxLayout()
@@ -88,13 +88,13 @@ class Ui_MainWindow(object):
         self.listWidget_model = QtWidgets.QListWidget(self.centralwidget)
         self.listWidget_model.setObjectName("listWidget_model")
         self.verticalLayout.addWidget(self.listWidget_model)
-        self.horizontalLayout_4.addLayout(self.verticalLayout)
+        self.mainLayout.addLayout(self.verticalLayout)
         self.gridLayout = QtWidgets.QGridLayout()
         self.gridLayout.setObjectName("gridLayout")
         self.label_mainview = InteractiveQLabel(self.centralwidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(5)
-        sizePolicy.setVerticalStretch(5)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.label_mainview.sizePolicy().hasHeightForWidth())
         self.label_mainview.setSizePolicy(sizePolicy)
         self.label_mainview.setAlignment(QtCore.Qt.AlignCenter)
@@ -104,7 +104,7 @@ class Ui_MainWindow(object):
         self.horizontalSlider_z.setOrientation(QtCore.Qt.Horizontal)
         self.horizontalSlider_z.setObjectName("horizontalSlider_z")
         self.gridLayout.addWidget(self.horizontalSlider_z, 1, 0, 1, 1)
-        self.horizontalLayout_4.addLayout(self.gridLayout)
+        self.mainLayout.addLayout(self.gridLayout)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 21))
@@ -113,6 +113,8 @@ class Ui_MainWindow(object):
         self.menuFile.setObjectName("menuFile")
         self.menuView = QtWidgets.QMenu(self.menubar)
         self.menuView.setObjectName("menuView")
+        self.menuHelp = QtWidgets.QMenu(self.menubar)
+        self.menuHelp.setObjectName("menuHelp")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
@@ -123,11 +125,18 @@ class Ui_MainWindow(object):
         self.actionNew_dataset.setObjectName("actionNew_dataset")
         self.actionSave_dataset = QtWidgets.QAction(MainWindow)
         self.actionSave_dataset.setObjectName("actionSave_dataset")
+        self.actionReset_view = QtWidgets.QAction(MainWindow)
+        self.actionReset_view.setObjectName("actionReset_view")
+        self.actionAbout = QtWidgets.QAction(MainWindow)
+        self.actionAbout.setObjectName("actionAbout")
         self.menuFile.addAction(self.actionNew_dataset)
         self.menuFile.addAction(self.actionLoad_dataset)
         self.menuFile.addAction(self.actionSave_dataset)
+        self.menuView.addAction(self.actionReset_view)
+        self.menuHelp.addAction(self.actionAbout)
         self.menubar.addAction(self.menuFile.menuAction())
         self.menubar.addAction(self.menuView.menuAction())
+        self.menubar.addAction(self.menuHelp.menuAction())
 
         self.retranslateUi(MainWindow)
         self.pushButton_dataset_load.clicked.connect(MainWindow.dataset_load_clicked) # type: ignore
@@ -141,7 +150,9 @@ class Ui_MainWindow(object):
         self.label_mainview.mouseMove['QMouseEvent'].connect(MainWindow.mainview_mouse_event) # type: ignore
         self.label_mainview.mousePress['QMouseEvent'].connect(MainWindow.mainview_mouse_event) # type: ignore
         self.label_mainview.mouseRelease['QMouseEvent'].connect(MainWindow.mainview_mouse_event) # type: ignore
-        self.treeWidget_dataset.itemSelectionChanged.connect(MainWindow.dataset_view_changed) # type: ignore
+        self.treeWidget_dataset.itemSelectionChanged.connect(MainWindow.dataset_item_selection_changed) # type: ignore
+        self.actionAbout.triggered.connect(MainWindow.menu_help_about_triggered) # type: ignore
+        self.treeWidget_dataset.itemChanged['QTreeWidgetItem*','int'].connect(MainWindow.dataset_item_selection_changed) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -163,11 +174,16 @@ class Ui_MainWindow(object):
         self.label_mainview.setText(_translate("MainWindow", "MainView"))
         self.menuFile.setTitle(_translate("MainWindow", "File"))
         self.menuView.setTitle(_translate("MainWindow", "View"))
+        self.menuHelp.setTitle(_translate("MainWindow", "Help"))
         self.actionLoad_dataset.setText(_translate("MainWindow", "Load dataset"))
         self.actionLoad_dataset.setShortcut(_translate("MainWindow", "Ctrl+O"))
         self.actionNew_dataset.setText(_translate("MainWindow", "New dataset"))
         self.actionNew_dataset.setShortcut(_translate("MainWindow", "Ctrl+N"))
         self.actionSave_dataset.setText(_translate("MainWindow", "Save dataset as"))
         self.actionSave_dataset.setShortcut(_translate("MainWindow", "Ctrl+S"))
+        self.actionReset_view.setText(_translate("MainWindow", "Reset view"))
+        self.actionReset_view.setShortcut(_translate("MainWindow", "Ctrl+R"))
+        self.actionAbout.setText(_translate("MainWindow", "About"))
+        self.actionAbout.setShortcut(_translate("MainWindow", "Ctrl+Space"))
 from customQtWidgets import InteractiveQLabel
 import mainwindow_rc
