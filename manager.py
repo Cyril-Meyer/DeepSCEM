@@ -33,6 +33,7 @@ class Manager:
         if dataset.attrs['name'] in self.datasets.keys():
             raise ValueError(f'A dataset with same name already exist.\n{filename}')
         self.datasets[dataset.attrs['name']] = dataset
+        return dataset.attrs['name']
 
     def new_dataset(self, name, labels=0, filename=None):
         """
