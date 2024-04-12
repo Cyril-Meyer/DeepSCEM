@@ -27,12 +27,16 @@ class Manager:
         load a dataset from an existing file.
         """
         dataset = data.read_dataset(filename)
+        if dataset.attrs['name'] in self.datasets.keys():
+            raise ValueError(f'A dataset with same name already exist.\n{filename}')
         self.datasets[dataset.attrs['name']] = dataset
 
     def new_dataset(self, name, labels=0, filename=None):
         """
         create a new dataset.
         """
+        if filename is None:
+            filename = name + '_DeepSCEM.hdf5'
         self.datasets[name] = data.create_dataset(name, labels, filename)
 
     def add_sample(self, name, sample_name, sample_image_filename, sample_labels_filenames):

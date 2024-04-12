@@ -28,11 +28,14 @@ def read_image(filename, dtype=np.float32, normalize=False):
     return data
 
 
-def read_dataset(filename):
+def read_dataset(filename, readonly=False):
     """
     read a dataset file into a h5py object.
     """
-    file = h5py.File(filename, 'r')
+    if readonly:
+        file = h5py.File(filename, 'r')
+    else:
+        file = h5py.File(filename, 'a')
 
     if 'name' not in file.attrs:
         raise ValueError('missing name attribute')
