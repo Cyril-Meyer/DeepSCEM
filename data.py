@@ -67,3 +67,22 @@ def add_sample_to_dataset(dataset, name, image, labels=None):
         sample_group.create_dataset(f'label_{i:04}', data=label)
 
     dataset.flush()
+
+
+def remove_sample_from_dataset(dataset, name):
+    del dataset[name]
+    dataset.flush()
+
+
+def copy_dataset(dataset, filename):
+    # inspiration: https://stackoverflow.com/a/53010788
+    fd = h5py.File(filename, 'w')
+    fs = dataset
+
+    for a in fs.attrs:
+        fd.attrs[a] = fs.attrs[a]
+    for d in fs:
+        # SFS_TRANSITION ? For now, we juste reuse working code.
+        if not 'SFS_TRANSITION' in d: fs.copy(d, fd)
+
+    fd.close()

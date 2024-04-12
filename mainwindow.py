@@ -36,7 +36,18 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     # ----------------------------------------
     # Widgets information processing (input)
     # ----------------------------------------
+    def dataset_get_selection_hierarchy(self):
+        current_item = self.treeWidget_dataset.currentItem()
+        texts = []
+        indexes = []
+        while current_item is not None:
+            texts.append(current_item.text(0))
+            indexes.append(self.treeWidget_dataset.indexOfTopLevelItem(current_item))
+            current_item = current_item.parent()
+        return texts, indexes
+
     def dataset_get_selection(self):
+        # todo: refactor: use dataset_get_selection_hierarchy
         current_item = self.treeWidget_dataset.currentItem()
         text = None
         index = -1
@@ -86,7 +97,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def dataset_saveas_clicked(self):
         text, index = self.dataset_get_selection()
         if index >= 0 and text is not None:
-            return
+            filename, _ = QFileDialog.getSaveFileName(self, 'Save dataset', '', 'Datasets (*.h5 *.hdf5)')
+            if not filename == '':
+                self.manager.saveas_dataset(text, filename)
         else:
             QMessageBox.information(self, 'Warning', f'No dataset selected.')
 
@@ -95,7 +108,15 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.dataset_update()
 
     def sample_remove_clicked(self):
-        return
+        texts, indexes = self.dataset_get_selection_hierarchy()
+        if len(indexes) < 2:
+            QMessageBox.information(self, 'Warning', f'No sample selected.')
+        else:
+            try:
+                self.manager.remove_sample(dataset=texts[-1], sample=texts[-2])
+            except Exception as e:
+                QMessageBox.critical(self, 'Error', f'{e}')
+        self.dataset_update()
 
     # ----------------------------------------
     # Wizards (multi-step user input)

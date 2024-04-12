@@ -71,3 +71,10 @@ class Manager:
         self.datasets[name].close()
         del self.datasets[name]
         self.datasets.pop(name, None)
+
+    def remove_sample(self, dataset, sample):
+        # del self.datasets[dataset][sample]
+        data.remove_sample_from_dataset(self.datasets[dataset], sample)
+
+    def saveas_dataset(self, name, filename):
+        data.copy_dataset(self.datasets[name], filename)
