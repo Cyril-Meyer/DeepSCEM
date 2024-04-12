@@ -1,4 +1,5 @@
 import time
+import numpy as np
 
 import manager
 
@@ -27,10 +28,23 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.dataset_item_selection_changed()
 
     # ----------------------------------------
+    # Window events
+    # ----------------------------------------
+    def resizeEvent(self, event):
+        QMainWindow.resizeEvent(self, event)
+        self.mainview_update()
+
+    # ----------------------------------------
     # Widgets update
     # ----------------------------------------
     def mainview_update(self):
-        import numpy as np
+        """
+        Update the mainview (image and labels view)
+
+        The first selected element is the most important element.
+        Others elements are draw over.
+        """
+        self.label_mainview.clear()
         if self.view_selection is None:
             return
         data, selection = self.view_selection
@@ -38,37 +52,35 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             return
         # todo: add a check to know if redraw is needed if nothing changed
 
-        # The first selected element is the most important element. Others elements are draw over.
+        # Get data with z selection
         data_view = data[selection[0]]
-        # z selection
-        z = 0
+        self.horizontalSlider_z.setMaximum(data_view.shape[0]-1)
+        z = self.horizontalSlider_z.value()
         data_view = data_view[z]
+
         # data convert [0, 1] -> [0, 255]
+        # data_view = (np.clip(data_view, 0, 1) * 255).astype(np.uint8)
         data_view = (data_view * 255).astype(np.uint8)
+        height, width = data_view.shape
 
-        try:
-            self.label_mainview.setMaximumSize(800, 800)
-            view_1 = QImage(data_view.data, data_view.shape[1], data_view.shape[0], QImage.Format_Grayscale8)
-            w = self.label_mainview.width()
-            h = self.label_mainview.height()
-            print(w, h)
-            qImg = QPixmap(view_1)
-            # qImg = QPixmap(view_1).scaled(w, h, Qt.KeepAspectRatio)
-            # Grayscale to RGB
-            '''
-            data_view = np.stack([data_view, data_view, data_view], axis=-1)
-            print(data_view.shape, data_view.dtype)
-            qImg = QPixmap(QImage(data_view.data, data_view.shape[0], data_view.shape[1], QImage.Format_RGB888))
-            '''
-            # qImg = QPixmap(QImage(data_view.data, data_view.shape[0], data_view.shape[1], QImage.Format_Grayscale8))
+        # grayscale if only one image, RGB otherwise
+        if len(selection) == 1:
+            bytesPerLine = 1 * width
+            data_view_qimage = QImage(data_view.data, data_view.shape[1], data_view.shape[0],
+                                      bytesPerLine, QImage.Format_Grayscale8)
+        else:
+            data_view = np.stack((data_view,) * 3, axis=-1)
+            for i, s in enumerate(selection[1:]):
+                data_view[data[s][z] > 0, i % 3] = 255
 
-        except Exception as e:
-            print(e)
+            bytesPerLine = 3 * width
+            data_view_qimage = QImage(data_view.data, data_view.shape[1], data_view.shape[0],
+                                      bytesPerLine, QImage.Format_RGB888)
 
+        qImg = QPixmap(data_view_qimage).scaled(self.label_mainview.width()-50,
+                                                self.label_mainview.height()-50,
+                                                Qt.KeepAspectRatio)
         self.label_mainview.setPixmap(qImg)
-        # self.label_mainview.setAlignment(Qt.AlignCenter)
-
-        return
 
     def dataset_update(self):
         self.flag_disable_ui_events = True
@@ -116,8 +128,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     # User events on ui
     # ----------------------------------------
     def mainview_mouse_event(self, event):
-        print(event)
         return
+
+    def mainview_slider_changed(self):
+        self.mainview_update()
 
     def dataset_item_selection_changed(self):
         if self.flag_disable_ui_events:
