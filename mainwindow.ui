@@ -218,6 +218,17 @@
           </property>
          </widget>
         </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_model_save">
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="mainwindow.qrc">
+            <normaloff>:/icons/icons/outline_save_black_48dp.png</normaloff>:/icons/icons/outline_save_black_48dp.png</iconset>
+          </property>
+         </widget>
+        </item>
        </layout>
       </item>
       <item>

@@ -172,6 +172,11 @@
         <widget class="QComboBox" name="comboBox_normalization">
          <item>
           <property name="text">
+           <string>None</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
            <string>BatchNorm</string>
           </property>
          </item>
