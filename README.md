@@ -33,7 +33,8 @@ Deep Segmentation for Cellular Electron Microscopy
   * need to set number of labels in the dataset file attribute
     * added, but not checked yet.
   * probably missing write rights after read of an existing dataset
-
+* UI
+  * Better handling of long operation (using thread)
 
 ## Keywords
 * Image : A 3D or 2D grayscale image (.tif, .tiff or .npy)
