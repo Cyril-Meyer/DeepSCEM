@@ -225,7 +225,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def model_new_clicked(self):
         dialog = DialogNewModel()
         if dialog.exec() == 1:
-            dim, archi, block, depth, outputs, acti = dialog.get()
+            a0, a1, a2, a3, a4, a5, a6, a7, a8, a9 = dialog.get()
+            self.manager.new_model(a0, a1, a2, a3, a4, a5, a6, a7, a8, a9)
 
     def model_train_clicked(self):
         return

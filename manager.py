@@ -1,11 +1,13 @@
 import numpy as np
 
 import data
+import model as m
 
 
 class Manager:
     def __init__(self):
         self.datasets = dict()
+        self.models = []
 
     def get_datasets_index(self):
         """
@@ -82,3 +84,23 @@ class Manager:
 
     def saveas_dataset(self, name, filename):
         data.copy_dataset(self.datasets[name], filename)
+
+    def load_model(self, filename):
+        import tensorflow as tf
+        model = tf.keras.models.load_model(filename)
+        self.models.append(model)
+
+    def new_model(self,
+                  dimension=2,
+                  architecture='u-net',
+                  backbone='residual',
+                  kernel_size=3,
+                  block_filters=32,
+                  block_per_level=2,
+                  normalization='batchnorm',
+                  depth=5,
+                  outputs=2,
+                  activation='sigmoid'):
+        model = m.create(dimension, architecture.lower(), backbone.lower(), kernel_size, block_filters, block_per_level,
+                         normalization.lower(), depth, outputs, activation.lower())
+        self.models.append(model)
