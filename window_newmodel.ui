@@ -33,16 +33,44 @@
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label_block">
+        <widget class="QLabel" name="label_backbone">
          <property name="text">
-          <string>Block size</string>
+          <string>Construction block</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_kernel_size">
+         <property name="text">
+          <string>Kernel size</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_block_filters">
+         <property name="text">
+          <string>Initial block filters</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_block_per_level">
+         <property name="text">
+          <string>Block per level</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_normalization">
+         <property name="text">
+          <string>Normalization</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_depth">
          <property name="text">
-          <string>Depth</string>
+          <string>Model depth (levels)</string>
          </property>
         </widget>
        </item>
@@ -85,15 +113,37 @@
            <string>U-Net</string>
           </property>
          </item>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="comboBox_backbone">
          <item>
           <property name="text">
-           <string>Res-U-Net</string>
+           <string>Residual</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>VGG</string>
           </property>
          </item>
         </widget>
        </item>
        <item>
-        <widget class="QSpinBox" name="spinBox_block">
+        <widget class="QSpinBox" name="spinBox_kernel_size">
+         <property name="minimum">
+          <number>2</number>
+         </property>
+         <property name="maximum">
+          <number>32</number>
+         </property>
+         <property name="value">
+          <number>3</number>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="spinBox_block_filters">
          <property name="minimum">
           <number>1</number>
          </property>
@@ -103,6 +153,28 @@
          <property name="value">
           <number>32</number>
          </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="spinBox_block_per_level">
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="maximum">
+          <number>32</number>
+         </property>
+         <property name="value">
+          <number>2</number>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="comboBox_normalization">
+         <item>
+          <property name="text">
+           <string>BatchNorm</string>
+          </property>
+         </item>
         </widget>
        </item>
        <item>

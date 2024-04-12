@@ -14,7 +14,11 @@ class DialogNewModel(QtWidgets.QDialog, Ui_Dialog):
     def get(self):
         return (self.comboBox_dimension.currentText(),
                 self.comboBox_architecture.currentText(),
-                self.spinBox_block.value(),
+                self.comboBox_backbone.currentText(),
+                self.spinBox_kernel_size.value(),
+                self.spinBox_block_filters.value(),
+                self.spinBox_block_per_level.value(),
+                self.comboBox_normalization.currentText(),
                 self.spinBox_depth.value(),
                 self.spinBox_outputs.value(),
                 self.comboBox_output_activation.currentText())
