@@ -107,7 +107,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_4.addLayout(self.gridLayout)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 20))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 21))
         self.menubar.setObjectName("menubar")
         self.menuFile = QtWidgets.QMenu(self.menubar)
         self.menuFile.setObjectName("menuFile")
@@ -141,6 +141,7 @@ class Ui_MainWindow(object):
         self.label_mainview.mouseMove['QMouseEvent'].connect(MainWindow.mainview_mouse_event) # type: ignore
         self.label_mainview.mousePress['QMouseEvent'].connect(MainWindow.mainview_mouse_event) # type: ignore
         self.label_mainview.mouseRelease['QMouseEvent'].connect(MainWindow.mainview_mouse_event) # type: ignore
+        self.treeWidget_dataset.itemSelectionChanged.connect(MainWindow.dataset_view_changed) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -163,7 +164,10 @@ class Ui_MainWindow(object):
         self.menuFile.setTitle(_translate("MainWindow", "File"))
         self.menuView.setTitle(_translate("MainWindow", "View"))
         self.actionLoad_dataset.setText(_translate("MainWindow", "Load dataset"))
+        self.actionLoad_dataset.setShortcut(_translate("MainWindow", "Ctrl+O"))
         self.actionNew_dataset.setText(_translate("MainWindow", "New dataset"))
-        self.actionSave_dataset.setText(_translate("MainWindow", "Save dataset"))
+        self.actionNew_dataset.setShortcut(_translate("MainWindow", "Ctrl+N"))
+        self.actionSave_dataset.setText(_translate("MainWindow", "Save dataset as"))
+        self.actionSave_dataset.setShortcut(_translate("MainWindow", "Ctrl+S"))
 from customQtWidgets import InteractiveQLabel
 import mainwindow_rc

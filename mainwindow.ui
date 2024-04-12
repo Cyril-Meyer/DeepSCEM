@@ -214,7 +214,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>20</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -238,15 +238,24 @@
    <property name="text">
     <string>Load dataset</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
   </action>
   <action name="actionNew_dataset">
    <property name="text">
     <string>New dataset</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
   </action>
   <action name="actionSave_dataset">
    <property name="text">
-    <string>Save dataset</string>
+    <string>Save dataset as</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
    </property>
   </action>
  </widget>
@@ -402,8 +411,8 @@
    <slot>mainview_mouse_event()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>766</x>
-     <y>552</y>
+     <x>789</x>
+     <y>541</y>
     </hint>
     <hint type="destinationlabel">
      <x>776</x>
@@ -418,8 +427,8 @@
    <slot>mainview_mouse_event()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>746</x>
-     <y>551</y>
+     <x>789</x>
+     <y>541</y>
     </hint>
     <hint type="destinationlabel">
      <x>747</x>
@@ -434,12 +443,28 @@
    <slot>mainview_mouse_event()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>712</x>
-     <y>559</y>
+     <x>789</x>
+     <y>541</y>
     </hint>
     <hint type="destinationlabel">
      <x>724</x>
      <y>575</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>treeWidget_dataset</sender>
+   <signal>itemSelectionChanged()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>dataset_view_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>17</x>
+     <y>92</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>6</x>
+     <y>104</y>
     </hint>
    </hints>
   </connection>
@@ -452,5 +477,6 @@
   <slot>dataset_saveas_clicked()</slot>
   <slot>dataset_new_clicked()</slot>
   <slot>mainview_mouse_event()</slot>
+  <slot>dataset_view_changed()</slot>
  </slots>
 </ui>

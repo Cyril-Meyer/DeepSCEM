@@ -16,20 +16,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self.manager = manager.Manager()
 
-    def mainview_mouse_event(self, event):
-        print(event)
-        return
-
-    def dataset_get_selection(self):
-        current_item = self.treeWidget_dataset.currentItem()
-        text = None
-        index = -1
-        while current_item is not None:
-            text = current_item.text(0)
-            index = self.treeWidget_dataset.indexOfTopLevelItem(current_item)
-            current_item = current_item.parent()
-        return text, index
-
+    # ----------------------------------------
+    # Widgets update
+    # ----------------------------------------
     def dataset_update(self):
         self.treeWidget_dataset.clear()
         for dataset in self.manager.get_datasets_index():
@@ -44,6 +33,32 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.treeWidget_dataset.addTopLevelItem(dataset_item)
         self.treeWidget_dataset.expandAll()
 
+    # ----------------------------------------
+    # Widgets information processing (input)
+    # ----------------------------------------
+    def dataset_get_selection(self):
+        current_item = self.treeWidget_dataset.currentItem()
+        text = None
+        index = -1
+        while current_item is not None:
+            text = current_item.text(0)
+            index = self.treeWidget_dataset.indexOfTopLevelItem(current_item)
+            current_item = current_item.parent()
+        return text, index
+
+    # ----------------------------------------
+    # User events on ui
+    # ----------------------------------------
+    def mainview_mouse_event(self, event):
+        print(event)
+        return
+
+    def dataset_view_changed(self):
+        return
+
+    # ----------------------------------------
+    # User events on buttons and menus
+    # ----------------------------------------
     def dataset_new_clicked(self):
         choice_dataset, choice_number_label, ok = self.dataset_new_wizard()
         if ok:
@@ -58,20 +73,33 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.dataset_update()
         except Exception as e:
             QMessageBox.critical(self, 'Error', f'Dataset load error.\n{e}')
+            self.dataset_update()
 
     def dataset_unload_clicked(self):
-        self.dataset_update()
+        text, index = self.dataset_get_selection()
+        if index >= 0 and text is not None:
+            self.manager.remove_dataset(text)
+            self.dataset_update()
+        else:
+            QMessageBox.information(self, 'Warning', f'No dataset selected.')
 
     def dataset_saveas_clicked(self):
-        self.dataset_get_selection()
-        return
+        text, index = self.dataset_get_selection()
+        if index >= 0 and text is not None:
+            return
+        else:
+            QMessageBox.information(self, 'Warning', f'No dataset selected.')
 
     def sample_add_clicked(self):
         self.sample_add_wizard()
+        self.dataset_update()
 
     def sample_remove_clicked(self):
         return
 
+    # ----------------------------------------
+    # Wizards (multi-step user input)
+    # ----------------------------------------
     def dataset_new_wizard(self):
         choice_dataset, ok = QInputDialog.getText(self, 'New Dataset',
                                                   'Dataset name (empty will create a name for you)')
@@ -125,15 +153,17 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # Create everything for real
         try:
             if new_dataset:
-                self.manager.new_dataset(choice_dataset, choice_number_label)
-            self.manager.add_sample(choice_dataset, choice_sample, choice_image, choice_labels)
+                self.dataset_new_manager(choice_dataset, choice_number_label)
+            self.sample_add_manager(choice_dataset, choice_sample, choice_image, choice_labels)
         except Exception as e:
             QMessageBox.critical(self, 'Error', f'{e}')
             self.manager.remove_dataset(choice_dataset)
 
-    def sample_add_manager(self):
-        # todo: put code at the end of the wizard here
-        return
+    # ----------------------------------------
+    # Wizards data manager
+    # ----------------------------------------
+    def sample_add_manager(self, choice_dataset, choice_sample, choice_image, choice_labels):
+        self.manager.add_sample(choice_dataset, choice_sample, choice_image, choice_labels)
 
     def dataset_new_manager(self, choice_dataset, choice_number_label):
         self.manager.new_dataset(choice_dataset, choice_number_label)
