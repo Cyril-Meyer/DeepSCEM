@@ -237,10 +237,18 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.models_update()
 
     def model_train_clicked(self):
-        return
+        index = self.listWidget_model.currentRow()
+        if index >= 0:
+            return
+        else:
+            QMessageBox.information(self, 'Warning', f'No model selected.')
 
     def model_pred_clicked(self):
-        return
+        index = self.listWidget_model.currentRow()
+        if index >= 0:
+            return
+        else:
+            QMessageBox.information(self, 'Warning', f'No model selected.')
 
     def model_save_clicked(self):
         index = self.listWidget_model.currentRow()
