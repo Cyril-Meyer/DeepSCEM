@@ -239,6 +239,11 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def model_train_clicked(self):
         index = self.listWidget_model.currentRow()
         if index >= 0:
+            # todo: move in manager module and add dialog.
+            import tensorflow as tf
+            model = self.manager.models[index]
+            optimizer = tf.keras.optimizers.Adam(learning_rate=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-07)
+            model.compile(optimizer=optimizer, loss=tf.keras.losses.MeanSquaredError())
             return
         else:
             QMessageBox.information(self, 'Warning', f'No model selected.')
