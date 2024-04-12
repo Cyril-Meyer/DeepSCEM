@@ -1,4 +1,6 @@
-def create(dim, architecture, backbone, kernel_size, block_filters, block_per_level, normalization, depth, outputs, output_activation):
+def create(dim, architecture,
+           backbone, kernel_size, block_filters, block_per_level, normalization, depth,
+           outputs, output_activation, name=None):
     # import inside function to avoid import tensorflow
     import models.architecture as a
     import models.backbone as b
@@ -8,6 +10,8 @@ def create(dim, architecture, backbone, kernel_size, block_filters, block_per_le
             dim = 2
         elif dim.lower() == '3d':
             dim = 3
+    if name is None:
+        name = f'{architecture}-{dim}D-{block_filters}-{depth}'.upper()
     assert 2 <= dim <= 3
     assert architecture in ['u-net']
     assert backbone in ['vgg', 'residual']
@@ -34,7 +38,8 @@ def create(dim, architecture, backbone, kernel_size, block_filters, block_per_le
                               op_dim=dim,
                               dropout=0,
                               pool_size=2,
-                              multiple_outputs=False)
+                              multiple_outputs=False,
+                              name=name)
     else:
         raise NotImplementedError
     if backbone in ['vgg', 'residual']:

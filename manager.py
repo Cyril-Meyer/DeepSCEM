@@ -100,7 +100,13 @@ class Manager:
                   normalization='batchnorm',
                   depth=5,
                   outputs=2,
-                  activation='sigmoid'):
+                  activation='sigmoid',
+                  name=None):
+        if normalization == 'None':
+            normalization = False
+        else:
+            normalization = normalization.lower()
         model = m.create(dimension, architecture.lower(), backbone.lower(), kernel_size, block_filters, block_per_level,
-                         normalization.lower(), depth, outputs, activation.lower())
+                         normalization, depth, outputs, activation.lower(), name)
         self.models.append(model)
+        print(model.name)

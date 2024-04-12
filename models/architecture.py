@@ -11,7 +11,8 @@ class UNet:
                  op_dim=2,
                  dropout=0,
                  pool_size=2,
-                 multiple_outputs=False):
+                 multiple_outputs=False,
+                 name='UNET'):
         self.input_shape = input_shape
         self.depth = depth
         self.output_classes = output_classes
@@ -20,6 +21,7 @@ class UNet:
         self.dropout = dropout
         self.pool_size = pool_size
         self.multiple_outputs = multiple_outputs
+        self.modelname = name
 
         if op_dim == 2: # default
             self.conv = tf.keras.layers.Conv2D
@@ -85,5 +87,5 @@ class UNet:
         else:
             outputs = self.conv(self.output_classes, 1, activation=self.output_activation, name='output')(X)
 
-        model = tf.keras.Model(inputs=inputs, outputs=outputs, name='UNET')
+        model = tf.keras.Model(inputs=inputs, outputs=outputs, name=self.modelname)
         return model
