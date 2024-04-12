@@ -10,6 +10,7 @@ Deep Segmentation for Cellular Electron Microscopy
   * [x] dataset creation
 * [ ] train
   * [ ] model creation
+    * model name
   * [ ] model training
   * [ ] patch generation
   * [ ] loss functions
