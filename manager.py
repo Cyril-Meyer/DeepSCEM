@@ -27,6 +27,12 @@ class Manager:
             sample_info.append((sample, list(self.datasets[name][sample].keys())))
         return sample_info
 
+    def get_models_list(self):
+        models = []
+        for model in self.models:
+            models.append(f'{model.name} {model.input_shape} > {model.output_shape}')
+        return models
+
     def load_dataset(self, filename):
         """
         load a dataset from an existing file.
@@ -89,6 +95,11 @@ class Manager:
         import tensorflow as tf
         model = tf.keras.models.load_model(filename)
         self.models.append(model)
+
+    def save_model(self, index, filename):
+        import tensorflow as tf
+        model = self.models[index]
+        model.save(filename)
 
     def new_model(self,
                   dimension=2,

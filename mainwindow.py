@@ -99,6 +99,14 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.treeWidget_dataset.expandAll()
         self.flag_disable_ui_events = False
 
+    def models_update(self):
+        self.flag_disable_ui_events = True
+        self.listWidget_model.clear()
+        for model in self.manager.get_models_list():
+            self.listWidget_model.addItem(model)
+        self.flag_disable_ui_events = False
+
+
     # ----------------------------------------
     # Widgets information processing (input)
     # ----------------------------------------
@@ -212,14 +220,13 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.dataset_update()
 
     def model_load_clicked(self):
-        '''
         filenames, _ = QFileDialog.getOpenFileNames(self, 'Select models', '', 'Model (*.h5)')
         try:
             for filename in filenames:
                 self.manager.load_model(filename)
+            self.models_update()
         except Exception as e:
-            QMessageBox.critical(self, 'Error', f'Dataset load error.\n{e}')
-        '''
+            QMessageBox.critical(self, 'Error', f'Model load error.\n{e}')
         return
 
     def model_new_clicked(self):
@@ -227,6 +234,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         if dialog.exec() == 1:
             a0, a1, a2, a3, a4, a5, a6, a7, a8, a9 = dialog.get()
             self.manager.new_model(a0, a1, a2, a3, a4, a5, a6, a7, a8, a9)
+            self.models_update()
 
     def model_train_clicked(self):
         return
@@ -235,7 +243,13 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         return
 
     def model_save_clicked(self):
-        return
+        index = self.listWidget_model.currentRow()
+        if index >= 0:
+            filename, _ = QFileDialog.getSaveFileName(self, 'Save model', '', 'Model (*.h5)')
+            if not filename == '':
+                self.manager.save_model(index, filename)
+        else:
+            QMessageBox.information(self, 'Warning', f'No model selected.')
 
     # ----------------------------------------
     # Wizards (multi-step user input)
