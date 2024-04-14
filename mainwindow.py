@@ -21,6 +21,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.manager = manager.Manager()
         self.view_selection = None
         self.flag_disable_ui_events = False
+        # Blocking task: run a blocking task in a thread but keep ui in a "disable" state
+        self.bt_thread = None
+        self.bt_worker = None
+        self.bt_messagebox = None
 
     # ----------------------------------------
     # Debug call (future "about" messagebox)
@@ -330,7 +334,53 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     # Wizards data manager
     # ----------------------------------------
     def sample_add_manager(self, choice_dataset, choice_sample, choice_image, choice_labels):
-        self.manager.add_sample(choice_dataset, choice_sample, choice_image, choice_labels)
+        self.blocking_task(target=self.manager.add_sample,
+                           args=(choice_dataset, choice_sample, choice_image, choice_labels),
+                           message='Loading sample(s)...',
+                           target_end=self.dataset_update)
 
     def dataset_new_manager(self, choice_dataset, choice_number_label):
         self.manager.new_dataset(choice_dataset, choice_number_label)
+
+    # ----------------------------------------
+    # Blocking task
+    # ----------------------------------------
+    def blocking_task(self, target, args, message, message_end=None, target_end=None):
+        # MessageBox
+        self.bt_messagebox = QMessageBox(self)
+        # self.bt_messagebox.setWindowFlags(Qt.CustomizeWindowHint | Qt.WindowTitleHint)
+        self.bt_messagebox.setWindowTitle('DeepSCEM')
+        self.bt_messagebox.setText(message + '\nClosing this message box will not terminate the current operation.')
+        self.bt_messagebox.setVisible(True)
+        # Disable UI (blocking task)
+        self.setEnabled(False)
+        self.bt_messagebox.setEnabled(False)
+        # Thread and Worker
+        self.bt_thread = QThread()
+        self.bt_worker = GenericWorker(target=target, args=args)
+        self.bt_worker.moveToThread(self.bt_thread)
+        self.bt_thread.started.connect(self.bt_worker.run)
+        self.bt_worker.finished.connect(self.bt_thread.quit)
+        self.bt_worker.finished.connect(self.bt_worker.deleteLater)
+        self.bt_thread.finished.connect(self.bt_thread.deleteLater)
+        self.bt_thread.start()
+        # Enable UI back when everything is done
+        if target_end is not None:
+            self.bt_thread.finished.connect(lambda: target_end())
+        self.bt_thread.finished.connect(lambda: self.setEnabled(True))
+        if message_end is not None:
+            self.bt_thread.finished.connect(lambda: self.bt_messagebox.setText(message_end))
+        self.bt_thread.finished.connect(lambda: self.bt_messagebox.setEnabled(True))
+
+
+class GenericWorker(QObject):
+    finished = pyqtSignal()
+
+    def __init__(self, target, args):
+        super().__init__()
+        self.target = target
+        self.args = args
+
+    def run(self):
+        self.target(*self.args)
+        self.finished.emit()
