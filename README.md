@@ -11,20 +11,20 @@ Deep Segmentation for Cellular Electron Microscopy
 * [ ] train
   * [x] model creation
   * [ ] model training
+    * [ ] loss functions
   * [x] patch generation
-  * [ ] loss functions
 * [ ] inference (predict)
-  * [ ] model load
+  * [x] model load
   * [ ] predict
   * [ ] image prediction with overlap
 
 #### User Interface
 
 * CLI
-  * replace current second stage parser with subparser
   * [x] data
   * [ ] train
   * [ ] predict
+  * replace current second stage parser with subparser
 * UI
   * [x] data
   * [x] view
@@ -35,9 +35,9 @@ Deep Segmentation for Cellular Electron Microscopy
 
 * data
   * need to set number of labels in the dataset file attribute
-    * added, but not checked yet.
+    * added, but not checked yet
 * UI
-  * Better handling of long operation (using thread)
+  * Check if `GenericWorker` create major performance issue
 * Current code is prone to user input error
 
 
