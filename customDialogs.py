@@ -3,11 +3,12 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
-from window_newmodelui import Ui_Dialog
+import window_newmodelui
+import window_trainui
 
 
-class DialogNewModel(QtWidgets.QDialog, Ui_Dialog):
-    def __init__(self, *args, obj=None, **kwargs):
+class DialogNewModel(QtWidgets.QDialog, window_newmodelui.Ui_Dialog):
+    def __init__(self, *args, **kwargs):
         super(DialogNewModel, self).__init__(*args, **kwargs)
         self.setupUi(self)
 
@@ -22,3 +23,9 @@ class DialogNewModel(QtWidgets.QDialog, Ui_Dialog):
                 self.spinBox_depth.value(),
                 self.spinBox_outputs.value(),
                 self.comboBox_output_activation.currentText())
+
+
+class DialogTrain(QtWidgets.QDialog, window_trainui.Ui_Dialog):
+    def __init__(self, *args, **kwargs):
+        super(DialogTrain, self).__init__(*args, **kwargs)
+        self.setupUi(self)

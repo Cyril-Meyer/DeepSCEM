@@ -9,7 +9,7 @@ from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
 from mainwindowui import Ui_MainWindow
-from customDialogs import DialogNewModel
+from customDialogs import DialogNewModel, DialogTrain
 
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
@@ -234,7 +234,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         return
 
     def model_new_clicked(self):
-        dialog = DialogNewModel()
+        dialog = DialogNewModel(self)
         if dialog.exec() == 1:
             a0, a1, a2, a3, a4, a5, a6, a7, a8, a9 = dialog.get()
             self.manager.new_model(a0, a1, a2, a3, a4, a5, a6, a7, a8, a9)
@@ -243,12 +243,16 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def model_train_clicked(self):
         index = self.listWidget_model.currentRow()
         if index >= 0:
-            # todo: move in manager module and add dialog.
-            import tensorflow as tf
-            model = self.manager.models[index]
-            optimizer = tf.keras.optimizers.Adam(learning_rate=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-07)
-            model.compile(optimizer=optimizer, loss=tf.keras.losses.MeanSquaredError())
-            return
+
+            dialog = DialogTrain(self)
+            dialog.exec()
+            '''
+            if dialog.exec() == 1:
+                import tensorflow as tf
+                model = self.manager.models[index]
+                optimizer = tf.keras.optimizers.Adam(learning_rate=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-07)
+                model.compile(optimizer=optimizer, loss=tf.keras.losses.MeanSquaredError())
+            '''
         else:
             QMessageBox.information(self, 'Warning', f'No model selected.')
 
