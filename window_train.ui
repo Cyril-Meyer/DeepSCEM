@@ -19,84 +19,84 @@
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_left">
        <item>
-        <widget class="QLabel" name="label">
+        <widget class="QLabel" name="label_model">
          <property name="text">
           <string>Model</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label_2">
+        <widget class="QLabel" name="label_dataset_train">
          <property name="text">
           <string>Train</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label_3">
+        <widget class="QLabel" name="label_dataset_valid">
          <property name="text">
           <string>Valid</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label_4">
+        <widget class="QLabel" name="label_dataset_test">
          <property name="text">
           <string>Test</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label_5">
+        <widget class="QLabel" name="label_loss">
          <property name="text">
           <string>Loss function</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label_7">
+        <widget class="QLabel" name="label_batch_size">
          <property name="text">
           <string>Batch size</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label_6">
+        <widget class="QLabel" name="label_patch_size">
          <property name="text">
           <string>Patch size (Z, Y, X)</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label_8">
+        <widget class="QLabel" name="label_steps_per_epoch">
          <property name="text">
           <string>Steps per epoch</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label_9">
+        <widget class="QLabel" name="label_epochs">
          <property name="text">
           <string>Epochs</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label_10">
+        <widget class="QLabel" name="label_validation_steps">
          <property name="text">
           <string>Validation steps per epoch</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label_11">
+        <widget class="QLabel" name="label_keep_best">
          <property name="text">
           <string/>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label_12">
+        <widget class="QLabel" name="label_early_stopping">
          <property name="text">
           <string/>
          </property>
@@ -107,19 +107,19 @@
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_right">
        <item>
-        <widget class="QComboBox" name="comboBox_2"/>
+        <widget class="QComboBox" name="comboBox_model"/>
        </item>
        <item>
-        <widget class="QComboBox" name="comboBox"/>
+        <widget class="QComboBox" name="comboBox_dataset_train"/>
        </item>
        <item>
-        <widget class="QComboBox" name="comboBox_3"/>
+        <widget class="QComboBox" name="comboBox_dataset_valid"/>
        </item>
        <item>
-        <widget class="QComboBox" name="comboBox_4"/>
+        <widget class="QComboBox" name="comboBox_dataset_test"/>
        </item>
        <item>
-        <widget class="QComboBox" name="comboBox_5">
+        <widget class="QComboBox" name="comboBox_loss">
          <item>
           <property name="text">
            <string>Dice</string>
@@ -133,7 +133,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QSpinBox" name="spinBox_4">
+        <widget class="QSpinBox" name="spinBox_batch_size">
          <property name="minimum">
           <number>1</number>
          </property>
@@ -148,7 +148,7 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
-          <widget class="QSpinBox" name="spinBox_3">
+          <widget class="QSpinBox" name="spinBox_patch_size_z">
            <property name="minimum">
             <number>1</number>
            </property>
@@ -161,7 +161,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QSpinBox" name="spinBox_2">
+          <widget class="QSpinBox" name="spinBox_patch_size_y">
            <property name="minimum">
             <number>1</number>
            </property>
@@ -174,7 +174,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QSpinBox" name="spinBox">
+          <widget class="QSpinBox" name="spinBox_patch_size_x">
            <property name="minimum">
             <number>1</number>
            </property>
@@ -189,7 +189,7 @@
         </layout>
        </item>
        <item>
-        <widget class="QSpinBox" name="spinBox_5">
+        <widget class="QSpinBox" name="spinBox_steps_per_epoch">
          <property name="minimum">
           <number>1</number>
          </property>
@@ -202,7 +202,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QSpinBox" name="spinBox_6">
+        <widget class="QSpinBox" name="spinBox_epochs">
          <property name="minimum">
           <number>1</number>
          </property>
@@ -215,7 +215,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QSpinBox" name="spinBox_7">
+        <widget class="QSpinBox" name="spinBox_validation_steps">
          <property name="maximum">
           <number>16777216</number>
          </property>
@@ -225,7 +225,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QCheckBox" name="checkBox">
+        <widget class="QCheckBox" name="checkBox_keep_best">
          <property name="text">
           <string>Keep best (valid)</string>
          </property>
@@ -235,7 +235,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QCheckBox" name="checkBox_2">
+        <widget class="QCheckBox" name="checkBox_early_stopping">
          <property name="text">
           <string>Early stopping</string>
          </property>
