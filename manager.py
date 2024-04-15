@@ -37,7 +37,7 @@ class Manager:
                 if 'image' in data:
                     image = np.expand_dims(np.array(self.datasets[name][sample][data]), axis=-1)
                 elif 'label' in data:
-                    label.append(np.array(self.datasets[name][sample][data]))
+                    label.append(np.array(self.datasets[name][sample][data], dtype=np.float16))
                 else:
                     raise NotImplementedError
             if image is None or len(label) <= 0:
@@ -125,7 +125,15 @@ class Manager:
 
     def load_model(self, filename):
         import tensorflow as tf
-        model = tf.keras.models.load_model(filename)
+
+        def dice_coef_tf_meyer(y_true, y_pred):
+            y_true_f = tf.reshape(y_true, [-1])
+            y_pred_f = tf.reshape(y_pred, [-1])
+            intersection = tf.reduce_sum(tf.multiply(y_true_f, y_pred_f))
+            smooth = 0.0001
+            return 1 - (2. * intersection + smooth) / (tf.reduce_sum(y_true_f) + tf.reduce_sum(y_pred_f) + smooth)
+
+        model = tf.keras.models.load_model(filename, custom_objects={'dice_coef_tf_meyer': dice_coef_tf_meyer})
         self.models.append(model)
 
     def save_model(self, index, filename):
@@ -195,9 +203,16 @@ class Manager:
         # todo
 
         # Train model
-        optimizer = tf.keras.optimizers.Adam(learning_rate=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-07)
+        optimizer = tf.keras.optimizers.Adam()
         # todo: use loss
-        model.compile(optimizer=optimizer, loss='MSE')
+        def dice_coef_tf_meyer(y_true, y_pred):
+            y_true_f = tf.reshape(y_true, [-1])
+            y_pred_f = tf.reshape(y_pred, [-1])
+            intersection = tf.reduce_sum(tf.multiply(y_true_f, y_pred_f))
+            smooth = 0.0001
+            return 1 - (2. * intersection + smooth) / (tf.reduce_sum(y_true_f) + tf.reduce_sum(y_pred_f) + smooth)
+
+        model.compile(optimizer=optimizer, loss=dice_coef_tf_meyer)
         fit_history = model.fit(gen_train,
                                 steps_per_epoch=steps_per_epoch,
                                 epochs=epochs)
@@ -226,9 +241,13 @@ class Manager:
         # todo: check if use patch and a lot of other options (now working for 2D only in full slice)
         for image in images:
             # todo: this is just for test purpose, not working code
+            image_ = np.copy(image)
             for slice in range(image.shape[0]):
-                pred = image[:, 0:1024, 0:1024, :]
+                pred = image[:, 0:1280, 0:1792, :]
                 pred = model.predict(pred[slice:slice+1])
-                image[slice, 0:1024, 0:1024, 0] = pred[0, :, :, 0] > 0.5
+                image[slice, 0:1280, 0:1792, 0] = pred[0, :, :, 0] > 0.5
                 # import matplotlib.pyplot as plt
                 # plt.imsave('test_pred.png', image[0, :, :, 0])
+            # todo: unsafe
+            data.add_sample_to_dataset(self.datasets[dataset_name], 'xxx', image_, labels=image)
+            return
