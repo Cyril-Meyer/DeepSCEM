@@ -28,7 +28,7 @@ Deep Segmentation for Cellular Electron Microscopy
 * UI
   * [x] data
   * [x] view
-  * [ ] train
+  * [x] train
   * [ ] predict
 
 #### Refactoring
