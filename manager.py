@@ -164,10 +164,18 @@ class Manager:
         is2d = len(model.input_shape) == 4  # (batch_size, y, x, chan=1)
         patch_size = (patch_size_y, patch_size_x) if is2d else (patch_size_z, patch_size_y, patch_size_x)
 
-        # Load all data in RAM
+        # Load all data in RAM (and avoid copy of same data)
         train_img, train_lbl = self.get_dataset_data_for_train(dataset_name_train)
-        valid_img, valid_lbl = self.get_dataset_data_for_train(dataset_name_valid)
-        test_img,  test_lbl  = self.get_dataset_data_for_train(dataset_name_test)
+        if dataset_name_train == dataset_name_valid:
+            valid_img, valid_lbl = train_img, train_lbl
+        else:
+            valid_img, valid_lbl = self.get_dataset_data_for_train(dataset_name_valid)
+        if dataset_name_train == dataset_name_test:
+            test_img, test_lbl = train_img, train_lbl
+        elif dataset_name_valid == dataset_name_test:
+            test_img, test_lbl = valid_img, valid_lbl
+        else:
+            test_img,  test_lbl  = self.get_dataset_data_for_train(dataset_name_test)
 
         # Create patch generators
         gen_train = patch.gen_patch_batch(patch_size, train_img, train_lbl, batch_size=batch_size, augmentation=True)
