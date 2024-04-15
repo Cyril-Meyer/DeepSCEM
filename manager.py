@@ -2,6 +2,7 @@ import numpy as np
 
 import data
 import model as m
+import patch
 
 
 class Manager:
@@ -26,6 +27,25 @@ class Manager:
         for sample in list(self.datasets[name].keys()):
             sample_info.append((sample, list(self.datasets[name][sample].keys())))
         return sample_info
+
+    def get_dataset_data_for_train(self, name):
+        images, labels = [], []
+        for sample in list(self.datasets[name].keys()):
+            image = None
+            label = []
+            for data in list(self.datasets[name][sample].keys()):
+                if 'image' in data:
+                    image = np.expand_dims(np.array(self.datasets[name][sample][data]), axis=-1)
+                elif 'label' in data:
+                    label.append(np.array(self.datasets[name][sample][data]))
+                else:
+                    raise NotImplementedError
+            if image is None or len(label) <= 0:
+                raise ValueError
+            label = np.moveaxis(np.array(label), 0, -1)
+            images.append(image)
+            labels.append(label)
+        return images, labels
 
     def get_models_list(self):
         models = []
@@ -124,9 +144,9 @@ class Manager:
 
     def train_model(self,
                     model_index,
-                    dataset_train,
-                    dataset_valid,
-                    dataset_test,
+                    dataset_name_train,
+                    dataset_name_valid,
+                    dataset_name_test,
                     loss,
                     batch_size,
                     patch_size_z,
@@ -139,5 +159,28 @@ class Manager:
                     early_stop=True):
         import tensorflow as tf
         model = self.models[model_index]
-        # todo: train model
+
+        # Get model information
+        is2d = len(model.input_shape) == 4  # (batch_size, y, x, chan=1)
+        patch_size = (patch_size_y, patch_size_x) if is2d else (patch_size_z, patch_size_y, patch_size_x)
+
+        # Load all data in RAM
+        train_img, train_lbl = self.get_dataset_data_for_train(dataset_name_train)
+        valid_img, valid_lbl = self.get_dataset_data_for_train(dataset_name_valid)
+        test_img,  test_lbl  = self.get_dataset_data_for_train(dataset_name_test)
+
+        # Create patch generators
+        gen_train = patch.gen_patch_batch(patch_size, train_img, train_lbl, batch_size=batch_size, augmentation=True)
+
+        # Create callbacks
+        # todo
+
+        # Train model
+        optimizer = tf.keras.optimizers.Adam(learning_rate=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-07)
+        # todo: use loss
+        model.compile(optimizer=optimizer, loss='MSE')
+        fit_history = model.fit(gen_train,
+                                steps_per_epoch=steps_per_epoch,
+                                epochs=epochs)
+
         self.models[model_index] = model
