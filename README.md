@@ -39,6 +39,8 @@ Deep Segmentation for Cellular Electron Microscopy
 * UI
   * Check if `GenericWorker` create major performance issue
 * Current code is prone to user input error
+* Using a dataset with prediction will cause a `NotImplementedError` during train data loading.
+
 
 
 ## Keywords
