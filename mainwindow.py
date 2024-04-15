@@ -9,7 +9,7 @@ from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
 from mainwindowui import Ui_MainWindow
-from customDialogs import DialogNewModel, DialogTrain
+from customDialogs import DialogNewModel, DialogTrain, DialogPred
 
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
@@ -273,11 +273,22 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             # self.manager.train_model(model_index, a0, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12)
 
     def model_pred_clicked(self):
-        index = self.listWidget_model.currentRow()
-        if index >= 0:
+        if len(self.manager.get_datasets_index()) <= 0:
+            QMessageBox.information(self, 'Warning', f'No dataset to select.')
             return
-        else:
-            QMessageBox.information(self, 'Warning', f'No model selected.')
+        if len(self.manager.get_models_list()) <= 0:
+            QMessageBox.information(self, 'Warning', f'No model to select.')
+            return
+
+        dialog = DialogPred(self.manager.get_datasets_index(), self.manager.get_models_list(), self)
+        if dialog.exec() == 1:
+            print(dialog.get())
+            '''
+            model_index, a0, a1, a2, a3, a4, a5, a6, a7, a8 = dialog.get()
+            self.blocking_task(target=self.manager.pred_model,
+                               args=(model_index, a0, a1, a2, a3, a4, a5, a6, a7, a8),
+                               message='Training model...')
+            '''
 
     # ----------------------------------------
     # Wizards (multi-step user input)

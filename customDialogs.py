@@ -5,6 +5,7 @@ from PyQt5.QtWidgets import *
 
 import window_newmodelui
 import window_trainui
+import window_predui
 
 
 class DialogNewModel(QtWidgets.QDialog, window_newmodelui.Ui_Dialog):
@@ -50,3 +51,24 @@ class DialogTrain(QtWidgets.QDialog, window_trainui.Ui_Dialog):
                 self.spinBox_validation_steps.value(),
                 self.checkBox_keep_best.isChecked(),
                 self.checkBox_early_stopping.isChecked())
+
+
+class DialogPred(QtWidgets.QDialog, window_predui.Ui_Dialog):
+    def __init__(self, datasets, models, *args, **kwargs):
+        super(DialogPred, self).__init__(*args, **kwargs)
+        self.setupUi(self)
+
+        self.comboBox_model.addItems(models)
+        self.comboBox_dataset.addItems(datasets)
+
+    def get(self):
+        return (self.comboBox_model.currentIndex(),
+                self.comboBox_dataset.currentText(),
+                self.spinBox_batch_size.value(),
+                self.checkBox_full_image.isChecked(),
+                self.spinBox_patch_size_z.value(),
+                self.spinBox_patch_size_y.value(),
+                self.spinBox_patch_size_x.value(),
+                self.checkBox_overlapping.isChecked(),
+                self.checkBox_threshold.isChecked(),
+                self.spinBox_threshold.value())
