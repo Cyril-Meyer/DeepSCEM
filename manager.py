@@ -47,6 +47,18 @@ class Manager:
             labels.append(label)
         return images, labels
 
+    def get_dataset_data_for_pred(self, name):
+        images = []
+        for sample in list(self.datasets[name].keys()):
+            image = None
+            for data in list(self.datasets[name][sample].keys()):
+                if 'image' in data:
+                    image = np.expand_dims(np.array(self.datasets[name][sample][data]), axis=-1)
+            if image is None:
+                raise ValueError
+            images.append(image)
+        return images
+
     def get_models_list(self):
         models = []
         for model in self.models:
@@ -140,7 +152,6 @@ class Manager:
         model = m.create(dimension, architecture.lower(), backbone.lower(), kernel_size, block_filters, block_per_level,
                          normalization, depth, outputs, activation.lower(), name)
         self.models.append(model)
-        print(model.name)
 
     def train_model(self,
                     model_index,
@@ -192,3 +203,32 @@ class Manager:
                                 epochs=epochs)
 
         self.models[model_index] = model
+
+    def pred_model(self,
+                   model_index,
+                   dataset_name,
+                   batch_size,
+                   full_image,
+                   patch_size_z,
+                   patch_size_y,
+                   patch_size_x,
+                   overlapping,
+                   threshold=None):
+        import tensorflow as tf
+        model = self.models[model_index]
+        # Get model information
+        is2d = len(model.input_shape) == 4  # (batch_size, y, x, chan=1)
+        # patch_size = (patch_size_y, patch_size_x) if is2d else (patch_size_z, patch_size_y, patch_size_x)
+
+        # Load all data in RAM (and avoid copy of same data)
+        images = self.get_dataset_data_for_pred(dataset_name)
+
+        # todo: check if use patch and a lot of other options (now working for 2D only in full slice)
+        for image in images:
+            # todo: this is just for test purpose, not working code
+            for slice in range(image.shape[0]):
+                pred = image[:, 0:1024, 0:1024, :]
+                pred = model.predict(pred[slice:slice+1])
+                image[slice, 0:1024, 0:1024, 0] = pred[0, :, :, 0] > 0.5
+                # import matplotlib.pyplot as plt
+                # plt.imsave('test_pred.png', image[0, :, :, 0])
