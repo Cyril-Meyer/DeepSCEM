@@ -241,8 +241,13 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         dialog = DialogNewModel(self)
         if dialog.exec() == 1:
             a0, a1, a2, a3, a4, a5, a6, a7, a8, a9 = dialog.get()
-            self.manager.new_model(a0, a1, a2, a3, a4, a5, a6, a7, a8, a9)
-            self.models_update()
+            self.blocking_task(target=self.manager.new_model,
+                               args=(a0, a1, a2, a3, a4, a5, a6, a7, a8, a9),
+                               message='Creating model...',
+                               target_end=self.models_update,
+                               wait_end=False)
+            # self.manager.new_model(a0, a1, a2, a3, a4, a5, a6, a7, a8, a9)
+            # self.models_update()
 
     def model_save_clicked(self):
         index = self.listWidget_model.currentRow()
@@ -282,13 +287,11 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         dialog = DialogPred(self.manager.get_datasets_index(), self.manager.get_models_list(), self)
         if dialog.exec() == 1:
-            print(dialog.get())
-            '''
-            model_index, a0, a1, a2, a3, a4, a5, a6, a7, a8 = dialog.get()
+            model_index, a0, a1, a2, a3, a4, a5, a6, thres, thres_val = dialog.get()
             self.blocking_task(target=self.manager.pred_model,
-                               args=(model_index, a0, a1, a2, a3, a4, a5, a6, a7, a8),
-                               message='Training model...')
-            '''
+                               args=(model_index, a0, a1, a2, a3, a4, a5, a6,
+                                     thres_val if thres else None),
+                               message='Predicting...')
 
     # ----------------------------------------
     # Wizards (multi-step user input)
