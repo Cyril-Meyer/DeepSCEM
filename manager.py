@@ -121,3 +121,23 @@ class Manager:
                          normalization, depth, outputs, activation.lower(), name)
         self.models.append(model)
         print(model.name)
+
+    def train_model(self,
+                    model_index,
+                    dataset_train,
+                    dataset_valid,
+                    dataset_test,
+                    loss,
+                    batch_size,
+                    patch_size_z,
+                    patch_size_y,
+                    patch_size_x,
+                    steps_per_epoch,
+                    epochs,
+                    validation_steps,
+                    keep_best=True,
+                    early_stop=True):
+        import tensorflow as tf
+        model = self.models[model_index]
+        # todo: train model
+        self.models[model_index] = model

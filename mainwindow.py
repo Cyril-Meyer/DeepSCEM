@@ -110,7 +110,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.listWidget_model.addItem(model)
         self.flag_disable_ui_events = False
 
-
     # ----------------------------------------
     # Widgets information processing (input)
     # ----------------------------------------
@@ -227,8 +226,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         filenames, _ = QFileDialog.getOpenFileNames(self, 'Select models', '', 'Model (*.h5)')
         try:
             for filename in filenames:
-                self.manager.load_model(filename)
-            self.models_update()
+                self.blocking_task(target=self.manager.load_model,
+                                   args=(filename,),
+                                   message='Loading model...',
+                                   target_end=self.models_update)
+                # self.manager.load_model(filename)
+            # self.models_update()
         except Exception as e:
             QMessageBox.critical(self, 'Error', f'Model load error.\n{e}')
         return
@@ -240,35 +243,38 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.manager.new_model(a0, a1, a2, a3, a4, a5, a6, a7, a8, a9)
             self.models_update()
 
-    def model_train_clicked(self):
-        index = self.listWidget_model.currentRow()
-        if index >= 0:
-
-            dialog = DialogTrain(self)
-            dialog.exec()
-            '''
-            if dialog.exec() == 1:
-                import tensorflow as tf
-                model = self.manager.models[index]
-                optimizer = tf.keras.optimizers.Adam(learning_rate=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-07)
-                model.compile(optimizer=optimizer, loss=tf.keras.losses.MeanSquaredError())
-            '''
-        else:
-            QMessageBox.information(self, 'Warning', f'No model selected.')
-
-    def model_pred_clicked(self):
-        index = self.listWidget_model.currentRow()
-        if index >= 0:
-            return
-        else:
-            QMessageBox.information(self, 'Warning', f'No model selected.')
-
     def model_save_clicked(self):
         index = self.listWidget_model.currentRow()
         if index >= 0:
             filename, _ = QFileDialog.getSaveFileName(self, 'Save model', '', 'Model (*.h5)')
             if not filename == '':
                 self.manager.save_model(index, filename)
+        else:
+            QMessageBox.information(self, 'Warning', f'No model selected.')
+
+    # ----------------------------------------
+    # User events forms
+    # ----------------------------------------
+    def model_train_clicked(self):
+        if len(self.manager.get_datasets_index()) <= 0:
+            QMessageBox.information(self, 'Warning', f'No dataset to select.')
+            return
+        if len(self.manager.get_models_list()) <= 0:
+            QMessageBox.information(self, 'Warning', f'No model to select.')
+            return
+
+        dialog = DialogTrain(self.manager.get_datasets_index(), self.manager.get_models_list(), self)
+        if dialog.exec() == 1:
+            model_index, a0, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12 = dialog.get()
+            self.blocking_task(target=self.manager.train_model,
+                               args=(model_index, a0, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12),
+                               message='Training model...')
+            # self.manager.train_model(model_index, a0, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12)
+
+    def model_pred_clicked(self):
+        index = self.listWidget_model.currentRow()
+        if index >= 0:
+            return
         else:
             QMessageBox.information(self, 'Warning', f'No model selected.')
 
@@ -335,7 +341,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.manager.remove_dataset(choice_dataset)
 
     # ----------------------------------------
-    # Wizards data manager
+    # Wizards and forms manager
     # ----------------------------------------
     def sample_add_manager(self, choice_dataset, choice_sample, choice_image, choice_labels):
         self.blocking_task(target=self.manager.add_sample,
@@ -350,6 +356,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     # Blocking task
     # ----------------------------------------
     def blocking_task(self, target, args, message, message_end=None, target_end=None):
+        if message_end is None:
+            message_end = message + '\nDone !'
         # MessageBox
         self.bt_messagebox = QMessageBox(self)
         # self.bt_messagebox.setWindowFlags(Qt.CustomizeWindowHint | Qt.WindowTitleHint)
@@ -372,8 +380,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         if target_end is not None:
             self.bt_thread.finished.connect(lambda: target_end())
         self.bt_thread.finished.connect(lambda: self.setEnabled(True))
-        if message_end is not None:
-            self.bt_thread.finished.connect(lambda: self.bt_messagebox.setText(message_end))
+        self.bt_thread.finished.connect(lambda: self.bt_messagebox.setText(message_end))
         self.bt_thread.finished.connect(lambda: self.bt_messagebox.setEnabled(True))
 
 
