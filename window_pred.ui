@@ -26,7 +26,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label_dataset_train">
+        <widget class="QLabel" name="label_dataset">
          <property name="text">
           <string>Dataset</string>
          </property>
@@ -75,7 +75,7 @@
         <widget class="QComboBox" name="comboBox_model"/>
        </item>
        <item>
-        <widget class="QComboBox" name="comboBox_dataset_train"/>
+        <widget class="QComboBox" name="comboBox_dataset"/>
        </item>
        <item>
         <widget class="QSpinBox" name="spinBox_batch_size">
