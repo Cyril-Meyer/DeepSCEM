@@ -229,7 +229,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 self.blocking_task(target=self.manager.load_model,
                                    args=(filename,),
                                    message='Loading model...',
-                                   target_end=self.models_update)
+                                   target_end=self.models_update,
+                                   wait_end=False)
                 # self.manager.load_model(filename)
             # self.models_update()
         except Exception as e:
@@ -347,7 +348,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.blocking_task(target=self.manager.add_sample,
                            args=(choice_dataset, choice_sample, choice_image, choice_labels),
                            message='Loading sample(s)...',
-                           target_end=self.dataset_update)
+                           target_end=self.dataset_update,
+                           wait_end=False)
 
     def dataset_new_manager(self, choice_dataset, choice_number_label):
         self.manager.new_dataset(choice_dataset, choice_number_label)
@@ -355,7 +357,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     # ----------------------------------------
     # Blocking task
     # ----------------------------------------
-    def blocking_task(self, target, args, message, message_end=None, target_end=None):
+    def blocking_task(self, target, args, message, message_end=None, target_end=None, wait_end=True):
         if message_end is None:
             message_end = message + '\nDone !'
         # MessageBox
@@ -382,6 +384,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.bt_thread.finished.connect(lambda: self.setEnabled(True))
         self.bt_thread.finished.connect(lambda: self.bt_messagebox.setText(message_end))
         self.bt_thread.finished.connect(lambda: self.bt_messagebox.setEnabled(True))
+        if not wait_end:
+            self.bt_thread.finished.connect(lambda: self.bt_messagebox.setVisible(False))
 
 
 class GenericWorker(QObject):
