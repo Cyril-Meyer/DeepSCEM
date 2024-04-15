@@ -167,3 +167,5 @@ working_dir/
 mainwindow_rc.py
 mainwindowui.py
 window_newmodelui.py
+window_trainui.py
+window_predui.py
