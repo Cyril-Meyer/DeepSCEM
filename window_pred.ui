@@ -33,30 +33,16 @@
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label_batch_size">
-         <property name="text">
-          <string>Batch size</string>
-         </property>
-        </widget>
-       </item>
-       <item>
         <widget class="QLabel" name="label_patch_size_whole_slide">
          <property name="text">
-          <string>Patch size</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_patch_size">
-         <property name="text">
-          <string>(Z, Y, X)</string>
+          <string>Patch size (Z, Y, X)</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_overlapping">
          <property name="text">
-          <string/>
+          <string>Z ignored if 2D model</string>
          </property>
         </widget>
        </item>
@@ -76,26 +62,6 @@
        </item>
        <item>
         <widget class="QComboBox" name="comboBox_dataset"/>
-       </item>
-       <item>
-        <widget class="QSpinBox" name="spinBox_batch_size">
-         <property name="minimum">
-          <number>1</number>
-         </property>
-         <property name="maximum">
-          <number>65535</number>
-         </property>
-         <property name="value">
-          <number>1</number>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="checkBox_full_image">
-         <property name="text">
-          <string>Full image</string>
-         </property>
-        </widget>
        </item>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_patch_size">
@@ -151,15 +117,18 @@
         </widget>
        </item>
        <item>
-        <widget class="QSpinBox" name="spinBox_threshold">
+        <widget class="QDoubleSpinBox" name="doubleSpinBox_threshold">
          <property name="minimum">
-          <number>-100</number>
+          <double>-100.000000000000000</double>
          </property>
          <property name="maximum">
-          <number>100</number>
+          <double>100.000000000000000</double>
+         </property>
+         <property name="singleStep">
+          <double>0.100000000000000</double>
          </property>
          <property name="value">
-          <number>5</number>
+          <double>0.500000000000000</double>
          </property>
         </widget>
        </item>
@@ -201,8 +170,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>248</x>
-     <y>254</y>
+     <x>257</x>
+     <y>349</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -217,8 +186,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>316</x>
-     <y>260</y>
+     <x>325</x>
+     <y>349</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>

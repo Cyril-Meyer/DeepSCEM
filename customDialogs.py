@@ -64,11 +64,9 @@ class DialogPred(QtWidgets.QDialog, window_predui.Ui_Dialog):
     def get(self):
         return (self.comboBox_model.currentIndex(),
                 self.comboBox_dataset.currentText(),
-                self.spinBox_batch_size.value(),
-                self.checkBox_full_image.isChecked(),
                 self.spinBox_patch_size_z.value(),
                 self.spinBox_patch_size_y.value(),
                 self.spinBox_patch_size_x.value(),
                 self.checkBox_overlapping.isChecked(),
                 self.checkBox_threshold.isChecked(),
-                self.spinBox_threshold.value())
+                self.doubleSpinBox_threshold.value())
