@@ -12,6 +12,8 @@ Deep Segmentation for Cellular Electron Microscopy
   * [x] model creation
   * [ ] model training
     * [ ] loss functions
+    * [ ] metrics
+    * [ ] valid / test output
   * [x] patch generation
 * [x] inference (predict)
   * [x] model load
