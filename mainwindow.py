@@ -287,11 +287,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         dialog = DialogPred(self.manager.get_datasets_index(), self.manager.get_models_list(), self)
         if dialog.exec() == 1:
-            model_index, a0, a1, a2, a3, a4, a5, a6, thres, thres_val = dialog.get()
+            model_index, a0, a1, a2, a3, a4, thres, thres_val = dialog.get()
             self.blocking_task(target=self.manager.pred_model,
-                               args=(model_index, a0, a1, a2, a3, a4, a5, a6,
+                               args=(model_index, a0, a1, a2, a3, a4,
                                      thres_val if thres else None),
-                               message='Predicting...')
+                               message='Predicting...',
+                               target_end=self.models_update)
 
     # ----------------------------------------
     # Wizards (multi-step user input)
