@@ -69,6 +69,17 @@ def add_sample_to_dataset(dataset, name, image, labels=None):
     dataset.flush()
 
 
+def add_prediction_to_dataset(dataset, name, image, prediction):
+    sample_group = dataset.create_group(name)
+    sample_group.attrs['shape'] = image.shape
+    sample_group.create_dataset('image', data=image)
+
+    for i in range(prediction.shape[-1]):
+        sample_group.create_dataset(f'prediction_{i:04}', data=prediction[:, :, :, i])
+
+    dataset.flush()
+
+
 def remove_sample_from_dataset(dataset, name):
     del dataset[name]
     dataset.flush()

@@ -1,8 +1,10 @@
+import time
 import numpy as np
 
 import data
 import model as m
 import patch
+import pred
 
 
 class Manager:
@@ -46,18 +48,6 @@ class Manager:
             images.append(image)
             labels.append(label)
         return images, labels
-
-    def get_dataset_data_for_pred(self, name):
-        images = []
-        for sample in list(self.datasets[name].keys()):
-            image = None
-            for data in list(self.datasets[name][sample].keys()):
-                if 'image' in data:
-                    image = np.expand_dims(np.array(self.datasets[name][sample][data]), axis=-1)
-            if image is None:
-                raise ValueError
-            images.append(image)
-        return images
 
     def get_models_list(self):
         models = []
@@ -222,8 +212,6 @@ class Manager:
     def pred_model(self,
                    model_index,
                    dataset_name,
-                   batch_size,
-                   full_image,
                    patch_size_z,
                    patch_size_y,
                    patch_size_x,
@@ -231,23 +219,39 @@ class Manager:
                    threshold=None):
         import tensorflow as tf
         model = self.models[model_index]
-        # Get model information
+        dataset = self.datasets[dataset_name]
+
+        # Get model information and set options
         is2d = len(model.input_shape) == 4  # (batch_size, y, x, chan=1)
-        # patch_size = (patch_size_y, patch_size_x) if is2d else (patch_size_z, patch_size_y, patch_size_x)
+        patch_size = (1, patch_size_y, patch_size_x) if is2d else (patch_size_z, patch_size_y, patch_size_x)
+        overlap = 1
+        if overlapping:
+            overlap = (1, 2, 2) if is2d else (2, 2, 2)
 
-        # Load all data in RAM (and avoid copy of same data)
-        images = self.get_dataset_data_for_pred(dataset_name)
+        # Prediction
+        if is2d:
+            def predict(x):
+                tf.keras.backend.clear_session()
+                x = x[0]
+                return np.expand_dims(model.predict(x, verbose=0), 0)
+        else:
+            def predict(x):
+                tf.keras.backend.clear_session()
+                return model.predict(x, verbose=0)
 
-        # todo: check if use patch and a lot of other options (now working for 2D only in full slice)
-        for image in images:
-            # todo: this is just for test purpose, not working code
-            image_ = np.copy(image)
-            for slice in range(image.shape[0]):
-                pred = image[:, 0:1280, 0:1792, :]
-                pred = model.predict(pred[slice:slice+1])
-                image[slice, 0:1280, 0:1792, 0] = pred[0, :, :, 0] > 0.5
-                # import matplotlib.pyplot as plt
-                # plt.imsave('test_pred.png', image[0, :, :, 0])
-            # todo: unsafe
-            data.add_sample_to_dataset(self.datasets[dataset_name], 'xxx', image_, labels=image)
-            return
+        # Load data, predict and store result
+        for sample in list(dataset.keys()):
+            pred_name = f'{sample} pred_' + f'{time.time():.4f}'.replace('.', '_')
+            image = np.array(dataset[sample]['image'])
+            prediction = pred.infer_pad(image,
+                                        patch_size,
+                                        predict,
+                                        overlap=overlap,
+                                        verbose=1)
+            if threshold is not None:
+                prediction = (prediction > threshold).astype(np.uint8)
+            data.add_prediction_to_dataset(dataset, pred_name, dataset[sample]['image'], prediction)
+            '''
+            for i in range(prediction.shape[-1]):
+                dataset[sample].create_dataset(f'prediction_{i:04}', data=prediction[:, :, :, i])
+            '''
