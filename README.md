@@ -38,7 +38,6 @@ Deep Segmentation for Cellular Electron Microscopy
     * added, but not checked yet
 * pred
   * use infer without pad when it's possible
-  * use "virtual" dataset when image is a copy in prediction
 * UI
   * Check if `GenericWorker` create major performance issue
 * Current code is prone to user input error

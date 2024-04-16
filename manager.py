@@ -239,9 +239,12 @@ class Manager:
                 tf.keras.backend.clear_session()
                 return model.predict(x, verbose=0)
 
+        # Create output dataset
+        pred_dataset_name = f'{dataset_name} pred_' + f'{time.time():.4f}'.replace('.', '_')
+        self.new_dataset(pred_dataset_name, labels=dataset.attrs['labels'])
+
         # Load data, predict and store result
         for sample in list(dataset.keys()):
-            pred_name = f'{sample} pred_' + f'{time.time():.4f}'.replace('.', '_')
             image = np.array(dataset[sample]['image'])
             prediction = pred.infer_pad(image,
                                         patch_size,
@@ -250,8 +253,5 @@ class Manager:
                                         verbose=1)
             if threshold is not None:
                 prediction = (prediction > threshold).astype(np.uint8)
-            data.add_prediction_to_dataset(dataset, pred_name, dataset[sample]['image'], prediction)
-            '''
-            for i in range(prediction.shape[-1]):
-                dataset[sample].create_dataset(f'prediction_{i:04}', data=prediction[:, :, :, i])
-            '''
+
+            data.add_prediction_to_dataset(self.datasets[pred_dataset_name], sample, dataset[sample]['image'], prediction)
