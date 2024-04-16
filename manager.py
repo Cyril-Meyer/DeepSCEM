@@ -3,8 +3,8 @@ import numpy as np
 
 import data
 import model as m
-import patch
 import pred
+import train
 
 
 class Manager:
@@ -186,8 +186,9 @@ class Manager:
         else:
             test_img,  test_lbl  = self.get_dataset_data_for_train(dataset_name_test)
 
-        # Create patch generators
-        gen_train = patch.gen_patch_batch(patch_size, train_img, train_lbl, batch_size=batch_size, augmentation=True)
+        # Train model
+        loss = train.get_loss(loss, multiclass=None)
+        train.train_model(model, (train_img, train_lbl), (valid_img, valid_lbl), )
 
         # Create callbacks
         # todo

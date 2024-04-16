@@ -4,8 +4,13 @@ import patch
 
 
 def get_loss(name, multiclass=False):
-    # todo
-    raise NotImplementedError
+    name = name.upper()
+    if name == 'DICE':
+        dice_coef_multi if multiclass else dice_coef
+    elif name == 'CROSSENTROPY':
+        raise NotImplementedError
+    else:
+        raise NotImplementedError
 
 
 def train_model(model, dataset_train, dataset_valid, loss,
