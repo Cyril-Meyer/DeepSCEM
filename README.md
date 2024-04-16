@@ -13,10 +13,10 @@ Deep Segmentation for Cellular Electron Microscopy
   * [ ] model training
     * [ ] loss functions
   * [x] patch generation
-* [ ] inference (predict)
+* [x] inference (predict)
   * [x] model load
-  * [ ] predict
-  * [ ] image prediction with overlap
+  * [x] predict
+  * [x] image prediction with overlap
 
 #### User Interface
 
@@ -29,7 +29,7 @@ Deep Segmentation for Cellular Electron Microscopy
   * [x] data
   * [x] view
   * [x] train
-  * [ ] predict
+  * [x] predict
 
 #### Refactoring
 
