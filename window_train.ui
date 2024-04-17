@@ -95,6 +95,20 @@
          </property>
         </widget>
        </item>
+       <item>
+        <widget class="QLabel" name="label_augmentation_rot">
+         <property name="text">
+          <string>Augmentation (rotation)</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_augmentation_flip">
+         <property name="text">
+          <string>Augmentation (flip)</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </item>
      <item>
@@ -140,7 +154,7 @@
          <item>
           <widget class="QSpinBox" name="spinBox_patch_size_z">
            <property name="minimum">
-            <number>1</number>
+            <number>32</number>
            </property>
            <property name="maximum">
             <number>65535</number>
@@ -156,7 +170,7 @@
          <item>
           <widget class="QSpinBox" name="spinBox_patch_size_y">
            <property name="minimum">
-            <number>1</number>
+            <number>32</number>
            </property>
            <property name="maximum">
             <number>65535</number>
@@ -172,7 +186,7 @@
          <item>
           <widget class="QSpinBox" name="spinBox_patch_size_x">
            <property name="minimum">
-            <number>1</number>
+            <number>32</number>
            </property>
            <property name="maximum">
             <number>65535</number>
@@ -239,6 +253,71 @@
           <string>Early stopping</string>
          </property>
         </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_aug_rot">
+         <item>
+          <widget class="QCheckBox" name="checkBox_rot_z">
+           <property name="text">
+            <string>Z</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="checkBox_rot_y">
+           <property name="text">
+            <string>Y</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="checkBox_rot_x">
+           <property name="text">
+            <string>X</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_aug_flip">
+         <item>
+          <widget class="QCheckBox" name="checkBox_flip_z">
+           <property name="text">
+            <string>Z</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="checkBox_flip_y">
+           <property name="text">
+            <string>Y</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="checkBox_flip_x">
+           <property name="text">
+            <string>X</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
       </layout>
      </item>
