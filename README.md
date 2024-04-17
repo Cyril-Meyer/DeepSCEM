@@ -54,17 +54,23 @@ Definitions for keywords used in this documentation.
 * [x] data
   * [x] data I/O
   * [x] dataset creation
-* [ ] train
+* [x] train
   * [x] model creation
-  * [ ] model training
-    * [ ] loss functions
-    * [ ] metrics
-    * [ ] valid / test output
-  * [x] patch generation
+  * [x] model training
+    * [x] patch generation
 * [x] inference (predict)
   * [x] model load
   * [x] predict
   * [x] image prediction with overlap
+* [ ] test
+  * [ ] metrics
+
+##### Tested
+* [x] 2D binary
+* [x] 2D multiclass
+* [ ] 3D binary
+* [ ] 3D multiclass
+
 
 #### User Interface
 
@@ -87,6 +93,7 @@ Definitions for keywords used in this documentation.
 * train
   * number of labels in data and model can be different and cause problems
   * validation steps set to 0 is not tested yet  
+  * better early stopping parameters
 * pred
   * use infer without pad when it's possible
 * UI
