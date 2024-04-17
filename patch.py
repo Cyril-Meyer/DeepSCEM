@@ -33,7 +33,9 @@ def create_label_indexes(label, patch_size):
     return label_indexes
 
 
-def gen_patch_2d_batch(patch_size, image, label, batch_size, augmentation, label_indexes, label_indexes_prop):
+def gen_patch_2d_batch(patch_size, image, label, batch_size,
+                       augmentation_rotation, augmentation_flip,
+                       label_indexes, label_indexes_prop):
     n_channel = image[0].shape[-1]
     n_label = label[0].shape[-1]
     image_dtype = image[0].dtype
@@ -70,12 +72,13 @@ def gen_patch_2d_batch(patch_size, image, label, batch_size, augmentation, label
             batch_image[i, :, :, :] = img[z, y:y + patch_size_y, x:x + patch_size_x, :]
             batch_label[i, :, :, :] = lbl[z, y:y + patch_size_y, x:x + patch_size_x, :]
 
-            if augmentation:
+            if augmentation_rotation:
                 if patch_size_y == patch_size_x:
                     rot = randint(0, 3)
                     batch_image[i, :, :] = np.rot90(batch_image[i, :, :], rot)
                     batch_label[i, :, :] = np.rot90(batch_label[i, :, :], rot)
 
+            if augmentation_flip:
                 if randint(0, 1) == 1:
                     batch_image[i, :, :] = np.fliplr(batch_image[i, :, :])
                     batch_label[i, :, :] = np.fliplr(batch_label[i, :, :])
@@ -87,7 +90,7 @@ def gen_patch_2d_batch(patch_size, image, label, batch_size, augmentation, label
         yield batch_image, batch_label
 
 
-def gen_patch_3d_batch(patch_size, image, label, batch_size, augmentation, label_indexes, label_indexes_prop):
+def gen_patch_3d_batch(patch_size, image, label, batch_size, augmentation_rotation, augmentation_flip, label_indexes, label_indexes_prop):
     n_channel = image[0].shape[-1]
     n_label = label[0].shape[-1]
     image_dtype = image[0].dtype
@@ -125,7 +128,7 @@ def gen_patch_3d_batch(patch_size, image, label, batch_size, augmentation, label
             batch_image[i, :, :, :, :] = img[z:z + patch_size_z, y:y + patch_size_y, x:x + patch_size_x, :]
             batch_label[i, :, :, :, :] = lbl[z:z + patch_size_z, y:y + patch_size_y, x:x + patch_size_x, :]
 
-            if augmentation:
+            if augmentation_rotation:
                 if patch_size_z == patch_size_x:
                     rot = randint(0, 3)
                     batch_image[i, :, :] = np.rot90(batch_image[i, :, :, :], rot, axes=(0, 2))
@@ -139,6 +142,7 @@ def gen_patch_3d_batch(patch_size, image, label, batch_size, augmentation, label
                     batch_image[i, :, :] = np.rot90(batch_image[i, :, :, :], rot, axes=(1, 2))
                     batch_label[i, :, :] = np.rot90(batch_label[i, :, :, :], rot, axes=(1, 2))
 
+            if augmentation_flip:
                 if randint(0, 1) == 1:
                     batch_image[i, :, :, :] = np.flip(batch_image[i, :, :, :], 0)
                     batch_label[i, :, :, :] = np.flip(batch_label[i, :, :, :], 0)
@@ -154,7 +158,7 @@ def gen_patch_3d_batch(patch_size, image, label, batch_size, augmentation, label
         yield batch_image, batch_label
 
 
-def gen_patch_batch(patch_size, image, label, batch_size=32, augmentation=True, label_indexes=None,
+def gen_patch_batch(patch_size, image, label, batch_size=32, augmentation_rotation=False, augmentation_flip=True, label_indexes=None,
                     label_indexes_prop=1.0):
     gen = None
     if not (len(patch_size) == 2 or len(patch_size) == 3):
@@ -162,9 +166,13 @@ def gen_patch_batch(patch_size, image, label, batch_size=32, augmentation=True, 
     if not check_valid(image, label):
         raise ValueError
     if len(patch_size) == 2:
-        gen = gen_patch_2d_batch(patch_size, image, label, batch_size, augmentation, label_indexes, label_indexes_prop)
+        gen = gen_patch_2d_batch(patch_size, image, label, batch_size,
+                                 augmentation_rotation, augmentation_flip,
+                                 label_indexes, label_indexes_prop)
     elif len(patch_size) == 3:
-        gen = gen_patch_3d_batch(patch_size, image, label, batch_size, augmentation, label_indexes, label_indexes_prop)
+        gen = gen_patch_3d_batch(patch_size, image, label, batch_size,
+                                 augmentation_rotation, augmentation_flip,
+                                 label_indexes, label_indexes_prop)
     else:
         raise ValueError
     return gen

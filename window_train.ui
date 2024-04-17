@@ -96,16 +96,16 @@
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label_augmentation_rot">
+        <widget class="QLabel" name="label_augmentation_1">
          <property name="text">
-          <string>Augmentation (rotation)</string>
+          <string>Augmentations</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label_augmentation_flip">
+        <widget class="QLabel" name="label_augmentation_2">
          <property name="text">
-          <string>Augmentation (flip)</string>
+          <string/>
          </property>
         </widget>
        </item>
@@ -255,69 +255,24 @@
         </widget>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_aug_rot">
-         <item>
-          <widget class="QCheckBox" name="checkBox_rot_z">
-           <property name="text">
-            <string>Z</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="checkBox_rot_y">
-           <property name="text">
-            <string>Y</string>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="checkBox_rot_x">
-           <property name="text">
-            <string>X</string>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-        </layout>
+        <widget class="QCheckBox" name="checkBox_rot">
+         <property name="text">
+          <string>Rotation (isotropic dataset)</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_aug_flip">
-         <item>
-          <widget class="QCheckBox" name="checkBox_flip_z">
-           <property name="text">
-            <string>Z</string>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="checkBox_flip_y">
-           <property name="text">
-            <string>Y</string>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="checkBox_flip_x">
-           <property name="text">
-            <string>X</string>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-        </layout>
+        <widget class="QCheckBox" name="checkBox_flip">
+         <property name="text">
+          <string>Flip</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>

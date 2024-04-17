@@ -164,7 +164,8 @@ class Manager:
                     epochs,
                     validation_steps,
                     keep_best=True,
-                    early_stop=True):
+                    early_stop=True,
+                    augmentations=(False, False)):
         import tensorflow as tf
         model = self.models[model_index]
 
@@ -202,7 +203,7 @@ class Manager:
         loss = train.get_loss(loss, n_classes)
         model = train.train_model(model, (train_img, train_lbl), (valid_img, valid_lbl),
                                   loss, batch_size, patch_size, steps_per_epoch, epochs,
-                                  validation_steps, callbacks, augmentation=is2d)
+                                  validation_steps, callbacks, augmentations)
 
         self.models[model_index] = model
 

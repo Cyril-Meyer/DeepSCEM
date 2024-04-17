@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>300</height>
+    <height>311</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -170,6 +170,9 @@
        </item>
        <item>
         <widget class="QComboBox" name="comboBox_normalization">
+         <property name="currentIndex">
+          <number>1</number>
+         </property>
          <item>
           <property name="text">
            <string>None</string>
