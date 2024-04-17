@@ -271,9 +271,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         dialog = DialogTrain(self.manager.get_datasets_index(), self.manager.get_models_list(), self)
         if dialog.exec() == 1:
-            model_index, a0, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12 = dialog.get()
+            model_index, a0, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11 = dialog.get()
             self.blocking_task(target=self.manager.train_model,
-                               args=(model_index, a0, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12),
+                               args=(model_index, a0, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11),
                                message='Training model...')
             # self.manager.train_model(model_index, a0, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12)
 
@@ -293,6 +293,16 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                                      thres_val if thres else None),
                                message='Predicting...',
                                target_end=self.dataset_update)
+
+    def model_eval_clicked(self):
+        if len(self.manager.get_datasets_index()) <= 0:
+            QMessageBox.information(self, 'Warning', f'No dataset to select.')
+            return
+        if len(self.manager.get_models_list()) <= 0:
+            QMessageBox.information(self, 'Warning', f'No model to select.')
+            return
+
+        QMessageBox.critical(self, 'Error', f'Evaluation not implemented.')
 
     # ----------------------------------------
     # Wizards (multi-step user input)

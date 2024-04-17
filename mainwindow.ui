@@ -236,6 +236,23 @@
          </widget>
         </item>
         <item>
+         <widget class="QPushButton" name="pushButton_model_eval">
+          <property name="toolTip">
+           <string>Evaluate model</string>
+          </property>
+          <property name="statusTip">
+           <string>Evaluate model</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="mainwindow.qrc">
+            <normaloff>:/icons/icons/outline_fact_check_black_48dp.png</normaloff>:/icons/icons/outline_fact_check_black_48dp.png</iconset>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QPushButton" name="pushButton_model_save">
           <property name="toolTip">
            <string>Save model as...</string>
@@ -297,7 +314,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -409,8 +426,8 @@
    <slot>dataset_load_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>243</x>
-     <y>45</y>
+     <x>271</x>
+     <y>54</y>
     </hint>
     <hint type="destinationlabel">
      <x>244</x>
@@ -441,8 +458,8 @@
    <slot>sample_add_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>310</x>
-     <y>42</y>
+     <x>339</x>
+     <y>54</y>
     </hint>
     <hint type="destinationlabel">
      <x>313</x>
@@ -649,8 +666,8 @@
    <slot>model_load_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>164</x>
-     <y>370</y>
+     <x>133</x>
+     <y>368</y>
     </hint>
     <hint type="destinationlabel">
      <x>268</x>
@@ -665,8 +682,8 @@
    <slot>model_new_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>198</x>
-     <y>370</y>
+     <x>167</x>
+     <y>368</y>
     </hint>
     <hint type="destinationlabel">
      <x>331</x>
@@ -697,8 +714,8 @@
    <slot>model_pred_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>359</x>
-     <y>353</y>
+     <x>339</x>
+     <y>368</y>
     </hint>
     <hint type="destinationlabel">
      <x>365</x>
@@ -713,8 +730,8 @@
    <slot>model_save_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>377</x>
-     <y>363</y>
+     <x>407</x>
+     <y>368</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -754,6 +771,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButton_model_eval</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>model_eval_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>354</x>
+     <y>359</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>413</x>
+     <y>438</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>dataset_load_clicked()</slot>
@@ -771,5 +804,6 @@
   <slot>model_train_clicked()</slot>
   <slot>model_pred_clicked()</slot>
   <slot>model_save_clicked()</slot>
+  <slot>model_eval_clicked()</slot>
  </slots>
 </ui>

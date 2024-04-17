@@ -155,7 +155,6 @@ class Manager:
                     model_index,
                     dataset_name_train,
                     dataset_name_valid,
-                    dataset_name_test,
                     loss,
                     batch_size,
                     patch_size_z,
@@ -179,12 +178,6 @@ class Manager:
             valid_img, valid_lbl = train_img, train_lbl
         else:
             valid_img, valid_lbl = self.get_dataset_data_for_train(dataset_name_valid)
-        if dataset_name_train == dataset_name_test:
-            test_img, test_lbl = train_img, train_lbl
-        elif dataset_name_valid == dataset_name_test:
-            test_img, test_lbl = valid_img, valid_lbl
-        else:
-            test_img,  test_lbl  = self.get_dataset_data_for_train(dataset_name_test)
 
         # Train model
         loss = train.get_loss(loss, multiclass=None)
