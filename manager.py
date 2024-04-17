@@ -202,7 +202,7 @@ class Manager:
         loss = train.get_loss(loss, n_classes)
         model = train.train_model(model, (train_img, train_lbl), (valid_img, valid_lbl),
                                   loss, batch_size, patch_size, steps_per_epoch, epochs,
-                                  validation_steps, callbacks)
+                                  validation_steps, callbacks, augmentation=is2d)
 
         self.models[model_index] = model
 

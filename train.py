@@ -4,13 +4,13 @@ import patch
 
 
 def train_model(model, dataset_train, dataset_valid, loss,
-                batch_size, patch_size, steps_per_epoch, epochs, validation_steps, callbacks):
+                batch_size, patch_size, steps_per_epoch, epochs, validation_steps, callbacks, augmentation):
     # validation = False if (validation_steps is None or validation_steps <= 0) else True
     train_img, train_lbl = dataset_train
     valid_img, valmid_lbl = dataset_valid
     # Create patch generators
-    gen_train = patch.gen_patch_batch(patch_size, train_img, train_lbl, batch_size=batch_size, augmentation=True)
-    gen_valid = patch.gen_patch_batch(patch_size, valid_img, valmid_lbl, batch_size=batch_size, augmentation=True)
+    gen_train = patch.gen_patch_batch(patch_size, train_img, train_lbl, batch_size=batch_size, augmentation=augmentation)
+    gen_valid = patch.gen_patch_batch(patch_size, valid_img, valmid_lbl, batch_size=batch_size, augmentation=augmentation)
 
     # Train model
     optimizer = tf.keras.optimizers.Adam()
