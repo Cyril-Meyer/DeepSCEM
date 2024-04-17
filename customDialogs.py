@@ -34,13 +34,11 @@ class DialogTrain(QtWidgets.QDialog, window_trainui.Ui_Dialog):
         self.comboBox_model.addItems(models)
         self.comboBox_dataset_train.addItems(datasets)
         self.comboBox_dataset_valid.addItems(datasets)
-        self.comboBox_dataset_test.addItems(datasets)
 
     def get(self):
         return (self.comboBox_model.currentIndex(),
                 self.comboBox_dataset_train.currentText(),
                 self.comboBox_dataset_valid.currentText(),
-                self.comboBox_dataset_test.currentText(),
                 self.comboBox_loss.currentText(),
                 self.spinBox_batch_size.value(),
                 self.spinBox_patch_size_z.value(),
