@@ -419,6 +419,9 @@
    <property name="text">
     <string>Add sample</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+B</string>
+   </property>
   </action>
   <action name="actionRemove_sample">
    <property name="icon">
@@ -427,6 +430,9 @@
    </property>
    <property name="text">
     <string>Remove sample</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+W</string>
    </property>
   </action>
   <action name="actionEvaluate">
@@ -450,6 +456,9 @@
    </property>
    <property name="text">
     <string>Crop sample</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+C</string>
    </property>
   </action>
  </widget>
