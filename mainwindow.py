@@ -186,7 +186,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.dataset_update()
 
     def dataset_load_clicked(self):
-        filenames, _ = QFileDialog.getOpenFileNames(self, 'Select datasets', '', 'Datasets (*.h5 *.hdf5)')
+        filenames, _ = QFileDialog.getOpenFileNames(self, 'Select datasets', '', 'Datasets (*.hdf5)')
         try:
             for filename in filenames:
                 self.manager.load_dataset(filename)
@@ -206,7 +206,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def dataset_saveas_clicked(self):
         text, index = self.dataset_get_selection()
         if index >= 0 and text is not None:
-            filename, _ = QFileDialog.getSaveFileName(self, 'Save dataset', '', 'Datasets (*.h5 *.hdf5)')
+            filename, _ = QFileDialog.getSaveFileName(self, 'Save dataset', '', 'Datasets (*.hdf5)')
             if not filename == '':
                 if not (filename.endswith('.h5') or filename.endswith('.hdf5')):
                     filename += '.hdf5'
