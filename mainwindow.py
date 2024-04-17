@@ -292,7 +292,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                                args=(model_index, a0, a1, a2, a3, a4,
                                      thres_val if thres else None),
                                message='Predicting...',
-                               target_end=self.models_update)
+                               target_end=self.dataset_update)
 
     # ----------------------------------------
     # Wizards (multi-step user input)
