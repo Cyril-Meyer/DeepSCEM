@@ -168,38 +168,41 @@ class Manager:
         import tensorflow as tf
         model = self.models[model_index]
 
-        # Get model information
+        # Get model information and set options
         is2d = len(model.input_shape) == 4  # (batch_size, y, x, chan=1)
+        if not is2d and len(model.input_shape) != 5:  # (batch_size, z, y, x, chan=1)
+            raise NotImplementedError("Input model is not 2D or 3D")
+        n_classes = self.datasets[dataset_name_train].attrs['labels']
         patch_size = (patch_size_y, patch_size_x) if is2d else (patch_size_z, patch_size_y, patch_size_x)
 
-        # Load all data in RAM (and avoid copy of same data)
+        # Load all data in RAM
         train_img, train_lbl = self.get_dataset_data_for_train(dataset_name_train)
-        if dataset_name_train == dataset_name_valid:
-            valid_img, valid_lbl = train_img, train_lbl
+        # Don't load validation data if
+        if validation_steps is None or validation_steps <= 0:
+            valid_img, valid_lbl = None, None
         else:
-            valid_img, valid_lbl = self.get_dataset_data_for_train(dataset_name_valid)
-
-        # Train model
-        loss = train.get_loss(loss, multiclass=None)
-        train.train_model(model, (train_img, train_lbl), (valid_img, valid_lbl), )
+            # Avoid copy of same data
+            if dataset_name_train == dataset_name_valid:
+                valid_img, valid_lbl = train_img, train_lbl
+            else:
+                valid_img, valid_lbl = self.get_dataset_data_for_train(dataset_name_valid)
 
         # Create callbacks
-        # todo
+        train_id = int(time.time())
+        callbacks = [tf.keras.callbacks.CSVLogger(f'{model.name}_{train_id}_logs.csv')]
+        if keep_best:
+            callbacks.append(
+                tf.keras.callbacks.ModelCheckpoint(f'{model.name}_{train_id}_best.h5',
+                                                   save_best_only=True,
+                                                   save_weights_only=False))
+        if early_stop:
+            callbacks.append(tf.keras.callbacks.EarlyStopping())
 
         # Train model
-        optimizer = tf.keras.optimizers.Adam()
-        # todo: use loss
-        def dice_coef_tf_meyer(y_true, y_pred):
-            y_true_f = tf.reshape(y_true, [-1])
-            y_pred_f = tf.reshape(y_pred, [-1])
-            intersection = tf.reduce_sum(tf.multiply(y_true_f, y_pred_f))
-            smooth = 0.0001
-            return 1 - (2. * intersection + smooth) / (tf.reduce_sum(y_true_f) + tf.reduce_sum(y_pred_f) + smooth)
-
-        model.compile(optimizer=optimizer, loss=dice_coef_tf_meyer)
-        fit_history = model.fit(gen_train,
-                                steps_per_epoch=steps_per_epoch,
-                                epochs=epochs)
+        loss = train.get_loss(loss, n_classes)
+        model = train.train_model(model, (train_img, train_lbl), (valid_img, valid_lbl),
+                                  loss, batch_size, patch_size, steps_per_epoch, epochs,
+                                  validation_steps, callbacks)
 
         self.models[model_index] = model
 
@@ -217,6 +220,8 @@ class Manager:
 
         # Get model information and set options
         is2d = len(model.input_shape) == 4  # (batch_size, y, x, chan=1)
+        if not is2d and len(model.input_shape) != 5:  # (batch_size, z, y, x, chan=1)
+            raise NotImplementedError("Input model is not 2D or 3D")
         patch_size = (1, patch_size_y, patch_size_x) if is2d else (patch_size_z, patch_size_y, patch_size_x)
         overlap = 1
         if overlapping:
