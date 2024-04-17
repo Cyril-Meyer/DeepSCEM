@@ -328,23 +328,31 @@
     <addaction name="actionNew_model"/>
     <addaction name="actionLoad_model"/>
    </widget>
-   <widget class="QMenu" name="menuView">
-    <property name="title">
-     <string>View</string>
-    </property>
-   </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
      <string>Help</string>
     </property>
     <addaction name="actionAbout"/>
+    <addaction name="actionAbout_Qt"/>
+   </widget>
+   <widget class="QMenu" name="menuData">
+    <property name="title">
+     <string>Data</string>
+    </property>
+    <addaction name="actionAdd_sample"/>
+    <addaction name="actionRemove_sample"/>
+    <addaction name="actionEvaluate"/>
    </widget>
    <addaction name="menuFile"/>
-   <addaction name="menuView"/>
+   <addaction name="menuData"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionLoad_dataset">
+   <property name="icon">
+    <iconset resource="mainwindow.qrc">
+     <normaloff>:/icons/icons/outline_playlist_add_black_48dp.png</normaloff>:/icons/icons/outline_playlist_add_black_48dp.png</iconset>
+   </property>
    <property name="text">
     <string>Load dataset</string>
    </property>
@@ -353,6 +361,10 @@
    </property>
   </action>
   <action name="actionNew_dataset">
+   <property name="icon">
+    <iconset resource="mainwindow.qrc">
+     <normaloff>:/icons/icons/outline_add_black_48dp.png</normaloff>:/icons/icons/outline_add_black_48dp.png</iconset>
+   </property>
    <property name="text">
     <string>New dataset</string>
    </property>
@@ -361,6 +373,10 @@
    </property>
   </action>
   <action name="actionSave_dataset">
+   <property name="icon">
+    <iconset resource="mainwindow.qrc">
+     <normaloff>:/icons/icons/outline_save_black_48dp.png</normaloff>:/icons/icons/outline_save_black_48dp.png</iconset>
+   </property>
    <property name="text">
     <string>Save dataset as</string>
    </property>
@@ -377,13 +393,53 @@
    </property>
   </action>
   <action name="actionNew_model">
+   <property name="icon">
+    <iconset resource="mainwindow.qrc">
+     <normaloff>:/icons/icons/outline_add_black_48dp.png</normaloff>:/icons/icons/outline_add_black_48dp.png</iconset>
+   </property>
    <property name="text">
     <string>New model</string>
    </property>
   </action>
   <action name="actionLoad_model">
+   <property name="icon">
+    <iconset resource="mainwindow.qrc">
+     <normaloff>:/icons/icons/outline_folder_open_black_48dp.png</normaloff>:/icons/icons/outline_folder_open_black_48dp.png</iconset>
+   </property>
    <property name="text">
     <string>Load model</string>
+   </property>
+  </action>
+  <action name="actionAdd_sample">
+   <property name="icon">
+    <iconset resource="mainwindow.qrc">
+     <normaloff>:/icons/icons/outline_add_photo_alternate_black_48dp.png</normaloff>:/icons/icons/outline_add_photo_alternate_black_48dp.png</iconset>
+   </property>
+   <property name="text">
+    <string>Add sample</string>
+   </property>
+  </action>
+  <action name="actionRemove_sample">
+   <property name="icon">
+    <iconset resource="mainwindow.qrc">
+     <normaloff>:/icons/icons/outline_delete_black_48dp.png</normaloff>:/icons/icons/outline_delete_black_48dp.png</iconset>
+   </property>
+   <property name="text">
+    <string>Remove sample</string>
+   </property>
+  </action>
+  <action name="actionEvaluate">
+   <property name="icon">
+    <iconset resource="mainwindow.qrc">
+     <normaloff>:/icons/icons/outline_fact_check_black_48dp.png</normaloff>:/icons/icons/outline_fact_check_black_48dp.png</iconset>
+   </property>
+   <property name="text">
+    <string>Evaluate</string>
+   </property>
+  </action>
+  <action name="actionAbout_Qt">
+   <property name="text">
+    <string>About Qt</string>
    </property>
   </action>
  </widget>
@@ -757,7 +813,7 @@
   </connection>
   <connection>
    <sender>actionLoad_model</sender>
-   <signal>toggled(bool)</signal>
+   <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>model_load_clicked()</slot>
    <hints>
@@ -787,6 +843,70 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionAdd_sample</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>sample_add_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>399</x>
+     <y>298</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionRemove_sample</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>sample_remove_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionEvaluate</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>model_eval_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionAbout_Qt</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>menu_help_about_qt_triggered()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>dataset_load_clicked()</slot>
@@ -805,5 +925,6 @@
   <slot>model_pred_clicked()</slot>
   <slot>model_save_clicked()</slot>
   <slot>model_eval_clicked()</slot>
+  <slot>menu_help_about_qt_triggered()</slot>
  </slots>
 </ui>

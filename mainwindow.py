@@ -27,10 +27,15 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.bt_messagebox = None
 
     # ----------------------------------------
-    # Debug call (future "about" messagebox)
+    # About
     # ----------------------------------------
-    def menu_help_about_triggered(self, event):
-        self.dataset_item_selection_changed()
+    def menu_help_about_triggered(self):
+        QMessageBox.about(self, 'DeepSCEM', "Cyril Meyer 2024<br>"
+                                            "Deep Segmentation for Cellular Electron Microscopy<br><br>"
+                                            "<a href='https://github.com/Cyril-Meyer/DeepSCEM'>Cyril-Meyer/DeepSCEM</a>")
+
+    def menu_help_about_qt_triggered(self):
+        QMessageBox.aboutQt(self, 'Qt')
 
     # ----------------------------------------
     # Window events
@@ -295,13 +300,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                                target_end=self.dataset_update)
 
     def model_eval_clicked(self):
-        if len(self.manager.get_datasets_index()) <= 0:
-            QMessageBox.information(self, 'Warning', f'No dataset to select.')
-            return
-        if len(self.manager.get_models_list()) <= 0:
-            QMessageBox.information(self, 'Warning', f'No model to select.')
-            return
-
         QMessageBox.critical(self, 'Error', f'Evaluation not implemented.')
 
     # ----------------------------------------
