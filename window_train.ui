@@ -196,7 +196,7 @@
           <number>16777216</number>
          </property>
          <property name="value">
-          <number>112</number>
+          <number>256</number>
          </property>
         </widget>
        </item>
@@ -209,7 +209,7 @@
           <number>16777216</number>
          </property>
          <property name="value">
-          <number>128</number>
+          <number>64</number>
          </property>
         </widget>
        </item>
@@ -219,7 +219,7 @@
           <number>16777216</number>
          </property>
          <property name="value">
-          <number>16</number>
+          <number>64</number>
          </property>
         </widget>
        </item>
