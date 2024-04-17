@@ -130,7 +130,7 @@ class Manager:
             smooth = 0.0001
             return 1 - (2. * intersection + smooth) / (tf.reduce_sum(y_true_f) + tf.reduce_sum(y_pred_f) + smooth)
 
-        model = tf.keras.models.load_model(filename, custom_objects={'dice_coef_tf_meyer': dice_coef_tf_meyer})
+        model = tf.keras.models.load_model(filename, compile=False)
         self.models.append(model)
 
     def save_model(self, index, filename):
