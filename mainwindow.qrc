@@ -1,5 +1,9 @@
 <RCC>
   <qresource prefix="icons">
+    <file>icons/outline_assignment_turned_in_black_48dp.png</file>
+    <file>icons/outline_checklist_black_48dp.png</file>
+    <file>icons/outline_done_black_48dp.png</file>
+    <file>icons/outline_fact_check_black_48dp.png</file>
     <file>icons/outline_close_black_48dp.png</file>
     <file>icons/outline_play_arrow_black_48dp.png</file>
     <file>icons/outline_stop_black_48dp.png</file>
