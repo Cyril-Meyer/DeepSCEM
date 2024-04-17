@@ -314,7 +314,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>20</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -340,6 +340,7 @@
      <string>Data</string>
     </property>
     <addaction name="actionAdd_sample"/>
+    <addaction name="actionCrop_sample"/>
     <addaction name="actionRemove_sample"/>
     <addaction name="actionEvaluate"/>
    </widget>
@@ -442,6 +443,15 @@
     <string>About Qt</string>
    </property>
   </action>
+  <action name="actionCrop_sample">
+   <property name="icon">
+    <iconset resource="mainwindow.qrc">
+     <normaloff>:/icons/icons/outline_crop_black_48dp.png</normaloff>:/icons/icons/outline_crop_black_48dp.png</iconset>
+   </property>
+   <property name="text">
+    <string>Crop sample</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
@@ -482,8 +492,8 @@
    <slot>dataset_load_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>271</x>
-     <y>54</y>
+     <x>258</x>
+     <y>55</y>
     </hint>
     <hint type="destinationlabel">
      <x>244</x>
@@ -514,8 +524,8 @@
    <slot>sample_add_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>339</x>
-     <y>54</y>
+     <x>326</x>
+     <y>55</y>
     </hint>
     <hint type="destinationlabel">
      <x>313</x>
@@ -722,8 +732,8 @@
    <slot>model_load_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>133</x>
-     <y>368</y>
+     <x>130</x>
+     <y>370</y>
     </hint>
     <hint type="destinationlabel">
      <x>268</x>
@@ -738,8 +748,8 @@
    <slot>model_new_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>167</x>
-     <y>368</y>
+     <x>164</x>
+     <y>370</y>
     </hint>
     <hint type="destinationlabel">
      <x>331</x>
@@ -754,8 +764,8 @@
    <slot>model_train_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>250</x>
-     <y>365</y>
+     <x>245</x>
+     <y>370</y>
     </hint>
     <hint type="destinationlabel">
      <x>252</x>
@@ -770,8 +780,8 @@
    <slot>model_pred_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>339</x>
-     <y>368</y>
+     <x>326</x>
+     <y>370</y>
     </hint>
     <hint type="destinationlabel">
      <x>365</x>
@@ -786,8 +796,8 @@
    <slot>model_save_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>407</x>
-     <y>368</y>
+     <x>394</x>
+     <y>370</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -850,8 +860,8 @@
    <slot>sample_add_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>399</x>
-     <y>298</y>
+     <x>-1</x>
+     <y>-1</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -907,6 +917,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionCrop_sample</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>sample_crop_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>dataset_load_clicked()</slot>
@@ -926,5 +952,6 @@
   <slot>model_save_clicked()</slot>
   <slot>model_eval_clicked()</slot>
   <slot>menu_help_about_qt_triggered()</slot>
+  <slot>sample_crop_clicked()</slot>
  </slots>
 </ui>

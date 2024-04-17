@@ -69,6 +69,17 @@ def add_sample_to_dataset(dataset, name, image, labels=None):
     dataset.flush()
 
 
+def crop_sample(dataset, sample_name, new_name, z_min, z_max, y_min, y_max, x_min, x_max):
+    sample_group = dataset.create_group(new_name)
+    sample_group.attrs['shape'] = [z_max - z_min, y_max - y_min, x_max - x_min]
+
+    for s in dataset[sample_name].keys():
+        data = np.array(dataset[sample_name][s])
+        sample_group.create_dataset(f'{s}', data=data[z_min:z_max, y_min:y_max, x_min:x_max])
+
+    dataset.flush()
+
+
 def add_prediction_to_dataset(dataset, name, image, prediction):
     sample_group = dataset.create_group(name)
     sample_group.attrs['shape'] = image.shape

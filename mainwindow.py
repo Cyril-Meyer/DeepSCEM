@@ -218,6 +218,17 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.sample_add_wizard()
         self.dataset_update()
 
+    def sample_crop_clicked(self):
+        texts, indexes, items = self.dataset_get_selection_hierarchy()
+        if len(indexes) < 2:
+            QMessageBox.information(self, 'Warning', f'No sample selected.')
+        else:
+            try:
+                self.sample_crop_wizard(dataset=texts[-1], sample=texts[-2])
+            except Exception as e:
+                QMessageBox.critical(self, 'Error', f'{e}')
+        self.dataset_update()
+
     def sample_remove_clicked(self):
         texts, indexes, items = self.dataset_get_selection_hierarchy()
         if len(indexes) < 2:
@@ -368,6 +379,28 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             QMessageBox.critical(self, 'Error', f'{e}')
             self.manager.remove_dataset(choice_dataset)
 
+    def sample_crop_wizard(self, dataset, sample):
+        z_max, y_max, x_max = tuple(self.manager.get_sample(dataset, sample).attrs['shape'])
+
+        def get_min_max(v_max, axis):
+            v_min, ok1 = QInputDialog.getInt(self, 'Crop sample', f'{axis} min', value=0, min=0, max=v_max-1)
+            if not ok1:
+                return None, None, ok1
+            v_max, ok2 = QInputDialog.getInt(self, 'Crop sample', f'{axis} max', value=v_max, min=v_min+1, max=v_max)
+            return v_min, v_max, ok2
+
+        z_min, z_max, ok = get_min_max(z_max, 'Z')
+        if not ok:
+            return
+        y_min, y_max, ok = get_min_max(y_max, 'Y')
+        if not ok:
+            return
+        x_min, x_max, ok = get_min_max(x_max, 'X')
+        if not ok:
+            return
+
+        self.sample_crop_manager(dataset, sample, z_min, z_max, y_min, y_max, x_min, x_max)
+
     # ----------------------------------------
     # Wizards and forms manager
     # ----------------------------------------
@@ -377,6 +410,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                            message='Loading sample(s)...',
                            target_end=self.dataset_update,
                            wait_end=False)
+
+    def sample_crop_manager(self, choice_dataset, choice_sample, z_min, z_max, y_min, y_max, x_min, x_max):
+        self.manager.crop_sample(choice_dataset, choice_sample, z_min, z_max, y_min, y_max, x_min, x_max)
 
     def dataset_new_manager(self, choice_dataset, choice_number_label):
         self.manager.new_dataset(choice_dataset, choice_number_label)
