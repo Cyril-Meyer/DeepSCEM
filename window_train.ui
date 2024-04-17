@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>359</height>
+    <width>402</width>
+    <height>403</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -36,13 +36,6 @@
         <widget class="QLabel" name="label_dataset_valid">
          <property name="text">
           <string>Valid</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_dataset_test">
-         <property name="text">
-          <string>Test</string>
          </property>
         </widget>
        </item>
@@ -116,9 +109,6 @@
         <widget class="QComboBox" name="comboBox_dataset_valid"/>
        </item>
        <item>
-        <widget class="QComboBox" name="comboBox_dataset_test"/>
-       </item>
-       <item>
         <widget class="QComboBox" name="comboBox_loss">
          <item>
           <property name="text">
@@ -155,6 +145,9 @@
            <property name="maximum">
             <number>65535</number>
            </property>
+           <property name="singleStep">
+            <number>32</number>
+           </property>
            <property name="value">
             <number>64</number>
            </property>
@@ -168,6 +161,9 @@
            <property name="maximum">
             <number>65535</number>
            </property>
+           <property name="singleStep">
+            <number>32</number>
+           </property>
            <property name="value">
             <number>256</number>
            </property>
@@ -180,6 +176,9 @@
            </property>
            <property name="maximum">
             <number>65535</number>
+           </property>
+           <property name="singleStep">
+            <number>32</number>
            </property>
            <property name="value">
             <number>256</number>
@@ -279,8 +278,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>248</x>
-     <y>254</y>
+     <x>257</x>
+     <y>393</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -295,8 +294,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>316</x>
-     <y>260</y>
+     <x>325</x>
+     <y>393</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>
