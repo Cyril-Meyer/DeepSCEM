@@ -208,6 +208,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         if index >= 0 and text is not None:
             filename, _ = QFileDialog.getSaveFileName(self, 'Save dataset', '', 'Datasets (*.h5 *.hdf5)')
             if not filename == '':
+                if not (filename.endswith('.h5') or filename.endswith('.hdf5')):
+                    filename += '.hdf5'
                 self.manager.saveas_dataset(text, filename)
         else:
             QMessageBox.information(self, 'Warning', f'No dataset selected.')
@@ -259,6 +261,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         if index >= 0:
             filename, _ = QFileDialog.getSaveFileName(self, 'Save model', '', 'Model (*.h5)')
             if not filename == '':
+                if not filename.endswith('.h5'):
+                    filename += '.h5'
                 self.manager.save_model(index, filename)
         else:
             QMessageBox.information(self, 'Warning', f'No model selected.')
