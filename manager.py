@@ -123,13 +123,6 @@ class Manager:
     def load_model(self, filename):
         import tensorflow as tf
 
-        def dice_coef_tf_meyer(y_true, y_pred):
-            y_true_f = tf.reshape(y_true, [-1])
-            y_pred_f = tf.reshape(y_pred, [-1])
-            intersection = tf.reduce_sum(tf.multiply(y_true_f, y_pred_f))
-            smooth = 0.0001
-            return 1 - (2. * intersection + smooth) / (tf.reduce_sum(y_true_f) + tf.reduce_sum(y_pred_f) + smooth)
-
         model = tf.keras.models.load_model(filename, compile=False)
         self.models.append(model)
 
