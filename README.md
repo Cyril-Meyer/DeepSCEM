@@ -85,7 +85,8 @@ Definitions for keywords used in this documentation.
   * need to set number of labels in the dataset file attribute
     * added, but not checked yet
 * train
-  * number of labels in data and model can be different and cause problems  
+  * number of labels in data and model can be different and cause problems
+  * validation steps set to 0 is not tested yet  
 * pred
   * use infer without pad when it's possible
 * UI
