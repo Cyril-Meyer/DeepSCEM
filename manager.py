@@ -4,7 +4,6 @@ import numpy as np
 import data
 import model as m
 import pred
-import train
 
 
 class Manager:
@@ -200,6 +199,7 @@ class Manager:
             callbacks.append(tf.keras.callbacks.EarlyStopping())
 
         # Train model
+        import train
         loss = train.get_loss(loss, n_classes)
         model = train.train_model(model, (train_img, train_lbl), (valid_img, valid_lbl),
                                   loss, batch_size, patch_size, steps_per_epoch, epochs,
