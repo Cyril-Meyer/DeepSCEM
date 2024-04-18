@@ -58,9 +58,30 @@ with command line interface.
 First, if you are not familiar with deep learning, you may want to check the
 [keywords](#keywords) used in this documentation.
 
-#### Graphical user interface
+### Graphical user interface
 
-##### Good practice
+First, here is an view of the main window and and explanation of the button features.
+
+![image](https://github.com/Cyril-Meyer/DeepSCEM/assets/69190238/5e51e835-df4b-4c63-9871-190958285d8f)
+
+1. Load dataset
+2. Unload dataset
+3. Add sample to dataset
+4. Remove sample from dataset
+5. Save dataset as
+6. List of loaded dataset and their samples
+7. Load model
+8. Create a new model
+9. Train model
+10. Predict model
+11. Evaluate model
+12. Save model as
+13. Lost of loaded models
+14. 3D images Z selector
+15. MainView correspond to the area for data visualization
+
+
+#### Good practice
 ⚠ Never store your dataset and models in the working dir.  
 When working with dataset, DeepSCEM create dataset file in realtime.
 This is very convenient to avoid in memory storage, but it may also rewrite
@@ -78,17 +99,23 @@ was always better than 3D ones for organelles segmentation.
 Contrary to datasets, models are directly used in memory.
 When you close DeepSCEM the unsaved models disappear.
 
-#### Command line interface
+💡 Overring a widget will show information about it. Example with cursor over "Load model".
+
+![image](https://github.com/Cyril-Meyer/DeepSCEM/assets/69190238/e8b6d01d-5f59-47d5-ba5a-b025f23f1f2e)
+
+
+### Command line interface
 
 The command line interface (CLI) allows advanced users to process data
 with single-call commands, streamlining your workflow and saving time.
 
 List of arguments :
-* `--create-dataset <filename> <name> <n_labels>` create a new empty dataset.
-* `--add-sample <filename> <name> <image> [<label1> <label2> ...]`
-add a sample from image and labels to an existing dataset.
+* `--create-dataset <filename> <name> <n_labels>`  
+  Create a new empty dataset.
+* `--add-sample <filename> <name> <image> [<label1> <label2> ...]`  
+  Add a sample from image and labels to an existing dataset.
 
-##### Examples
+#### Examples
 * Create an empty dataset `I3_EXAMPLE.hdf5` with name **I3** and requiring **2** labels per sample
   * `--create-dataset I3_EXAMPLE.hdf5 I3 2`
 * Add sample **i31** to dataset `I3_EXAMPLE.hdf5`
@@ -107,7 +134,6 @@ Definitions for keywords used in this documentation.
 * Dataset : A collection (= a list) of samples
 * Architecture : A type of network (e.g. U-Net, FCN)
 * Model : A deep neural network (it's layers and weights)
-
 * Working dir : The directory from where you have started DeepSCEM
 
 
