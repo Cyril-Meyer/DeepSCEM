@@ -37,16 +37,28 @@ official documentation.
 
 ## GPU
 If you have a GPU, you may want to use it to make faster training and prediction.
+This guide only work for NVIDIA GPU.
 
 * TensorFlow official documentation
   * [Install TensorFlow with pip](https://www.tensorflow.org/install/pip)
   * [🇫🇷 Compatibilité avec les GPU](https://www.tensorflow.org/install/gpu?hl=fr)
 
 ### Windows
+To install GPU you can refer to the
+[NVIDIA CUDA installation guide for Windows](https://docs.nvidia.com/cuda/cuda-installation-guide-microsoft-windows/index.html).
 
-[CUDA Installation Guide for Microsoft Windows](https://docs.nvidia.com/cuda/cuda-installation-guide-microsoft-windows/index.html)
+First, you need to have working NVIDIA GPU and its driver installed.
+This is normally the case on your computer.
 
-To check that gpu is used, use the task manager performance tab and check
+We will install cuda using the
+[Using Conda to Install the CUDA Software](https://docs.nvidia.com/cuda/cuda-installation-guide-microsoft-windows/index.html#using-conda-to-install-the-cuda-software)
+part of the guide which is the most straightforward.
+
+1. Install [miniconda](https://docs.anaconda.com/free/miniconda/)
+2. TODO
+
+To check that gpu is used durint training,
+use the task manager performance tab and check
 GPU CUDA and memory usage :
 
 ![task-manager-gpu](https://github.com/Cyril-Meyer/DeepSCEM/assets/69190238/239c8b0e-d884-4f21-9887-377a4fb9d8b1)
