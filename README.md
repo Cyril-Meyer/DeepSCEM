@@ -8,6 +8,16 @@ The toolkit is developed to be both easy to use and deploy initially,
 but also very efficient and configurable for the most advanced users.
 
 
+## Quick links
+
+* Download latest release (todo)
+
+
+## Bug report 🐛 & Feature request ✨
+
+To report bugs or request a new feature, you are invited to create a new issue.
+
+
 ## User manual 📝
 Welcome to the User Manual of DeepSCEM.
 This manual will guide you through the process of using DeepSCEM,
@@ -27,9 +37,7 @@ regardless of your technical expertise.
 
 For users who prefer a straightforward installation, we provide a binary release
 for Windows.
-Simply download the zip file, extract it, and you're ready to go.
-
-* TODO: upload binary release somewhere and add "Download" link.
+Simply download the zip file in [quick links](#quick-links), extract it, and you're ready to go.
 
 If you want to use your GPU and do not know how to install dependecy, check the
 [INSTALL](INSTALL.md) guide.
@@ -101,11 +109,6 @@ Definitions for keywords used in this documentation.
 * Model : A deep neural network (it's layers and weights)
 
 * Working dir : The directory from where you have started DeepSCEM
-
-
-## Bug report 🐛 & Feature request ✨
-
-To report bugs or ask for a new feature, you can create an issue.
 
 
 ## Developers 💻
