@@ -25,3 +25,19 @@ class InteractiveQLabel(QLabel):
     def wheelEvent(self, event):
         self.wheel.emit(event)
         QLabel.wheelEvent(self, event)
+
+
+class QTreeWidgetWithDrop(QTreeWidget):
+    ok_ext = ['hdf5']
+    drop = QtCore.pyqtSignal(QUrl)
+
+    def dropEvent(self, event):
+        if event.mimeData().hasUrls:
+            for url in event.mimeData().urls():
+                if QFileInfo(url.toLocalFile()).suffix().lower() in self.ok_ext:
+                    self.drop.emit(url)
+        else:
+            event.ignore()
+
+    def mimeTypes(self):
+        return ['text/uri-list']

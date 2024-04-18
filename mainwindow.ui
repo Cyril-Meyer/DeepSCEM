@@ -131,12 +131,21 @@
        </layout>
       </item>
       <item>
-       <widget class="QTreeWidget" name="treeWidget_dataset">
+       <widget class="QTreeWidgetWithDrop" name="treeWidget_dataset">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
           <horstretch>0</horstretch>
           <verstretch>2</verstretch>
          </sizepolicy>
+        </property>
+        <property name="mouseTracking">
+         <bool>true</bool>
+        </property>
+        <property name="acceptDrops">
+         <bool>true</bool>
+        </property>
+        <property name="dragDropMode">
+         <enum>QAbstractItemView::DropOnly</enum>
         </property>
         <column>
          <property name="text">
@@ -472,6 +481,14 @@
     <signal>mouseRelease(QMouseEvent)</signal>
     <signal>mouseMove(QMouseEvent)</signal>
     <signal>wheel(QWheelEvent)</signal>
+   </slots>
+  </customwidget>
+  <customwidget>
+   <class>QTreeWidgetWithDrop</class>
+   <extends>QTreeWidget</extends>
+   <header>customQtWidgets</header>
+   <slots>
+    <signal>drop(QUrl)</signal>
    </slots>
   </customwidget>
  </customwidgets>
@@ -942,6 +959,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>treeWidget_dataset</sender>
+   <signal>drop(QUrl)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>dataset_load_drop(QUrl)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>386</x>
+     <y>146</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>400</x>
+     <y>149</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>dataset_load_clicked()</slot>
@@ -962,5 +995,6 @@
   <slot>model_eval_clicked()</slot>
   <slot>menu_help_about_qt_triggered()</slot>
   <slot>sample_crop_clicked()</slot>
+  <slot>dataset_load_drop(QUrl)</slot>
  </slots>
 </ui>

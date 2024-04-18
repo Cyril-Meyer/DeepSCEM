@@ -195,6 +195,15 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             QMessageBox.critical(self, 'Error', f'Dataset load error.\n{e}')
             self.dataset_update()
 
+    def dataset_load_drop(self, url):
+        try:
+            file = url.toLocalFile()
+            self.manager.load_dataset(file)
+            self.dataset_update()
+        except Exception as e:
+            QMessageBox.critical(self, 'Error', f'Dataset load error.\n{e}')
+            self.dataset_update()
+
     def dataset_unload_clicked(self):
         text, index = self.dataset_get_selection()
         if index >= 0 and text is not None:
