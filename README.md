@@ -122,6 +122,8 @@ List of arguments :
   * `--add-sample I3_EXAMPLE.hdf5 i31 i3_1.tif i3_label_11.tif i3_label_12.tif `
 * Create dataset with samples
   * `--create-dataset I3_EXAMPLE.hdf5 I3 2 --add-sample I3_EXAMPLE.hdf5 i31 i3_1.tif i3_label_11.tif i3_label_12.tif --add-sample I3_EXAMPLE.hdf5 i32 i3_2.tif i3_label_21.tif i3_label_22.tif`
+* Train a model (implementation is a work in progress)
+  * `--train-model i3-unet-3d-bin-mito.h5 I3-MITO-BIN.hdf5 I3-MITO-BIN.hdf5 Dice 1 96 192 192 128 32 64`
 
 #### Keywords
 Definitions for keywords used in this documentation.
