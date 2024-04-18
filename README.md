@@ -1,5 +1,5 @@
 # DeepSCEM
-Deep Segmentation for Cellular Electron Microscopy.
+Deep Segmentation for Cellular Electron Microscopy 🦠🔬⚛️.
 
 DeepSCEM is an automatic segmentation tool integrating deep learning methods.
 DeepSCEM is developed for organelles segmentation in cellular electron microscopy
@@ -8,44 +8,85 @@ The toolkit is developed to be both easy to use and deploy initially,
 but also very efficient and configurable for the most advanced users.
 
 
-## User manual
+## User manual 📝
 Welcome to the User Manual of DeepSCEM.
 This manual will guide you through the process of using DeepSCEM,
 making your experience with the software as seamless as possible.
 
 Before we begin, here is a summary of the section
-* [Installation](#installation)
-* [Usage](#usage)
-  * [Graphical user interface](#graphical-user-interface)
-  * [Command line interface](#command-line-interface)
-* [Keywords](#keywords)
+* [Installation](#installation) - A step-by-step guide to help you install DeepSCEM on your system.
+* [Usage](#usage) - Learn how to use DeepSCEM effectively
+  * [Graphical user interface](#graphical-user-interface) - An overview of the GUI features and how to use them
+  * [Command line interface](#command-line-interface) - Use DeepSCEM via command-line commands for advanced users.
+* [Keywords](#keywords) - A glossary of important terms and keywords
 
 ### [Installation](INSTALL.md)
+To use DeepSCEM, the first step is to install it on your system.
+We've made this process simple and user-friendly for everyone,
+regardless of your technical expertise.
+
+For users who prefer a straightforward installation, we provide a binary release
+for Windows.
+Simply download the zip file, extract it, and you're ready to go.
+
+* TODO: upload binary release somewhere and add "Download" link.
+
+If you want to use your GPU and do not know how to install dependecy, check the
+[INSTALL](INSTALL.md) guide.
+
+For more experienced users who want to run DeepSCEM from their own Python setup:
+Detailed instructions on how to install and set up DeepSCEM are available in the
+[INSTALL](INSTALL.md) guide.
 
 
 ### Usage
 
 Our goal is to provide you with a toolkit that is not only user-friendly
 but also highly efficient and customizable for advanced users.
+For a user-friendly experience, you may go with the graphical user interface.
+For higher efficiency, you will probably be interested in the functionality available
+with command line interface.
 
-If you are not familiar with deep learning, you may want to check the
-[keywords](#keywords)
-
-
+First, if you are not familiar with deep learning, you may want to check the
+[keywords](#keywords) used in this documentation.
 
 #### Graphical user interface
 
+##### Good practice
+⚠ Never store your dataset and models in the working dir.  
+When working with dataset, DeepSCEM create dataset file in realtime.
+This is very convenient to avoid in memory storage, but it may also rewrite
+existing files.  
+The correct workflow is to export (save) your dataset once you're happy with it.
 
+💡 Save dataset again if something changed.
+The HDF5 format file used with h5py may not release space when samples are removed.
+
+💡 Use 2D models at first.  
+This is more advice than a good practice, but in our experience, 2D models
+was always better than 3D ones for organelles segmentation.
+
+💡 Don't forget to save you models.  
+Contrary to datasets, models are directly used in memory.
+When you close DeepSCEM the unsaved models disappear.
 
 #### Command line interface
-##### CLI Examples
+
+The command line interface (CLI) allows advanced users to process data
+with single-call commands, streamlining your workflow and saving time.
+
+List of arguments :
+* `--create-dataset <filename> <name> <n_labels>` create a new empty dataset.
+* `--add-sample <filename> <name> <image> [<label1> <label2> ...]`
+add a sample from image and labels to an existing dataset.
+
+##### Examples
 * Create an empty dataset `I3_EXAMPLE.hdf5` with name **I3** and requiring **2** labels per sample
   * `--create-dataset I3_EXAMPLE.hdf5 I3 2`
 * Add sample **i31** to dataset `I3_EXAMPLE.hdf5`
   * `--add-sample I3_EXAMPLE.hdf5 i31 i3_1.tif i3_label_11.tif i3_label_12.tif `
 * Create dataset with samples
   * `--create-dataset I3_EXAMPLE.hdf5 I3 2 --add-sample I3_EXAMPLE.hdf5 i31 i3_1.tif i3_label_11.tif i3_label_12.tif --add-sample I3_EXAMPLE.hdf5 i32 i3_2.tif i3_label_21.tif i3_label_22.tif`
-
 
 #### Keywords
 Definitions for keywords used in this documentation.
@@ -59,11 +100,15 @@ Definitions for keywords used in this documentation.
 * Architecture : A type of network (e.g. U-Net, FCN)
 * Model : A deep neural network (it's layers and weights)
 
+* Working dir : The directory from where you have started DeepSCEM
 
-## Bug report & Feature request
+
+## Bug report 🐛 & Feature request ✨
+
+To report bugs or ask for a new feature, you can create an issue.
 
 
-## Developers
+## Developers 💻
 
 ### Requirements explained
 
@@ -86,6 +131,9 @@ Definitions for keywords used in this documentation.
     * `pyqt5-tools` : PyQt5 tools (designer)
       * required to run `pyqt5-tools designer`
   * Install everything `pip install h5py imagecodecs PyQt5 pyqt5-tools tifffile tqdm matplotlib numpy`
+* PyInstaller
+  * Packaged DeepSCEM app without installing a Python interpreter or any modules
+  * `pip install pyinstaller` : only for binary release
 
 
 ### Work in progress
@@ -122,12 +170,14 @@ Definitions for keywords used in this documentation.
   * [x] data
   * [ ] train
   * [ ] predict
+  * [ ] test
   * replace current second stage parser with subparser
 * UI
   * [x] data
   * [x] view
   * [x] train
   * [x] predict
+  * [ ] test
 
 #### Refactoring
 
@@ -136,10 +186,8 @@ Definitions for keywords used in this documentation.
     * added, but not checked yet
 * train
   * number of labels in data and model can be different and cause problems
-  * validation steps set to 0 is not tested yet  
+  * validation steps set to 0 is not tested yet
   * better early stopping parameters
 * pred
   * use infer without pad when it's possible
-* UI
-  * Check if `GenericWorker` create major performance issue
 * Current code is prone to user input error
