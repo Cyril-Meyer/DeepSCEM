@@ -8,11 +8,11 @@ def train_model(model, dataset_train, dataset_valid, loss,
     augmentation_rotation, augmentation_flip = augmentations
     # validation = False if (validation_steps is None or validation_steps <= 0) else True
     train_img, train_lbl = dataset_train
-    valid_img, valmid_lbl = dataset_valid
+    valid_img, valid_lbl = dataset_valid
     # Create patch generators
     gen_train = patch.gen_patch_batch(patch_size, train_img, train_lbl, batch_size=batch_size,
                                       augmentation_rotation=augmentation_rotation, augmentation_flip=augmentation_flip)
-    gen_valid = patch.gen_patch_batch(patch_size, valid_img, valmid_lbl, batch_size=batch_size,
+    gen_valid = patch.gen_patch_batch(patch_size, valid_img, valid_lbl, batch_size=batch_size,
                                       augmentation_rotation=augmentation_rotation, augmentation_flip=augmentation_flip)
 
     # Train model
@@ -54,12 +54,17 @@ def dice_coef(y_true, y_pred):
     y_pred_f = tf.reshape(y_pred, [-1])
     intersection = tf.reduce_sum(tf.multiply(y_true_f, y_pred_f))
     smooth = 0.0001
-    return 1 - (2. * intersection + smooth) / (tf.reduce_sum(y_true_f) + tf.reduce_sum(y_pred_f) + smooth)
+    return 1. - (2. * intersection + smooth) / (tf.reduce_sum(y_true_f) + tf.reduce_sum(y_pred_f) + smooth)
+    '''
+    y_true_f = tf.cast(tf.reshape(y_true, [-1]), 'float32')
+    y_pred_f = tf.cast(tf.reshape(y_pred, [-1]), 'float32')
+    smooth = 128.
+    '''
 
 
 def dice_coef_multi(n_label):
     def loss(y_true, y_pred):
-        dice = 0
+        dice = 0.
         for index in range(n_label):
             dice += dice_coef(y_true[..., index], y_pred[..., index])
         return dice / n_label

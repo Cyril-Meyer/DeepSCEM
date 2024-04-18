@@ -38,7 +38,6 @@ def create(dim, architecture,
                               op_dim=dim,
                               dropout=0,
                               pool_size=2,
-                              multiple_outputs=False,
                               name=name)
     else:
         raise NotImplementedError

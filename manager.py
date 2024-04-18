@@ -36,9 +36,9 @@ class Manager:
             label = []
             for data in list(self.datasets[name][sample].keys()):
                 if 'image' in data:
-                    image = np.expand_dims(np.array(self.datasets[name][sample][data]), axis=-1)
+                    image = np.expand_dims(np.array(self.datasets[name][sample][data], dtype=np.float32), axis=-1)
                 elif 'label' in data:
-                    label.append(np.array(self.datasets[name][sample][data], dtype=np.float16))
+                    label.append(np.array(self.datasets[name][sample][data], dtype=np.float32))
                 else:
                     raise NotImplementedError
             if image is None or len(label) <= 0:
@@ -139,7 +139,7 @@ class Manager:
                   block_per_level=2,
                   normalization='batchnorm',
                   depth=5,
-                  outputs=2,
+                  outputs=1,
                   activation='sigmoid',
                   name=None):
         if normalization == 'None':
@@ -163,7 +163,7 @@ class Manager:
                     epochs,
                     validation_steps,
                     keep_best=True,
-                    early_stop=True,
+                    early_stop=False,
                     augmentations=(False, False)):
         import tensorflow as tf
         model = self.models[model_index]
@@ -177,7 +177,7 @@ class Manager:
 
         # Load all data in RAM
         train_img, train_lbl = self.get_dataset_data_for_train(dataset_name_train)
-        # Don't load validation data if
+        # Don't load validation data if no validation steps
         if validation_steps is None or validation_steps <= 0:
             valid_img, valid_lbl = None, None
         else:

@@ -11,7 +11,6 @@ class UNet:
                  op_dim=2,
                  dropout=0,
                  pool_size=2,
-                 multiple_outputs=False,
                  name='UNET'):
         self.input_shape = input_shape
         self.depth = depth
@@ -20,10 +19,9 @@ class UNet:
         self.op_dim = op_dim
         self.dropout = dropout
         self.pool_size = pool_size
-        self.multiple_outputs = multiple_outputs
         self.modelname = name
 
-        if op_dim == 2: # default
+        if op_dim == 2:  # default
             self.conv = tf.keras.layers.Conv2D
             self.conv_t = tf.keras.layers.Conv2DTranspose
             self.pool = tf.keras.layers.MaxPool2D
@@ -80,12 +78,7 @@ class UNet:
             X, _ = backbone_decoder(X, i-1)
 
         # output activation
-        if self.multiple_outputs:
-            outputs = []
-            for c in range(self.output_classes):
-                outputs.append(self.conv(1, 1, activation=self.output_activation, name='output_' + str(c+1))(X))
-        else:
-            outputs = self.conv(self.output_classes, 1, activation=self.output_activation, name='output')(X)
+        outputs = self.conv(self.output_classes, 1, activation=self.output_activation, name='output')(X)
 
         model = tf.keras.Model(inputs=inputs, outputs=outputs, name=self.modelname)
         return model
