@@ -368,7 +368,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         if len(choice_sample) < 1:
             choice_sample = f'{time.time():.4f}'.replace('.', '_')
         # Select sample image
-        choice_image, _ = QFileDialog.getOpenFileName(self, 'Select sample image', '', 'Sample (*.tif *.tiff *.npy)')
+        choice_image, _ = QFileDialog.getOpenFileName(self, 'Select sample image', '', 'Sample (*.tif *.tiff)')
         if choice_image == '':
             return
         # Select sample labels
@@ -376,7 +376,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         for i in range(choice_number_label):
             choice_label, _ = QFileDialog.getOpenFileName(self, f'Select sample label {i}. '
                                                                 f'No file will be considered a blank label.',
-                                                          '', 'Sample (*.tif *.tiff *.npy)')
+                                                          '', 'Sample (*.tif *.tiff)')
             choice_labels.append(choice_label)
 
         # Create everything for real
