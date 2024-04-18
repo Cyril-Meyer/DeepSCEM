@@ -42,7 +42,7 @@
        <item>
         <widget class="QLabel" name="label_overlapping">
          <property name="text">
-          <string>Z ignored if 2D model</string>
+          <string/>
          </property>
         </widget>
        </item>
