@@ -503,6 +503,7 @@
   <tabstop>pushButton_model_new</tabstop>
   <tabstop>pushButton_model_train</tabstop>
   <tabstop>pushButton_model_predict</tabstop>
+  <tabstop>pushButton_model_eval</tabstop>
   <tabstop>pushButton_model_save</tabstop>
   <tabstop>listWidget_model</tabstop>
   <tabstop>horizontalSlider_z</tabstop>
