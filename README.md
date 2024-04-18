@@ -222,3 +222,11 @@ Definitions for keywords used in this documentation.
 * pred
   * use infer without pad when it's possible
 * Current code is prone to user input error
+
+#### Know bugs
+
+* unexpected nan dice loss with large 3D patches
+  * create 3D model (default but 16 filter at start)
+  * `python ../run.py --train-model i3-unet-3d-bin-mito.h5 I3-MITO-BIN.hdf5 I3-MITO-BIN.hdf5 Dice 1 96 192 192 128 32 64`
+  * after a few steps, you get a nan loss
+    * `4/128 [..............................] - ETA: 1:13 - loss: nan`
