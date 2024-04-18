@@ -90,7 +90,9 @@ def gen_patch_2d_batch(patch_size, image, label, batch_size,
         yield batch_image, batch_label
 
 
-def gen_patch_3d_batch(patch_size, image, label, batch_size, augmentation_rotation, augmentation_flip, label_indexes, label_indexes_prop):
+def gen_patch_3d_batch(patch_size, image, label, batch_size,
+                       augmentation_rotation, augmentation_flip,
+                       label_indexes, label_indexes_prop):
     n_channel = image[0].shape[-1]
     n_label = label[0].shape[-1]
     image_dtype = image[0].dtype
