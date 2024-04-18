@@ -147,11 +147,6 @@
            <string>Dice</string>
           </property>
          </item>
-         <item>
-          <property name="text">
-           <string>MSE</string>
-          </property>
-         </item>
         </widget>
        </item>
        <item>
