@@ -80,7 +80,6 @@ First, here is an view of the main window and and explanation of the button feat
 14. 3D images Z selector
 15. MainView correspond to the area for data visualization
 
-
 #### Good practice
 ⚠ Never store your dataset and models in the working dir.  
 When working with dataset, DeepSCEM create dataset file in realtime.
@@ -103,6 +102,17 @@ When you close DeepSCEM the unsaved models disappear.
 
 ![image](https://github.com/Cyril-Meyer/DeepSCEM/assets/69190238/e8b6d01d-5f59-47d5-ba5a-b025f23f1f2e)
 
+#### How to train models effectively
+⚠ Advice from someone who has practiced a lot, potentially empirical reasoning.
+
+1. 2D models are very effective, especially if physical data are
+  [registered](https://en.wikipedia.org/wiki/Image_registration).
+   Don't go with 3D model unless you have particular reason.
+2. Size of model is important but not as much important as patch size.
+3. Prefer larger patch size than larger batch size
+4. Always use as large patch as possible for prediction
+   1. Patch size in prediction can be a lot larger than in training as we do
+      not compute gradients.
 
 ### Command line interface
 
@@ -228,6 +238,7 @@ Definitions for keywords used in this documentation.
 #### Know bugs
 
 * unexpected nan loss with large 3D patches (dice and bce experimented)
+  3D models are most time very bad or does not converge, this may not be a bug.
   * create 3D model (default but 16 filter at start)
   * `python ../run.py --train-model i3-unet-3d-bin-mito.h5 i3-unet-3d-bin-mito-train.h5 I3-MITO-BIN.hdf5 I3-MITO-BIN.hdf5 Dice 1 96 192 192 128 32 64`
   * after a few steps, you get a nan loss
