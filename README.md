@@ -122,8 +122,8 @@ List of arguments :
   * `--add-sample I3_EXAMPLE.hdf5 i31 i3_1.tif i3_label_11.tif i3_label_12.tif `
 * Create dataset with samples
   * `--create-dataset I3_EXAMPLE.hdf5 I3 2 --add-sample I3_EXAMPLE.hdf5 i31 i3_1.tif i3_label_11.tif i3_label_12.tif --add-sample I3_EXAMPLE.hdf5 i32 i3_2.tif i3_label_21.tif i3_label_22.tif`
-* Train a model (implementation is a work in progress)
-  * `--train-model i3-unet-3d-bin-mito.h5 I3-MITO-BIN.hdf5 I3-MITO-BIN.hdf5 Dice 1 96 192 192 128 32 64`
+* Train a model
+  * `--train-model i3-unet-3d-bin-mito.h5 i3-unet-3d-bin-mito-train.h5 I3-MITO-BIN.hdf5 I3-MITO-BIN.hdf5 Dice 1 128 128 128 192 32 64`
 
 #### Keywords
 Definitions for keywords used in this documentation.
@@ -199,13 +199,15 @@ Definitions for keywords used in this documentation.
 
 * CLI
   * [x] data
-  * [ ] train
+  * [ ] create model
+  * [x] train
   * [ ] predict
   * [ ] test
   * replace current second stage parser with subparser
 * UI
   * [x] data
   * [x] view
+  * [x] create model
   * [x] train
   * [x] predict
   * [ ] test
@@ -227,6 +229,6 @@ Definitions for keywords used in this documentation.
 
 * unexpected nan dice loss with large 3D patches
   * create 3D model (default but 16 filter at start)
-  * `python ../run.py --train-model i3-unet-3d-bin-mito.h5 I3-MITO-BIN.hdf5 I3-MITO-BIN.hdf5 Dice 1 96 192 192 128 32 64`
+  * `python ../run.py --train-model i3-unet-3d-bin-mito.h5 i3-unet-3d-bin-mito-train.h5 I3-MITO-BIN.hdf5 I3-MITO-BIN.hdf5 Dice 1 96 192 192 128 32 64`
   * after a few steps, you get a nan loss
     * `4/128 [..............................] - ETA: 1:13 - loss: nan`
