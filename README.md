@@ -227,7 +227,7 @@ Definitions for keywords used in this documentation.
 
 #### Know bugs
 
-* unexpected nan dice loss with large 3D patches
+* unexpected nan loss with large 3D patches (dice and bce experimented)
   * create 3D model (default but 16 filter at start)
   * `python ../run.py --train-model i3-unet-3d-bin-mito.h5 i3-unet-3d-bin-mito-train.h5 I3-MITO-BIN.hdf5 I3-MITO-BIN.hdf5 Dice 1 96 192 192 128 32 64`
   * after a few steps, you get a nan loss
