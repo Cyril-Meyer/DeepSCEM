@@ -10,7 +10,7 @@ but also very efficient and configurable for the most advanced users.
 
 ## Quick links
 
-* Download latest release (todo)
+* Download the latest release (todo)
 
 
 ## Bug report 🐛 & Feature request ✨
@@ -39,7 +39,7 @@ For users who prefer a straightforward installation, we provide a binary release
 for Windows.
 Simply download the zip file in [quick links](#quick-links), extract it, and you're ready to go.
 
-If you want to use your GPU and do not know how to install dependecy, check the
+If you want to use your GPU and do not know how to install dependency, check the
 [INSTALL](INSTALL.md) guide.
 
 For more experienced users who want to run DeepSCEM from their own Python setup:
@@ -60,7 +60,7 @@ First, if you are not familiar with deep learning, you may want to check the
 
 ### Graphical user interface
 
-First, here is an view of the main window and and explanation of the button features.
+First, here is a view of the main window and explanation of the button features.
 
 ![image](https://github.com/Cyril-Meyer/DeepSCEM/assets/69190238/5e51e835-df4b-4c63-9871-190958285d8f)
 
@@ -88,7 +88,7 @@ existing files.
 The correct workflow is to export (save) your dataset once you're happy with it.
 
 💡 Save dataset again if something changed.
-The HDF5 format file used with h5py may not release space when samples are removed.
+The HDF5 format file used with `h5py` do not release space when samples are removed.
 
 💡 Use 2D models at first.  
 This is more advice than a good practice, but in our experience, 2D models
@@ -98,7 +98,8 @@ was always better than 3D ones for organelles segmentation.
 Contrary to datasets, models are directly used in memory.
 When you close DeepSCEM the unsaved models disappear.
 
-💡 Overring a widget will show information about it. Example with cursor over "Load model".
+💡 Moving the cursor on a button will show information about its purpose.
+Example with cursor over "Load model".
 
 ![image](https://github.com/Cyril-Meyer/DeepSCEM/assets/69190238/e8b6d01d-5f59-47d5-ba5a-b025f23f1f2e)
 
@@ -108,9 +109,9 @@ When you close DeepSCEM the unsaved models disappear.
 1. 2D models are very effective, especially if physical data are
   [registered](https://en.wikipedia.org/wiki/Image_registration).
    Don't go with 3D model unless you have particular reason.
-2. Size of model is important but not as much important as patch size.
-3. Prefer larger patch size than larger batch size
-4. Always use as large patch as possible for prediction
+2. Size of model is important but not as much important as patch and batch size.
+3. Prefer larger patch size than larger batch size, especially for 2D models.
+4. Always use as large patch as possible for prediction.
    1. Patch size in prediction can be a lot larger than in training as we do
       not compute gradients.
 
@@ -196,14 +197,17 @@ Definitions for keywords used in this documentation.
 
 #### Tested
 
-* [x] 2D binary
-* [x] 2D multiclass
-* [ ] 3D binary
-* [ ] 3D multiclass
-* Loss (tested in binary)
-  * [x] Dice
-* Activation (tested in binary)
+* Models
+  * [x] 2D binary (256 x 256 patches)
+  * [x] 2D multiclass (256 x 256 patches)
+  * [x] 3D binary (32 x 128 x 128 patches, 16-4 model)
+  * [x] 3D multiclass (32 x 128 x 128 patches, 16-4 model)
+* Loss
+  * [x] Dice (binary and multiclass)
+  * [x] CrossEntropy (binary)
+* Activation
   * [x] sigmoid
+  * [x] softmax
 
 #### User Interface
 
@@ -231,12 +235,18 @@ Definitions for keywords used in this documentation.
   * number of labels in data and model can be different and cause problems
   * validation steps set to 0 is not tested yet
   * better early stopping parameters
-* pred
+* prediction
   * use infer without pad when it's possible
 * Current code is prone to user input error
 * UI
   * Unloaded data still in view and user can move z selector and crash software.
 
+#### Documentation
+
+* [ ] user manual for gui (list of functionality)
+* [ ] user manual for cli
+* [ ] tutorials
+* [ ] video tutorials
 
 #### Know bugs
 
