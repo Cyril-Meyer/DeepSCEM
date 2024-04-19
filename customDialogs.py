@@ -6,6 +6,7 @@ from PyQt5.QtWidgets import *
 import window_newmodelui
 import window_trainui
 import window_predui
+import window_evalui
 
 
 class DialogNewModel(QtWidgets.QDialog, window_newmodelui.Ui_Dialog):
@@ -69,3 +70,18 @@ class DialogPred(QtWidgets.QDialog, window_predui.Ui_Dialog):
                 self.checkBox_overlapping.isChecked(),
                 self.checkBox_threshold.isChecked(),
                 self.doubleSpinBox_threshold.value())
+
+
+class DialogEval(QtWidgets.QDialog, window_evalui.Ui_Dialog):
+    def __init__(self, datasets, *args, **kwargs):
+        super(DialogEval, self).__init__(*args, **kwargs)
+        self.setupUi(self)
+
+        self.comboBox_ref.addItems(datasets)
+        self.comboBox_seg.addItems(datasets)
+
+    def get(self):
+        return (self.comboBox_ref.currentText(),
+                self.comboBox_seg.currentText(),
+                self.checkBox_F1.isChecked(),
+                self.checkBox_IoU.isChecked())
