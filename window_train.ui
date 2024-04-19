@@ -147,6 +147,11 @@
            <string>Dice</string>
           </property>
          </item>
+         <item>
+          <property name="text">
+           <string>CrossEntropy</string>
+          </property>
+         </item>
         </widget>
        </item>
        <item>
