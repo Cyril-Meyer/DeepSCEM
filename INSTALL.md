@@ -39,23 +39,23 @@ official documentation.
 If you have a GPU, you may want to use it to make faster training and prediction.
 This guide only work for NVIDIA GPU.
 
-* TensorFlow official documentation
-  * [Install TensorFlow with pip](https://www.tensorflow.org/install/pip)
-  * [🇫🇷 Compatibilité avec les GPU](https://www.tensorflow.org/install/gpu?hl=fr)
-
 ### Windows
-To install GPU you can refer to the
-[NVIDIA CUDA installation guide for Windows](https://docs.nvidia.com/cuda/cuda-installation-guide-microsoft-windows/index.html).
-
 First, you need to have working NVIDIA GPU and its driver installed.
 This is normally the case on your computer.
+We need to install cuda (>=11.2) and cuDNN (>=8.1) for TensorFlow 2.10.
 
-We will install cuda using the
-[Using Conda to Install the CUDA Software](https://docs.nvidia.com/cuda/cuda-installation-guide-microsoft-windows/index.html#using-conda-to-install-the-cuda-software)
-part of the guide which is the most straightforward.
+We will install cuda using
+[conda](https://docs.nvidia.com/cuda/cuda-installation-guide-microsoft-windows/index.html#using-conda-to-install-the-cuda-software).
+We advise you to install miniconda which is the lightest distribution for conda.
 
 1. Install [miniconda](https://docs.anaconda.com/free/miniconda/)
-2. TODO
+2. Start conda prompt
+![miniconda prompt](https://github.com/Cyril-Meyer/DeepSCEM/assets/69190238/6908f7ab-c5ba-404c-9ec6-4ff594afdb50)
+3. Install CUDA
+  * `conda install cudatoolkit==11.3.1`
+4. Install cuDNN
+  * `conda install cudnn==8.2.1`
+5. Run DeepSCEM with miniconda prompt
 
 To check that gpu is used durint training,
 use the task manager performance tab and check
@@ -71,3 +71,10 @@ Python and TensorFlow installed to run DeepSCEM from source code.
 
 * TensorFlow official documentation
   * [Docker ](https://www.tensorflow.org/install/docker)
+
+
+## References
+* [tensorflow.org/install/source/gpu](https://www.tensorflow.org/install/source#gpu)
+* [Install TensorFlow with pip](https://www.tensorflow.org/install/pip)
+* [🇫🇷 Compatibilité avec les GPU](https://www.tensorflow.org/install/gpu?hl=fr)
+* [NVIDIA CUDA installation guide for Windows](https://docs.nvidia.com/cuda/cuda-installation-guide-microsoft-windows/index.html)
