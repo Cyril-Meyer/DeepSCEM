@@ -11,7 +11,8 @@ class UNet:
                  op_dim=2,
                  dropout=0,
                  pool_size=2,
-                 name='UNET'):
+                 name='UNET',
+                 transpose=True):
         self.input_shape = input_shape
         self.depth = depth
         self.output_classes = output_classes
@@ -20,14 +21,17 @@ class UNet:
         self.dropout = dropout
         self.pool_size = pool_size
         self.modelname = name
+        self.transpose = transpose
 
         if op_dim == 2:  # default
             self.conv = tf.keras.layers.Conv2D
             self.conv_t = tf.keras.layers.Conv2DTranspose
+            self.ups = tf.keras.layers.UpSampling2D
             self.pool = tf.keras.layers.MaxPool2D
         elif op_dim == 3:
             self.conv = tf.keras.layers.Conv3D
             self.conv_t = tf.keras.layers.Conv3DTranspose
+            self.ups = tf.keras.layers.UpSampling3D
             self.pool = tf.keras.layers.MaxPool3D
         else:
             raise ValueError
@@ -69,9 +73,15 @@ class UNet:
         for i in range(self.depth - 1,  0, -1):
             # up-sample
             if self.pool_size == 2:
-                X = self.conv_t(encoder_out_depth[i - 1], 2, 2, padding='valid')(X)
+                if self.transpose:
+                    X = self.conv_t(encoder_out_depth[i - 1], 2, 2, padding='valid')(X)
+                else:
+                    X = self.ups(2)(X)
             else:
-                X = self.conv_t(encoder_out_depth[i - 1], 2, self.pool_size, padding='same')(X)
+                if self.transpose:
+                    X = self.conv_t(encoder_out_depth[i - 1], 2, self.pool_size, padding='same')(X)
+                else:
+                    X = self.ups(self.pool_size)(X)
             # concatenate
             X = tf.keras.layers.Concatenate()([X, encoder_out[i - 1]])
             # filters
