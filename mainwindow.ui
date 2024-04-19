@@ -247,10 +247,10 @@
         <item>
          <widget class="QPushButton" name="pushButton_model_eval">
           <property name="toolTip">
-           <string>Evaluate model</string>
+           <string>Evaluate prediction</string>
           </property>
           <property name="statusTip">
-           <string>Evaluate model</string>
+           <string>Evaluate prediction</string>
           </property>
           <property name="text">
            <string/>
