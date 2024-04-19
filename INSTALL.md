@@ -13,8 +13,7 @@ a [GPU](#gpu) if you got one.
 
 💡 If you have somme missing .dll errors, you may need to install
 [Microsoft Visual C++ redistributable](https://learn.microsoft.com/fr-FR/cpp/windows/latest-supported-vc-redist?view=msvc-170)
-as said in the [Install TensorFlow 2](https://www.tensorflow.org/install)
-official documentation.
+as stated in [Install TensorFlow 2 Documentation](https://www.tensorflow.org/install).
 
 
 ## Run from source with Python
@@ -46,22 +45,28 @@ We need to install cuda (>=11.2) and cuDNN (>=8.1) for TensorFlow 2.10.
 
 We will install cuda using
 [conda](https://docs.nvidia.com/cuda/cuda-installation-guide-microsoft-windows/index.html#using-conda-to-install-the-cuda-software).
-We advise you to install miniconda which is the lightest distribution for conda.
+You can install miniconda which is the lightest distribution for conda.
 
 1. Install [miniconda](https://docs.anaconda.com/free/miniconda/)
-2. Start conda prompt
+2. Start conda prompt  
 ![miniconda prompt](https://github.com/Cyril-Meyer/DeepSCEM/assets/69190238/6908f7ab-c5ba-404c-9ec6-4ff594afdb50)
-3. Install CUDA
-  * `conda install cudatoolkit==11.3.1`
-4. Install cuDNN
-  * `conda install cudnn==8.2.1`
-5. Run DeepSCEM with miniconda prompt
+3. Install CUDA and cuDNN `conda install cudatoolkit==11.3.1 cudnn==8.2.1`
+4. Run DeepSCEM with miniconda prompt `DeepSCEM.exe` or `python run.py`
 
 To check that gpu is used durint training,
 use the task manager performance tab and check
 GPU CUDA and memory usage :
 
 ![task-manager-gpu](https://github.com/Cyril-Meyer/DeepSCEM/assets/69190238/239c8b0e-d884-4f21-9887-377a4fb9d8b1)
+
+To use your GPU, the only important thing,
+is to activate a conda environment with cudatoolkit and cudnn installed.
+You can install requirements in the conda environment or
+activate a previously created venv after starting the conda prompt.
+
+Example of my "Windows test" setup :
+
+![image](https://github.com/Cyril-Meyer/DeepSCEM/assets/69190238/60524ee3-0422-4edc-b48b-61aaaf5eb334)
 
 
 ## Docker
