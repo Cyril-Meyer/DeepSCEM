@@ -9,7 +9,7 @@ from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
 from mainwindowui import Ui_MainWindow
-from customDialogs import DialogNewModel, DialogTrain, DialogPred
+from customDialogs import DialogNewModel, DialogTrain, DialogPred, DialogEval
 
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
@@ -347,7 +347,15 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                                target_end=self.dataset_update)
 
     def model_eval_clicked(self):
-        QMessageBox.critical(self, 'Error', f'Evaluation not implemented.')
+        if len(self.manager.get_datasets_index()) <= 0:
+            QMessageBox.information(self, 'Warning', f'No dataset to select.')
+            return
+
+        dialog = DialogEval(self.manager.get_datasets_index(), self)
+        if dialog.exec() == 1:
+            ref, seg, f1, iou = dialog.get()
+
+            QMessageBox.critical(self, 'Error', f'Evaluation not implemented.')
 
     # ----------------------------------------
     # Wizards (multi-step user input)
