@@ -125,6 +125,19 @@ class Manager:
 
     def saveas_dataset(self, name, filename):
         data.copy_dataset(self.datasets[name], filename)
+    
+    def eval_dataset(self, reference_name, segmentation_name, f1=True, iou=False):
+        f1 = {} if f1 else None
+        iou = {} if iou else None
+        ref_ds = self.datasets[reference_name]
+        seg_ds = self.datasets[segmentation_name]
+
+        for sample in ref_ds.keys():
+            if sample in seg_ds.keys():
+                for i in range(ref_ds.attrs['labels']):
+                    continue
+
+        return f1, iou
 
     def load_model(self, filename):
         import tensorflow as tf

@@ -356,6 +356,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             ref, seg, f1, iou = dialog.get()
 
             QMessageBox.critical(self, 'Error', f'Evaluation not implemented.')
+            return
+
+            self.blocking_task(target=self.manager.eval_dataset,
+                               args=(ref, seg, f1, iou),
+                               message='Evaluating...',
+                               wait_end=False)
 
     # ----------------------------------------
     # Wizards (multi-step user input)
