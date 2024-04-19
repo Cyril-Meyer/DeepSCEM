@@ -100,12 +100,14 @@ class Manager:
 
         data.add_sample_to_dataset(dataset, sample_name, sample_image, sample_labels)
 
-    def crop_sample(self, name, sample_name, z_min, z_max, y_min, y_max, x_min, x_max):
+    def crop_sample(self, name, sample_name, z_min, z_max, y_min, y_max, x_min, x_max, new_name=None):
         """
         crop an existing sample.
         """
         dataset = self.datasets[name]
-        data.crop_sample(dataset, sample_name, f'{sample_name}_crop', z_min, z_max, y_min, y_max, x_min, x_max)
+        if new_name is None or new_name == '':
+            new_name = f'{sample_name}_crop_{z_min}_{z_max}_{y_min}_{y_max}_{x_min}_{x_max}'
+        data.crop_sample(dataset, sample_name, new_name, z_min, z_max, y_min, y_max, x_min, x_max)
 
     def remove_dataset(self, name):
         self.datasets[name].close()
