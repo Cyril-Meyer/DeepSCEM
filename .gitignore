@@ -169,3 +169,6 @@ mainwindowui.py
 window_newmodelui.py
 window_trainui.py
 window_predui.py
+
+# archive folder
+__old__/
