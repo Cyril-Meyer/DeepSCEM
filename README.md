@@ -234,6 +234,9 @@ Definitions for keywords used in this documentation.
 * pred
   * use infer without pad when it's possible
 * Current code is prone to user input error
+* UI
+  * Unloaded data still in view and user can move z selector and crash software.
+
 
 #### Know bugs
 
