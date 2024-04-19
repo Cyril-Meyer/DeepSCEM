@@ -72,6 +72,11 @@ class Manager:
             filename = name + '_DeepSCEM.hdf5'
         self.datasets[name] = data.create_dataset(name, labels, filename)
 
+    def rename_dataset(self, name, new_name):
+        dataset = self.datasets.pop(name)
+        dataset.attrs['name'] = new_name
+        self.datasets[new_name] = dataset
+
     def add_sample(self, name, sample_name, sample_image_filename, sample_labels_filenames):
         """
         add a sample composed of multiple files to an existing dataset.

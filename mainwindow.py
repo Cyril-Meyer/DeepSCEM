@@ -150,6 +150,29 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def mainview_slider_changed(self):
         self.mainview_update()
 
+    def dataset_item_rename(self):
+        _, _, selection = self.dataset_get_selection_hierarchy()
+        # nothing selected
+        if len(selection) < 1:
+            return
+        # dataset
+        elif len(selection) == 1:
+            dataset_name = selection[0].text(0)
+
+            new_name, ok = QInputDialog.getText(self, 'New name', 'New dataset name', text=dataset_name)
+            if not ok or len(new_name) <= 0:
+                return
+            if new_name in self.manager.get_datasets_index():
+                QMessageBox.critical(self, 'Warning', f'Name already exist.')
+                return
+
+            self.manager.rename_dataset(dataset_name, new_name)
+
+            self.dataset_update()
+        # sample
+        else:
+            return
+
     def dataset_item_selection_changed(self):
         if self.flag_disable_ui_events:
             return

@@ -976,6 +976,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>treeWidget_dataset</sender>
+   <signal>activated(QModelIndex)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>dataset_item_rename()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>376</x>
+     <y>107</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>397</x>
+     <y>109</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>dataset_load_clicked()</slot>
@@ -997,5 +1013,6 @@
   <slot>menu_help_about_qt_triggered()</slot>
   <slot>sample_crop_clicked()</slot>
   <slot>dataset_load_drop(QUrl)</slot>
+  <slot>dataset_item_rename()</slot>
  </slots>
 </ui>
