@@ -192,8 +192,8 @@ Definitions for keywords used in this documentation.
   * [x] model load
   * [x] predict
   * [x] image prediction with overlap
-* [ ] test
-  * [ ] metrics
+* [x] test
+  * [x] metrics
 
 #### Tested
 
@@ -224,7 +224,7 @@ Definitions for keywords used in this documentation.
   * [x] create model
   * [x] train
   * [x] predict
-  * [ ] test
+  * [x] test
 
 #### Refactoring
 
