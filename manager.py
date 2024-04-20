@@ -3,6 +3,7 @@ import numpy as np
 
 import data
 import model as m
+import metrics
 import pred
 
 
@@ -127,17 +128,30 @@ class Manager:
         data.copy_dataset(self.datasets[name], filename)
     
     def eval_dataset(self, reference_name, segmentation_name, f1=True, iou=False):
-        f1 = {} if f1 else None
-        iou = {} if iou else None
+        results = []
         ref_ds = self.datasets[reference_name]
         seg_ds = self.datasets[segmentation_name]
 
-        for sample in ref_ds.keys():
-            if sample in seg_ds.keys():
-                for i in range(ref_ds.attrs['labels']):
-                    continue
+        if not ref_ds.attrs['labels'] == seg_ds.attrs['labels']:
+            raise ValueError('Datasets number of labels does not match')
 
-        return f1, iou
+        for i in range(ref_ds.attrs['labels']):
+            score_samples = {}
+            for sample in ref_ds.keys():
+                if sample in seg_ds.keys():
+                    ref = np.array(ref_ds[sample][f'label_{i:04}'])
+                    seg = np.array(seg_ds[sample][f'prediction_{i:04}'])
+
+                    scores = {'f1': None, 'iou': None}
+                    if f1:
+                        scores['f1'] = metrics.f1(ref, seg)
+                    if iou:
+                        scores['iou'] = metrics.iou(ref, seg)
+
+                    score_samples[sample] = scores
+            results.append(score_samples)
+
+        return results
 
     def load_model(self, filename):
         import tensorflow as tf

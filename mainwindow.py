@@ -9,7 +9,7 @@ from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
 from mainwindowui import Ui_MainWindow
-from customDialogs import DialogNewModel, DialogTrain, DialogPred, DialogEval
+from customDialogs import DialogNewModel, DialogTrain, DialogPred, DialogEval, DialogEvalRes
 
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
@@ -350,18 +350,16 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         if len(self.manager.get_datasets_index()) <= 0:
             QMessageBox.information(self, 'Warning', f'No dataset to select.')
             return
-
+        # Evaluation dialog
         dialog = DialogEval(self.manager.get_datasets_index(), self)
         if dialog.exec() == 1:
             ref, seg, f1, iou = dialog.get()
+            result = self.manager.eval_dataset(ref, seg, f1, iou)
 
-            QMessageBox.critical(self, 'Error', f'Evaluation not implemented.')
-            return
+            # Evaluation results dialog
+            dialog = DialogEvalRes(result, self)
+            dialog.exec()
 
-            self.blocking_task(target=self.manager.eval_dataset,
-                               args=(ref, seg, f1, iou),
-                               message='Evaluating...',
-                               wait_end=False)
 
     # ----------------------------------------
     # Wizards (multi-step user input)

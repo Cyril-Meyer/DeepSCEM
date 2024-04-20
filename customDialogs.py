@@ -7,6 +7,7 @@ import window_newmodelui
 import window_trainui
 import window_predui
 import window_evalui
+import window_evalresui
 
 
 class DialogNewModel(QtWidgets.QDialog, window_newmodelui.Ui_Dialog):
@@ -85,3 +86,25 @@ class DialogEval(QtWidgets.QDialog, window_evalui.Ui_Dialog):
                 self.comboBox_seg.currentText(),
                 self.checkBox_F1.isChecked(),
                 self.checkBox_IoU.isChecked())
+
+
+class DialogEvalRes(QtWidgets.QDialog, window_evalresui.Ui_Dialog):
+    def __init__(self, result, *args, **kwargs):
+        super(DialogEvalRes, self).__init__(*args, **kwargs)
+        self.setupUi(self)
+
+        csv = 'label,sample,f1,iou\n'
+
+        for i, samples in enumerate(result):
+            label_item = QTreeWidgetItem(self.treeWidget, [str(i)])
+            for sample in samples.keys():
+                score_item = QTreeWidgetItem(label_item, [str(sample)])
+                if samples[sample]['f1'] is not None:
+                    score_item.setText(1, f"{samples[sample]['f1']:.6}")
+                if samples[sample]['iou'] is not None:
+                    score_item.setText(2, f"{samples[sample]['iou']:.6}")
+                csv += f"{i},{sample},{samples[sample]['f1']},{samples[sample]['iou']}\n"
+
+            self.treeWidget.addTopLevelItem(label_item)
+        self.treeWidget.expandAll()
+        self.plainTextEdit.setPlainText(csv)
