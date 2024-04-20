@@ -44,7 +44,13 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     # ----------------------------------------
     def safe_mode_disable(self):
         self.safe = False
-        QMessageBox.information(self, 'Safe mode disabled', f'Safe mode disabled.')
+        QMessageBox.information(self, 'Safe mode disabled', 'Safe mode disabled.')
+
+    def safe_mode_warning(self):
+        QMessageBox.information(self, 'Safe mode', 'This feature is disabled because because of safe mode.\n'
+                                                   'DeepSCEM is currently running in safe mode.\n'
+                                                   'To disable safe mode, use the "Help" menu and click '
+                                                   '"Turn off safe mode".')
 
     # ----------------------------------------
     # Window events
@@ -356,6 +362,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                                target_end=self.dataset_update)
 
     def model_eval_clicked(self):
+        if self.safe:
+            self.safe_mode_warning()
+            return
+
         if len(self.manager.get_datasets_index()) <= 0:
             QMessageBox.information(self, 'Warning', f'No dataset to select.')
             return
