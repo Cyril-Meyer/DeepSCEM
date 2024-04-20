@@ -237,6 +237,9 @@ Definitions for keywords used in this documentation.
   * better early stopping parameters
 * prediction
   * use infer without pad when it's possible
+* test
+  * user can do a lot of bad choice and this will result in crash
+  * related to previous, user cannot compare dataset if it is not label and pred
 * Current code is prone to user input error
 * UI
   * Unloaded data still in view and user can move z selector and crash software.
