@@ -25,6 +25,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.bt_thread = None
         self.bt_worker = None
         self.bt_messagebox = None
+        # Safe Mode
+        self.safe = True
 
     # ----------------------------------------
     # About
@@ -36,6 +38,13 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def menu_help_about_qt_triggered(self):
         QMessageBox.aboutQt(self, 'Qt')
+
+    # ----------------------------------------
+    # Safe mode
+    # ----------------------------------------
+    def safe_mode_disable(self):
+        self.safe = False
+        QMessageBox.information(self, 'Safe mode disabled', f'Safe mode disabled.')
 
     # ----------------------------------------
     # Window events

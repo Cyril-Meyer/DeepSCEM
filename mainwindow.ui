@@ -343,6 +343,7 @@
     </property>
     <addaction name="actionAbout"/>
     <addaction name="actionAbout_Qt"/>
+    <addaction name="actionDisable_safe_mode"/>
    </widget>
    <widget class="QMenu" name="menuData">
     <property name="title">
@@ -395,11 +396,15 @@
    </property>
   </action>
   <action name="actionAbout">
+   <property name="icon">
+    <iconset resource="mainwindow.qrc">
+     <normaloff>:/icons/icons/outline_info_black_48dp.png</normaloff>:/icons/icons/outline_info_black_48dp.png</iconset>
+   </property>
    <property name="text">
     <string>About</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+Space</string>
+    <string>F1</string>
    </property>
   </action>
   <action name="actionNew_model">
@@ -454,6 +459,10 @@
    </property>
   </action>
   <action name="actionAbout_Qt">
+   <property name="icon">
+    <iconset resource="mainwindow.qrc">
+     <normaloff>:/icons/icons/outline_info_black_48dp.png</normaloff>:/icons/icons/outline_info_black_48dp.png</iconset>
+   </property>
    <property name="text">
     <string>About Qt</string>
    </property>
@@ -468,6 +477,15 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+C</string>
+   </property>
+  </action>
+  <action name="actionDisable_safe_mode">
+   <property name="icon">
+    <iconset resource="mainwindow.qrc">
+     <normaloff>:/icons/icons/outline_lock_open_black_48dp.png</normaloff>:/icons/icons/outline_lock_open_black_48dp.png</iconset>
+   </property>
+   <property name="text">
+    <string>Disable safe mode</string>
    </property>
   </action>
  </widget>
@@ -992,6 +1010,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionDisable_safe_mode</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>safe_mode_disable()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>dataset_load_clicked()</slot>
@@ -1014,5 +1048,6 @@
   <slot>sample_crop_clicked()</slot>
   <slot>dataset_load_drop(QUrl)</slot>
   <slot>dataset_item_rename()</slot>
+  <slot>safe_mode_disable()</slot>
  </slots>
 </ui>
