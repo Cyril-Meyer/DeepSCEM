@@ -170,6 +170,7 @@ window_newmodelui.py
 window_trainui.py
 window_predui.py
 window_evalui.py
+window_evalresui.py
 
 # archive folder
 __old__/
