@@ -28,6 +28,7 @@ Before we begin, here is a summary of the section
 * [Usage](#usage) - Learn how to use DeepSCEM effectively
   * [Graphical user interface](#graphical-user-interface) - An overview of the GUI features and how to use them
   * [Command line interface](#command-line-interface) - Use DeepSCEM via command-line commands for advanced users.
+* [Tutorials](#tutorials)
 * [Keywords](#keywords) - A glossary of important terms and keywords
 
 ### [Installation](INSTALL.md)
@@ -104,7 +105,8 @@ Example with cursor over "Load model".
 ![image](https://github.com/Cyril-Meyer/DeepSCEM/assets/69190238/e8b6d01d-5f59-47d5-ba5a-b025f23f1f2e)
 
 #### How to train models effectively
-⚠ Advice from someone who has practiced a lot, potentially empirical reasoning.
+⚠ Advice from someone who has practiced a lot, potentially empirical reasoning
+and biases.
 
 1. 2D models are very effective, especially if physical data are
   [registered](https://en.wikipedia.org/wiki/Image_registration).
@@ -126,6 +128,12 @@ List of arguments :
 * `--add-sample <filename> <name> <image> [<label1> <label2> ...]`  
   Add a sample from image and labels to an existing dataset.
 
+You can use the same arguments multiple times (excepting train),
+for example, you can create 3 dataset calling 3 times `--create-dataset`
+in the same row.
+Whatever the number of arguments and their placement in the command line call,
+they will always be evaluated in the order defined by the list of arguments above.
+
 #### Examples
 * Create an empty dataset `I3_EXAMPLE.hdf5` with name **I3** and requiring **2** labels per sample
   * `--create-dataset I3_EXAMPLE.hdf5 I3 2`
@@ -135,6 +143,16 @@ List of arguments :
   * `--create-dataset I3_EXAMPLE.hdf5 I3 2 --add-sample I3_EXAMPLE.hdf5 i31 i3_1.tif i3_label_11.tif i3_label_12.tif --add-sample I3_EXAMPLE.hdf5 i32 i3_2.tif i3_label_21.tif i3_label_22.tif`
 * Train a model
   * `--train-model i3-unet-3d-bin-mito.h5 i3-unet-3d-bin-mito-train.h5 I3-MITO-BIN.hdf5 I3-MITO-BIN.hdf5 Dice 1 128 128 128 192 32 64`
+
+### Tutorials
+
+The tutorials list below will allow you to familiarize yourself
+with the use of DeepSCEM by focusing on the features that interest you.
+For all tutorials, sample data is also provided if you don't have one.
+
+* [Create a dataset and train your first model](TUTORIALS/TUTO_01.md)
+* [Train models and use it to produce automatic segmentation](TUTORIALS/TUTO_02.md)
+* [Evaluate your segmentation on a test set](TUTORIALS/TUTO_03.md)
 
 #### Keywords
 Definitions for keywords used in this documentation.
@@ -217,14 +235,18 @@ Definitions for keywords used in this documentation.
   * [x] train
   * [ ] predict
   * [ ] test
-  * replace current second stage parser with subparser
 * UI
   * [x] data
+    * [ ] rename
   * [x] view
   * [x] create model
   * [x] train
   * [x] predict
   * [x] test
+  * [ ] safe mode
+    * [x] disable test
+    * [ ] fixed labels
+    * [ ] fixed patch size
 
 #### Refactoring
 

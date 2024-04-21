@@ -186,6 +186,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.dataset_update()
         # sample
         else:
+            # https://docs.h5py.org/en/stable/high/group.html#h5py.Group.move
+            # self.dataset_update()
             return
 
     def dataset_item_selection_changed(self):
