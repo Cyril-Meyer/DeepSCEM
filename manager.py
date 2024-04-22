@@ -266,8 +266,7 @@ class Manager:
                                                    save_best_only=True,
                                                    save_weights_only=False))
         if early_stop:
-            callbacks.append(tf.keras.callbacks.EarlyStopping(start_from_epoch=epochs//10,
-                                                              patience=max(3, epochs//20)))
+            callbacks.append(tf.keras.callbacks.EarlyStopping(patience=max(5, epochs//20)))
 
         # Train model
         import train
