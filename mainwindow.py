@@ -27,6 +27,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.bt_messagebox = None
         # Safe Mode
         self.safe = True
+        self.safe_labels = None
 
     # ----------------------------------------
     # About
