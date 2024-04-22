@@ -44,6 +44,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     # Safe mode
     # ----------------------------------------
     def safe_mode_disable(self):
+        if self.safe is False:
+            return
         self.safe = False
         QMessageBox.information(self, 'Safe mode disabled', 'Safe mode disabled.')
 
@@ -336,16 +338,20 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.dataset_update()
 
     def model_load_clicked(self):
-        filenames, _ = QFileDialog.getOpenFileNames(self, 'Select models', '', 'Model (*.h5)')
+        labels = self.safe_mode_get_labels()
+        filename, _ = QFileDialog.getOpenFileName(self, 'Select model', '', 'Model (*.h5)')
+        if filename is None or filename == '':
+            return
         try:
-            for filename in filenames:
+            if self.safe:
+                self.manager.load_model(filename, labels)
+                self.models_update()
+            else:
                 self.blocking_task(target=self.manager.load_model,
                                    args=(filename,),
                                    message='Loading model...',
                                    target_end=self.models_update,
                                    wait_end=False)
-                # self.manager.load_model(filename)
-            # self.models_update()
         except Exception as e:
             QMessageBox.critical(self, 'Error', f'Model load error.\n{e}')
         return
