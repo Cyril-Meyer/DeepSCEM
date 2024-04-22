@@ -352,6 +352,7 @@
     <addaction name="actionAdd_sample"/>
     <addaction name="actionCrop_sample"/>
     <addaction name="actionRemove_sample"/>
+    <addaction name="actionRename"/>
     <addaction name="actionEvaluate"/>
    </widget>
    <addaction name="menuFile"/>
@@ -486,6 +487,18 @@
    </property>
    <property name="text">
     <string>Disable safe mode</string>
+   </property>
+  </action>
+  <action name="actionRename">
+   <property name="icon">
+    <iconset resource="mainwindow.qrc">
+     <normaloff>:/icons/icons/outline_edit_black_48dp.png</normaloff>:/icons/icons/outline_edit_black_48dp.png</iconset>
+   </property>
+   <property name="text">
+    <string>Rename</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+R</string>
    </property>
   </action>
  </widget>
@@ -1015,6 +1028,22 @@
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>safe_mode_disable()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionRename</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>dataset_item_rename()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
