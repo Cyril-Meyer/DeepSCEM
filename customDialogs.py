@@ -11,9 +11,12 @@ import window_evalresui
 
 
 class DialogNewModel(QtWidgets.QDialog, window_newmodelui.Ui_Dialog):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, labels=None, *args, **kwargs):
         super(DialogNewModel, self).__init__(*args, **kwargs)
         self.setupUi(self)
+        if labels is not None:
+            self.spinBox_outputs.setValue(labels)
+            self.spinBox_outputs.setEnabled(False)
 
     def get(self):
         return (self.comboBox_dimension.currentText(),

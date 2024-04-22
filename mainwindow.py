@@ -57,12 +57,16 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         else:
             return None
 
-    def safe_mode_set_labels(self):
-        ok = False
-        while not ok:
-            choice_number_label, ok = QInputDialog.getInt(self, 'Safe mode', 'Number of labels', 1, 0, 1000)
+    def safe_mode_set_labels(self, labels=None):
+        if labels is None:
+            ok = False
+            while not ok:
+                choice_number_label, ok = QInputDialog.getInt(self, 'Safe mode', 'Number of labels', 1, 0, 1000)
 
-        self.safe_labels = choice_number_label
+            self.safe_labels = choice_number_label
+        else:
+            labels = max(0, int(labels))
+            self.safe_labels = labels
 
     def safe_mode_warning(self):
         QMessageBox.information(self, 'Safe mode', 'This feature is disabled because because of safe mode.\n'
@@ -347,16 +351,19 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         return
 
     def model_new_clicked(self):
-        dialog = DialogNewModel(self)
+        labels = self.safe_labels if self.safe else None
+        dialog = DialogNewModel(labels, self)
         if dialog.exec() == 1:
-            a0, a1, a2, a3, a4, a5, a6, a7, a8, a9 = dialog.get()
+            a0, a1, a2, a3, a4, a5, a6, a7, outputs, a9 = dialog.get()
             self.blocking_task(target=self.manager.new_model,
-                               args=(a0, a1, a2, a3, a4, a5, a6, a7, a8, a9),
+                               args=(a0, a1, a2, a3, a4, a5, a6, a7, outputs, a9),
                                message='Creating model...',
                                target_end=self.models_update,
                                wait_end=False)
             # self.manager.new_model(a0, a1, a2, a3, a4, a5, a6, a7, a8, a9)
             # self.models_update()
+            if self.safe and self.safe_labels is None:
+                self.safe_labels = outputs
 
     def model_save_clicked(self):
         index = self.listWidget_model.currentRow()
@@ -427,7 +434,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             # Evaluation results dialog
             dialog = DialogEvalRes(result, self)
             dialog.exec()
-
 
     # ----------------------------------------
     # Wizards (multi-step user input)
