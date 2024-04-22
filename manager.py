@@ -179,10 +179,20 @@ class Manager:
 
         return results
 
-    def load_model(self, filename):
+    def load_model(self, filename, labels=None):
         import tensorflow as tf
 
         model = tf.keras.models.load_model(filename, compile=False)
+
+        if len(model.input_shape) != len(model.output_shape):
+            raise AssertionError(f'Model shapes error. Input and output shapes does not match.\n{filename}')
+        if not (4 <= len(model.input_shape) <= 5):
+            raise AssertionError(f'Model shapes error. Input shape is not 2D or 3D.\n{filename}')
+        if not model.input_shape[-1] == 1:
+            raise AssertionError(f'Model shapes error. Input shape chan is not equal to 1.\n{filename}')
+        if labels is not None and model.output_shape[-1] != labels:
+            raise AssertionError(f'Model output label do not match expected labels.\n{filename}')
+
         self.models.append(model)
 
     def save_model(self, index, filename):
