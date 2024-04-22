@@ -169,6 +169,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         _, _, selection = self.dataset_get_selection_hierarchy()
         # nothing selected
         if len(selection) < 1:
+            QMessageBox.information(self, 'Warning', f'No dataset or sample selected.')
             return
         # dataset
         elif len(selection) == 1:
@@ -182,13 +183,21 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 return
 
             self.manager.rename_dataset(dataset_name, new_name)
-
             self.dataset_update()
         # sample
         else:
-            # https://docs.h5py.org/en/stable/high/group.html#h5py.Group.move
-            # self.dataset_update()
-            return
+            dataset_name = selection[-1].text(0)
+            sample_name = selection[-2].text(0)
+
+            new_name, ok = QInputDialog.getText(self, 'New name', 'New sample name', text=sample_name)
+            if not ok or len(new_name) <= 0:
+                return
+            if new_name in self.manager.get_dataset_samples(dataset_name, info=False):
+                QMessageBox.critical(self, 'Warning', f'Name already exist.')
+                return
+
+            self.manager.rename_sample(dataset_name, sample_name, new_name)
+            self.dataset_update()
 
     def dataset_item_selection_changed(self):
         if self.flag_disable_ui_events:

@@ -24,10 +24,13 @@ class Manager:
     def get_sample(self, dataset, sample):
         return self.datasets[dataset][sample]
 
-    def get_dataset_samples(self, name):
+    def get_dataset_samples(self, name, info=True):
         sample_info = []
         for sample in list(self.datasets[name].keys()):
-            sample_info.append((sample, list(self.datasets[name][sample].keys())))
+            if info:
+                sample_info.append((sample, list(self.datasets[name][sample].keys())))
+            else:
+                sample_info.append(sample)
         return sample_info
 
     def get_dataset_data_for_train(self, name):
@@ -77,6 +80,12 @@ class Manager:
         dataset = self.datasets.pop(name)
         dataset.attrs['name'] = new_name
         self.datasets[new_name] = dataset
+
+    def rename_sample(self, dataset_name, sample_name, new_name):
+        dataset = self.datasets[dataset_name]
+        # https://docs.h5py.org/en/stable/high/group.html#h5py.Group.move
+        dataset.move(sample_name, new_name)
+        dataset.flush()
 
     def add_sample(self, name, sample_name, sample_image_filename, sample_labels_filenames):
         """
