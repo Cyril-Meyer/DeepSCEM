@@ -13,7 +13,7 @@ from customDialogs import DialogNewModel, DialogTrain, DialogPred, DialogEval, D
 
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
-    def __init__(self, *args, obj=None, **kwargs):
+    def __init__(self, safe=True, *args, **kwargs):
         super(MainWindow, self).__init__(*args, **kwargs)
         self.setupUi(self)
         self.mainLayout.setStretch(0, 0)
@@ -26,7 +26,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.bt_worker = None
         self.bt_messagebox = None
         # Safe Mode
-        self.safe = True
+        self.safe = safe
         self.safe_labels = None
 
     # ----------------------------------------

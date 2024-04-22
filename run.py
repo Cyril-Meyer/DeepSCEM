@@ -23,6 +23,7 @@ parser.add_argument('--train-model', type=str, nargs='+',
                          '<loss> <batch_size>'
                          '<patch_size_z> <patch_size_y> <patch_size_x>'
                          '<steps_per_epoch> <epochs> <validation_steps>')
+parser.add_argument('--gui-no-safe', action='store_true')
 args = parser.parse_args()
 
 # create dataset module
@@ -84,9 +85,9 @@ if args.train_model:
     manager.save_model(0, train_args.model_output)
 
 # no args = graphical mode
-if not len(sys.argv) > 1:
+if not len(sys.argv) > 1 or args.gui_no_safe:
     app = QtWidgets.QApplication(sys.argv)
 
-    window = MainWindow()
+    window = MainWindow(safe=(not args.gui_no_safe))
     window.show()
     app.exec()
