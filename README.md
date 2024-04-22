@@ -237,7 +237,7 @@ Definitions for keywords used in this documentation.
   * [ ] test
 * UI
   * [x] data
-    * [ ] rename
+    * [x] rename
   * [x] view
   * [x] create model
   * [x] train
