@@ -385,7 +385,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         dialog = DialogEval(self.manager.get_datasets_index(), self)
         if dialog.exec() == 1:
             ref, seg, f1, iou = dialog.get()
-            result = self.manager.eval_dataset(ref, seg, f1, iou)
+
+            try:
+                result = self.manager.eval_dataset(ref, seg, f1, iou)
+            except Exception as e:
+                QMessageBox.critical(self, 'Error', f'{e}')
+                return
 
             # Evaluation results dialog
             dialog = DialogEvalRes(result, self)

@@ -148,8 +148,21 @@ class Manager:
             score_samples = {}
             for sample in ref_ds.keys():
                 if sample in seg_ds.keys():
-                    ref = np.array(ref_ds[sample][f'label_{i:04}'])
-                    seg = np.array(seg_ds[sample][f'prediction_{i:04}'])
+                    ref_samples_data = '\t'.join(list(ref_ds[sample].keys()))
+                    if 'label_' in ref_samples_data:
+                        ref = np.array(ref_ds[sample][f'label_{i:04}'])
+                    elif 'prediction_' in ref_samples_data:
+                        ref = np.array(ref_ds[sample][f'prediction__{i:04}'])
+                    else:
+                        raise ValueError('Reference do not have label or prediction')
+
+                    seg_samples_data = '\t'.join(list(seg_ds[sample].keys()))
+                    if 'prediction_' in seg_samples_data:
+                        seg = np.array(seg_ds[sample][f'prediction__{i:04}'])
+                    elif 'label_' in seg_samples_data:
+                        seg = np.array(seg_ds[sample][f'label_{i:04}'])
+                    else:
+                        raise ValueError('Segmentation do not have label or prediction')
 
                     scores = {'f1': None, 'iou': None}
                     if f1:
