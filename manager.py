@@ -58,11 +58,15 @@ class Manager:
             models.append(f'{model.name} {model.input_shape} > {model.output_shape}')
         return models
 
-    def load_dataset(self, filename):
+    def load_dataset(self, filename, labels=None):
         """
         load a dataset from an existing file.
         """
         dataset = data.read_dataset(filename)
+
+        if labels is not None and int(dataset.attrs['labels']) != labels:
+            raise AssertionError(f'Labels attribute in dataset do not match expected labels.\n{filename}')
+
         if dataset.attrs['name'] in self.datasets.keys():
             raise ValueError(f'A dataset with same name already exist.\n{filename}')
         self.datasets[dataset.attrs['name']] = dataset

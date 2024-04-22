@@ -47,6 +47,23 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.safe = False
         QMessageBox.information(self, 'Safe mode disabled', 'Safe mode disabled.')
 
+    def safe_mode_get_labels(self):
+        if self.safe:
+            if self.safe_labels is None:
+                self.safe_mode_set_labels()
+            self.statusbar.showMessage(f'Safe mode enabled. DeepSCEM is locked in {self.safe_labels} '
+                                       f'{"classes" if self.safe_labels > 1 else "class"} mode.')
+            return self.safe_labels
+        else:
+            return None
+
+    def safe_mode_set_labels(self):
+        ok = False
+        while not ok:
+            choice_number_label, ok = QInputDialog.getInt(self, 'Safe mode', 'Number of labels', 1, 0, 1000)
+
+        self.safe_labels = choice_number_label
+
     def safe_mode_warning(self):
         QMessageBox.information(self, 'Safe mode', 'This feature is disabled because because of safe mode.\n'
                                                    'DeepSCEM is currently running in safe mode.\n'
@@ -235,30 +252,44 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.dataset_new_manager(choice_dataset, choice_number_label)
             self.dataset_update()
 
+    def dataset_load(self, filename):
+        labels = None
+        if self.safe:
+            labels = self.safe_labels
+
+        try:
+            name = self.manager.load_dataset(filename, labels)
+        except AssertionError as e:
+            QMessageBox.critical(self, 'Error', f'Safe mode dataset load error. '
+                                                f'Disable safe mode to load datasets with different number of classes. '
+                                                f'\n{e}')
+            return
+        except Exception as e:
+            QMessageBox.critical(self, 'Error', f'Dataset load error.\n{e}')
+            return
+
+        if self.safe and self.safe_labels is None:
+            labels = self.manager.get_datasets_number_labels(name)
+            self.safe_labels = labels
+
     def dataset_load_clicked(self):
         filenames, _ = QFileDialog.getOpenFileNames(self, 'Select datasets', '', 'Datasets (*.hdf5)')
-        try:
-            for filename in filenames:
-                self.manager.load_dataset(filename)
-            self.dataset_update()
-        except Exception as e:
-            QMessageBox.critical(self, 'Error', f'Dataset load error.\n{e}')
-            self.dataset_update()
+
+        for filename in filenames:
+            self.dataset_load(filename)
+        self.dataset_update()
 
     def dataset_load_drop(self, url):
-        try:
-            file = url.toLocalFile()
-            self.manager.load_dataset(file)
-            self.dataset_update()
-        except Exception as e:
-            QMessageBox.critical(self, 'Error', f'Dataset load error.\n{e}')
-            self.dataset_update()
+        file = url.toLocalFile()
+        self.dataset_load(file)
+        self.dataset_update()
 
     def dataset_unload_clicked(self):
         text, index = self.dataset_get_selection()
         if index >= 0 and text is not None:
             self.manager.remove_dataset(text)
             self.dataset_update()
+            self.view_selection = None
         else:
             QMessageBox.information(self, 'Warning', f'No dataset selected.')
 
@@ -295,6 +326,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         else:
             try:
                 self.manager.remove_sample(dataset=texts[-1], sample=texts[-2])
+                self.view_selection = None
             except Exception as e:
                 QMessageBox.critical(self, 'Error', f'{e}')
         self.dataset_update()
@@ -408,10 +440,14 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         if len(choice_dataset) < 1:
             choice_dataset = f'{time.time():.4f}'.replace('.', '_')
 
-        choice_number_label, ok = QInputDialog.getInt(self, 'New Dataset', 'Number of labels per sample', 1, 0, 1000)
+        if self.safe:
+            choice_number_label = self.safe_mode_get_labels()
+            ok = True
+        else:
+            choice_number_label, ok = QInputDialog.getInt(self, 'New Dataset', 'Number of labels per sample', 1, 0, 1000)
 
-        if not ok:
-            return None, None, ok
+            if not ok:
+                return None, None, ok
 
         return choice_dataset, choice_number_label, ok
 
