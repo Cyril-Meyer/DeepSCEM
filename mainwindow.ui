@@ -488,6 +488,9 @@
    <property name="text">
     <string>Disable safe mode</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl++</string>
+   </property>
   </action>
   <action name="actionRename">
    <property name="icon">
