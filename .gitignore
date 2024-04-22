@@ -174,3 +174,7 @@ window_evalresui.py
 
 # archive folder
 __old__/
+
+# Build
+DeepSCEM-bin/
+DeepSCEM-build/
