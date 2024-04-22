@@ -156,13 +156,13 @@ class Manager:
                     if 'label_' in ref_samples_data:
                         ref = np.array(ref_ds[sample][f'label_{i:04}'])
                     elif 'prediction_' in ref_samples_data:
-                        ref = np.array(ref_ds[sample][f'prediction__{i:04}'])
+                        ref = np.array(ref_ds[sample][f'prediction_{i:04}'])
                     else:
                         raise ValueError('Reference do not have label or prediction')
 
                     seg_samples_data = '\t'.join(list(seg_ds[sample].keys()))
                     if 'prediction_' in seg_samples_data:
-                        seg = np.array(seg_ds[sample][f'prediction__{i:04}'])
+                        seg = np.array(seg_ds[sample][f'prediction_{i:04}'])
                     elif 'label_' in seg_samples_data:
                         seg = np.array(seg_ds[sample][f'label_{i:04}'])
                     else:
@@ -266,7 +266,8 @@ class Manager:
                                                    save_best_only=True,
                                                    save_weights_only=False))
         if early_stop:
-            callbacks.append(tf.keras.callbacks.EarlyStopping())
+            callbacks.append(tf.keras.callbacks.EarlyStopping(start_from_epoch=epochs//10,
+                                                              patience=max(3, epochs//20)))
 
         # Train model
         import train
