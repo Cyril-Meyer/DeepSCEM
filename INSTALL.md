@@ -30,6 +30,9 @@ as stated in [Install TensorFlow 2 Documentation](https://www.tensorflow.org/ins
   * `pip install -U pip setuptools wheel`
 * Install requirements
   * `pip install tensorflow==2.10.1 h5py PyQt5 pyqt5-tools tifffile tqdm matplotlib numpy imagecodecs`
+* Generate `*_ui.py` files
+  * windows `convert_ui_py.bat`
+  * linux `./convert_ui_py.sh`
 * Run DeepSCEM
   * `python run.py`
 
