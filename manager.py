@@ -110,7 +110,7 @@ class Manager:
                 sample_label = np.zeros(sample_image.shape, dtype=np.uint8)
             else:
                 try:
-                    sample_label = data.read_image(choice_label, dtype=np.uint8)
+                    sample_label = data.read_image(choice_label, dtype=np.uint8, binarize=True)
                     if not sample_image.shape == sample_label.shape:
                         raise Exception(f'Label shape does not match image shape.')
                 except Exception as e:

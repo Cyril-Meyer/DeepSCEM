@@ -3,7 +3,7 @@ import tifffile
 import h5py
 
 
-def read_image(filename, dtype=np.float32, normalize=False):
+def read_image(filename, dtype=np.float32, normalize=False, binarize=False):
     """
     read an image file into a numpy array with specific dtype and normalize option.
     """
@@ -18,6 +18,9 @@ def read_image(filename, dtype=np.float32, normalize=False):
     # normalize value in range [0, 1].
     if normalize:
         data = (data - data.min()) / (data.max() - data.min())
+    # binarize value in {0, 1}.
+    if binarize:
+        data = (data > 0).astype(dtype)
     # convert 2D array into 3D array.
     if len(data.shape) == 2:
         data = np.expand_dims(data, axis=0)
