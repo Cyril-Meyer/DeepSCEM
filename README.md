@@ -248,6 +248,8 @@ Definitions for keywords used in this documentation.
 #### Refactoring
 
 * data
+  * choice to load data as float16 or float32
+  * alert when label is not in {0, 1}
   * need to set number of labels in the dataset file attribute
     * added, but not checked yet
 * train
