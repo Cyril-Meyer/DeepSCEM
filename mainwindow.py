@@ -321,6 +321,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.manager.distance_transform(text)
         else:
             QMessageBox.information(self, 'Warning', f'No dataset selected.')
+        self.dataset_update()
 
     def sample_add_clicked(self):
         self.sample_add_wizard()
