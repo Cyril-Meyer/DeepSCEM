@@ -47,6 +47,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         if self.safe is False:
             return
         self.safe = False
+        self.actionDistance_transform.setEnabled(True)
         QMessageBox.information(self, 'Safe mode disabled', 'Safe mode disabled.')
 
     def safe_mode_get_labels(self):
@@ -307,6 +308,17 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 if not (filename.endswith('.h5') or filename.endswith('.hdf5')):
                     filename += '.hdf5'
                 self.manager.saveas_dataset(text, filename)
+        else:
+            QMessageBox.information(self, 'Warning', f'No dataset selected.')
+
+    def dataset_distance_transform(self):
+        if self.safe:
+            self.safe_mode_warning()
+            return
+
+        text, index = self.dataset_get_selection()
+        if index >= 0 and text is not None:
+            self.manager.distance_transform(text)
         else:
             QMessageBox.information(self, 'Warning', f'No dataset selected.')
 

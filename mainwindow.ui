@@ -323,7 +323,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -354,6 +354,7 @@
     <addaction name="actionRemove_sample"/>
     <addaction name="actionRename"/>
     <addaction name="actionEvaluate"/>
+    <addaction name="actionDistance_transform"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuData"/>
@@ -504,6 +505,14 @@
     <string>Ctrl+R</string>
    </property>
   </action>
+  <action name="actionDistance_transform">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Distance transform</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
@@ -553,8 +562,8 @@
    <slot>dataset_load_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>258</x>
-     <y>55</y>
+     <x>271</x>
+     <y>54</y>
     </hint>
     <hint type="destinationlabel">
      <x>244</x>
@@ -585,8 +594,8 @@
    <slot>sample_add_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>326</x>
-     <y>55</y>
+     <x>339</x>
+     <y>54</y>
     </hint>
     <hint type="destinationlabel">
      <x>313</x>
@@ -793,8 +802,8 @@
    <slot>model_load_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>130</x>
-     <y>370</y>
+     <x>133</x>
+     <y>368</y>
     </hint>
     <hint type="destinationlabel">
      <x>268</x>
@@ -809,8 +818,8 @@
    <slot>model_new_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>164</x>
-     <y>370</y>
+     <x>167</x>
+     <y>368</y>
     </hint>
     <hint type="destinationlabel">
      <x>331</x>
@@ -825,8 +834,8 @@
    <slot>model_train_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>245</x>
-     <y>370</y>
+     <x>253</x>
+     <y>368</y>
     </hint>
     <hint type="destinationlabel">
      <x>252</x>
@@ -841,8 +850,8 @@
    <slot>model_pred_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>326</x>
-     <y>370</y>
+     <x>339</x>
+     <y>368</y>
     </hint>
     <hint type="destinationlabel">
      <x>365</x>
@@ -857,8 +866,8 @@
    <slot>model_save_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>394</x>
-     <y>370</y>
+     <x>407</x>
+     <y>368</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -1058,6 +1067,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionDistance_transform</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>dataset_distance_transform()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>dataset_load_clicked()</slot>
@@ -1081,5 +1106,6 @@
   <slot>dataset_load_drop(QUrl)</slot>
   <slot>dataset_item_rename()</slot>
   <slot>safe_mode_disable()</slot>
+  <slot>dataset_distance_transform()</slot>
  </slots>
 </ui>
