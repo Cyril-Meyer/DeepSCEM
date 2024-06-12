@@ -152,6 +152,11 @@
            <string>CrossEntropy</string>
           </property>
          </item>
+         <item>
+          <property name="text">
+           <string>MeanSquaredError</string>
+          </property>
+         </item>
         </widget>
        </item>
        <item>

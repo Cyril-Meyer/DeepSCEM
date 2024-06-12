@@ -60,6 +60,8 @@ def get_loss(name, n_classes=1):
         return dice_coef_multi(n_classes) if n_classes > 1 else dice_coef
     elif name == 'CROSSENTROPY':
         return tf.keras.losses.CategoricalCrossentropy() if n_classes > 1 else tf.keras.losses.BinaryCrossentropy()
+    elif name == 'MEANSQUAREDERROR':
+        return tf.keras.losses.MeanSquaredError()
     else:
         raise NotImplementedError
 
