@@ -5,6 +5,7 @@ import data
 import model as m
 import metrics
 import pred
+import transform
 
 
 class Manager:
@@ -178,6 +179,14 @@ class Manager:
             results.append(score_samples)
 
         return results
+
+    def distance_transform(self, name):
+        dataset = self.datasets[name]
+
+        for sample in list(self.datasets[name].keys()):
+            for data in list(self.datasets[name][sample].keys()):
+                if 'label' in data:
+                    self.datasets[name][sample][data+'_dt'] = transform.label_dt(np.array(self.datasets[name][sample][data]))
 
     def load_model(self, filename, labels=None):
         import tensorflow as tf
