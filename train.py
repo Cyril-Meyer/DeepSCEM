@@ -1,17 +1,35 @@
 import tensorflow as tf
+import numpy as np
 
 import patch
 
 
 def train_model(model, dataset_train, dataset_valid, loss,
-                batch_size, patch_size, steps_per_epoch, epochs, validation_steps, callbacks, augmentations):
+                batch_size, patch_size, steps_per_epoch, epochs, validation_steps, callbacks, augmentations,
+                label_focus=True):
     augmentation_rotation, augmentation_flip = augmentations
     # validation = False if (validation_steps is None or validation_steps <= 0) else True
     train_img, train_lbl = dataset_train
     valid_img, valid_lbl = dataset_valid
+    # label focus on train
+    train_lbl_id = None
+    if label_focus:
+        train_lbl_id = []
+        for i in range(len(train_lbl)):
+            lbl_id = []
+            for cla in range(train_lbl[i].shape[-1]):
+                lbl_id.append(np.argwhere(train_lbl[i][:, :, :, cla] > 0))
+            train_lbl_id.append(lbl_id)
+            '''
+            lbl_id = patch.create_label_indexes(train_lbl[i], patch_size)
+            for j in range(len(lbl_id)):
+                np.random.shuffle(lbl_id[j])
+            train_lbl_id.append(lbl_id)
+            '''
     # Create patch generators
     gen_train = patch.gen_patch_batch(patch_size, train_img, train_lbl, batch_size=batch_size,
-                                      augmentation_rotation=augmentation_rotation, augmentation_flip=augmentation_flip)
+                                      augmentation_rotation=augmentation_rotation, augmentation_flip=augmentation_flip,
+                                      label_indexes=train_lbl_id, label_indexes_prop=0.75)
     gen_valid = patch.gen_patch_batch(patch_size, valid_img, valid_lbl, batch_size=batch_size,
                                       augmentation_rotation=augmentation_rotation, augmentation_flip=augmentation_flip)
 
