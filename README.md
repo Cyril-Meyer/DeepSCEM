@@ -182,6 +182,7 @@ Definitions for keywords used in this documentation.
     * `numpy` : linear algebra and arrays
     * `matplotlib` : view outside user interface, may be used for debug
     * `tqdm` : command line progress view
+    * `edt` : euclidean distance transform
   * Data
     * `h5py` : read and write HDF5 files (our dataset format)
     * `tifffile` : read and write `.tif` and `.tiff` files
@@ -190,7 +191,7 @@ Definitions for keywords used in this documentation.
     * `PyQt5` : Qt5 Python bindings for GUI
     * `pyqt5-tools` : PyQt5 tools (designer)
       * required to run `pyqt5-tools designer`
-  * Install everything `pip install h5py imagecodecs PyQt5 pyqt5-tools tifffile tqdm matplotlib numpy`
+  * Install everything `pip install edt h5py imagecodecs PyQt5 pyqt5-tools tifffile tqdm matplotlib numpy`
 * PyInstaller
   * Packaged DeepSCEM app without installing a Python interpreter or any modules
   * `pip install pyinstaller` : only for binary release
