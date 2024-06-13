@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>402</width>
-    <height>403</height>
+    <height>428</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -124,6 +124,13 @@
         <widget class="QLabel" name="label_augmentation_2">
          <property name="text">
           <string/>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_label_focus">
+         <property name="text">
+          <string>Label focus</string>
          </property>
         </widget>
        </item>
@@ -294,6 +301,16 @@
          </property>
          <property name="checked">
           <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="spinBox_label_focus">
+         <property name="suffix">
+          <string> %</string>
+         </property>
+         <property name="maximum">
+          <number>100</number>
          </property>
         </widget>
        </item>

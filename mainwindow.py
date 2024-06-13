@@ -408,9 +408,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         dialog = DialogTrain(self.manager.get_datasets_index(), self.manager.get_models_list(), self)
         if dialog.exec() == 1:
-            model_index, a0, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, augmentations = dialog.get()
+            model_index, a0, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, augmentations, focus = dialog.get()
             self.blocking_task(target=self.manager.train_model,
-                               args=(model_index, a0, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, augmentations),
+                               args=(model_index, a0, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, augmentations, focus),
                                message='Training model...')
             # self.manager.train_model(model_index, a0, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12)
 

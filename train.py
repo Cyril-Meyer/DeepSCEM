@@ -6,14 +6,14 @@ import patch
 
 def train_model(model, dataset_train, dataset_valid, loss,
                 batch_size, patch_size, steps_per_epoch, epochs, validation_steps, callbacks, augmentations,
-                label_focus=True):
+                label_focus=0):
     augmentation_rotation, augmentation_flip = augmentations
     # validation = False if (validation_steps is None or validation_steps <= 0) else True
     train_img, train_lbl = dataset_train
     valid_img, valid_lbl = dataset_valid
     # label focus on train
     train_lbl_id = None
-    if label_focus:
+    if label_focus > 0:
         train_lbl_id = []
         for i in range(len(train_lbl)):
             lbl_id = []

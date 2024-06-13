@@ -54,7 +54,8 @@ class DialogTrain(QtWidgets.QDialog, window_trainui.Ui_Dialog):
                 self.spinBox_validation_steps.value(),
                 self.checkBox_keep_best.isChecked(),
                 self.checkBox_early_stopping.isChecked(),
-                (self.checkBox_rot.isChecked(),  self.checkBox_flip.isChecked()))
+                (self.checkBox_rot.isChecked(),  self.checkBox_flip.isChecked()),
+                self.spinBox_label_focus.value())
 
 
 class DialogPred(QtWidgets.QDialog, window_predui.Ui_Dialog):
