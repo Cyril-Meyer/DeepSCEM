@@ -278,12 +278,17 @@ class Manager:
         if early_stop:
             callbacks.append(tf.keras.callbacks.EarlyStopping(patience=max(5, epochs//20)))
 
+        callbacks.append(tf.keras.callbacks.ReduceLROnPlateau(monitor='val_loss', factor=0.5, patience=3, verbose=1))
+
         # Train model
         import train
         loss = train.get_loss(loss, n_classes)
+        t0 = time.time()
         model = train.train_model(model, (train_img, train_lbl), (valid_img, valid_lbl),
                                   loss, batch_size, patch_size, steps_per_epoch, epochs,
                                   validation_steps, callbacks, augmentations, label_focus)
+        t1 = time.time()
+        print(f'training duration: {int(t1 - t0)} s')
 
         self.models[model_index] = model
 
