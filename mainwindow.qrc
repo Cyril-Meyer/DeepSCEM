@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="icons">
+    <file>icons/screenshot_monitor_black_48dp.png</file>
     <file>icons/outline_info_black_48dp.png</file>
     <file>icons/outline_lock_black_48dp.png</file>
     <file>icons/outline_lock_open_black_48dp.png</file>
