@@ -273,6 +273,9 @@ Definitions for keywords used in this documentation.
 
 #### Know bugs
 
+* prediction padding when matching shapes
+  * usage of `pred.infer_pad` should be replaced with a `infer` when precondition
+    are met.
 * unexpected nan loss with large 3D patches (dice and bce experimented)
   3D models are most time very bad or does not converge, this may not be a bug.
   * create 3D model (default but 16 filter at start)
