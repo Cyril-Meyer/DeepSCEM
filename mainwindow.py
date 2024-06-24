@@ -132,6 +132,14 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                                                 Qt.KeepAspectRatio)
         self.label_mainview.setPixmap(qImg)
 
+    def screenshot(self):
+        img = self.label_mainview.pixmap()
+        if img is not None:
+            if img.save(f'{time.time():.4f}'.replace('.', '_') + '.png'):
+                return
+
+        QMessageBox.information(self, 'Warning', f'Nothing to screenshot.')
+
     def dataset_update(self):
         self.flag_disable_ui_events = True
         self.treeWidget_dataset.clear()
