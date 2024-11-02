@@ -35,10 +35,27 @@ class DialogTrain(QtWidgets.QDialog, window_trainui.Ui_Dialog):
     def __init__(self, datasets, models, *args, **kwargs):
         super(DialogTrain, self).__init__(*args, **kwargs)
         self.setupUi(self)
+        self.models = models
 
-        self.comboBox_model.addItems(models)
+        models_str = []
+        for model in self.models:
+            models_str.append(f'{model[0]} {model[1]} {model[2]}')
+
+        self.comboBox_model.addItems(models_str)
         self.comboBox_dataset_train.addItems(datasets)
         self.comboBox_dataset_valid.addItems(datasets)
+
+    def model_changed(self, model_index):
+        if len(self.models[model_index][1]) == 4:
+            self.label_patch_size.setText('Patch size (Y, X)')
+            self.spinBox_patch_size_z.setEnabled(False)
+            # self.spinBox_patch_size_z.setVisible(False)
+        elif len(self.models[model_index][1]) == 5:
+            self.label_patch_size.setText('Patch size (Z, Y, X)')
+            self.spinBox_patch_size_z.setEnabled(True)
+            # self.spinBox_patch_size_z.setVisible(True)
+        else:
+            raise ValueError('model input shape length invalid.')
 
     def get(self):
         return (self.comboBox_model.currentIndex(),

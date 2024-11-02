@@ -352,8 +352,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>257</x>
-     <y>393</y>
+     <x>266</x>
+     <y>418</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -368,8 +368,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>325</x>
-     <y>393</y>
+     <x>334</x>
+     <y>418</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>
@@ -377,5 +377,24 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>comboBox_model</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>Dialog</receiver>
+   <slot>model_changed(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>218</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>198</x>
+     <y>21</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
+ <slots>
+  <slot>model_changed(int)</slot>
+ </slots>
 </ui>

@@ -53,10 +53,13 @@ class Manager:
             labels.append(label)
         return images, labels
 
-    def get_models_list(self):
+    def get_models_list(self, string=True):
         models = []
         for model in self.models:
-            models.append(f'{model.name} {model.input_shape} > {model.output_shape}')
+            if string:
+                models.append(f'{model.name} {model.input_shape} > {model.output_shape}')
+            else:
+                models.append((model.name, model.input_shape, model.output_shape))
         return models
 
     def load_dataset(self, filename, labels=None):
