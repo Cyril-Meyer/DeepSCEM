@@ -159,6 +159,10 @@ class Manager:
         del self.datasets[name]
         self.datasets.pop(name, None)
 
+    def remove_labels_aliases(self, name):
+        if 'labels_aliases' in self.datasets[name].attrs.keys():
+            del self.datasets[name].attrs['labels_aliases']
+
     def remove_sample(self, dataset, sample):
         # del self.datasets[dataset][sample]
         data.remove_sample_from_dataset(self.datasets[dataset], sample)
