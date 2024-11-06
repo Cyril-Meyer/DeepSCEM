@@ -22,9 +22,12 @@ class Manager:
     def get_datasets_number_labels(self, name):
         return self.datasets[name].attrs['labels']
 
-    def get_datasets_labels_aliases(self, name):
+    def get_datasets_labels_aliases(self, name, asdictionary=True):
         if 'labels_aliases' in self.datasets[name].attrs.keys():
-            return {f'label_{i:04}': item for i, item in enumerate(self.datasets[name].attrs['labels_aliases'])}
+            if asdictionary:
+                return {f'label_{i:04}': item for i, item in enumerate(self.datasets[name].attrs['labels_aliases'])}
+            else:
+                return self.datasets[name].attrs['labels_aliases']
         return {}
 
     def get_sample(self, dataset, sample):
