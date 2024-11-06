@@ -222,7 +222,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.manager.rename_dataset(dataset_name, new_name)
             self.dataset_update()
         # sample
-        else:
+        elif len(selection) == 2:
             dataset_name = selection[-1].text(0)
             sample_name = selection[-2].text(0)
 
@@ -234,6 +234,29 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 return
 
             self.manager.rename_sample(dataset_name, sample_name, new_name)
+            self.dataset_update()
+        # image / label_xxxx
+        else:
+            dataset_name = selection[-1].text(0)
+            sample_name = selection[-2].text(0)
+            label_name = selection[-3].text(0).split(' ')[0]
+            if label_name == 'image':
+                return
+
+            aliases_table = self.manager.get_datasets_labels_aliases(dataset_name, asdictionary=False)
+            if len(aliases_table) == 0:
+                aliases_table = [f'label_{i:04}' for i in range(self.manager.get_datasets_number_labels(dataset_name))]
+
+            new_aliases, ok = QInputDialog.getText(self, 'Aliases', 'Labels aliases', text=';'.join(aliases_table))
+            if not ok or len(new_aliases) <= 0:
+                return
+
+            aliases_table = new_aliases.split(';')
+            if not all(part.isalpha() and part.islower() for part in aliases_table):
+                QMessageBox.critical(self, 'Warning', f'Error in labels aliases input format.')
+                return
+
+            self.manager.rename_labels_aliases(dataset_name, aliases_table)
             self.dataset_update()
 
     def dataset_item_selection_changed(self):
