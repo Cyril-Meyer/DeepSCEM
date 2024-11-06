@@ -358,6 +358,19 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 QMessageBox.critical(self, 'Error', f'{e}')
         self.dataset_update()
 
+    def samples_export_clicked(self):
+        texts, indexes, items = self.dataset_get_selection_hierarchy()
+        if len(indexes) < 2:
+            QMessageBox.information(self, 'Warning', f'No sample selected.')
+        else:
+            folder = QFileDialog.getExistingDirectory(self, 'Select output folder', '')
+            if len(folder) == 0:
+                return
+            try:
+                self.manager.export_sample(dataset=texts[-1], sample=texts[-2], folder=folder)
+            except Exception as e:
+                QMessageBox.critical(self, 'Error', f'{e}')
+
     def model_load_clicked(self):
         labels = self.safe_mode_get_labels()
         filename, _ = QFileDialog.getOpenFileName(self, 'Select model', '', 'Model (*.h5)')
