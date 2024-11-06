@@ -333,6 +333,7 @@
     <addaction name="actionNew_dataset"/>
     <addaction name="actionLoad_dataset"/>
     <addaction name="actionSave_dataset"/>
+    <addaction name="actionExport_sample"/>
     <addaction name="separator"/>
     <addaction name="actionNew_model"/>
     <addaction name="actionLoad_model"/>
@@ -524,6 +525,11 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+-</string>
+   </property>
+  </action>
+  <action name="actionExport_sample">
+   <property name="text">
+    <string>Export sample</string>
    </property>
   </action>
  </widget>
@@ -1112,6 +1118,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionExport_sample</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>samples_export_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>dataset_load_clicked()</slot>
@@ -1137,5 +1159,6 @@
   <slot>safe_mode_disable()</slot>
   <slot>dataset_distance_transform()</slot>
   <slot>screenshot()</slot>
+  <slot>samples_export_clicked()</slot>
  </slots>
 </ui>
