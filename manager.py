@@ -123,6 +123,12 @@ class Manager:
 
         data.add_sample_to_dataset(dataset, sample_name, sample_image, sample_labels)
 
+    def export_sample(self, dataset, sample, folder):
+        sample_ = self.datasets[dataset][sample]
+        for imgk in sample_.keys():
+            data.write_image(f'{folder}/{imgk}', sample_[imgk], extension='tiff')
+
+
     def crop_sample(self, name, sample_name, z_min, z_max, y_min, y_max, x_min, x_max, new_name=None):
         """
         crop an existing sample.

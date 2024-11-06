@@ -31,6 +31,13 @@ def read_image(filename, dtype=np.float32, normalize=False, binarize=False):
     return data
 
 
+def write_image(filename, data, extension='tiff'):
+    if extension in ['tif', 'tiff', 'TIF', 'TIFF']:
+        tifffile.imwrite(filename + f'.{extension}', data)
+    else:
+        raise NotImplementedError('NotImplementedError')
+
+
 def read_dataset(filename, readonly=False):
     """
     read a dataset file into a h5py object.
