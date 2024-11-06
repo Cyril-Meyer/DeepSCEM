@@ -144,10 +144,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.flag_disable_ui_events = True
         self.treeWidget_dataset.clear()
         for dataset in self.manager.get_datasets_index():
+            label_aliases = self.manager.get_datasets_labels_aliases(dataset)
             dataset_item = QTreeWidgetItem(self.treeWidget_dataset, [dataset])
             for sample, samples_data in self.manager.get_dataset_samples(dataset):
                 sample_item = QTreeWidgetItem(dataset_item, [sample])
                 for i, sample_data in enumerate(samples_data):
+                    sample_data = label_aliases.get(sample_data, sample_data)
                     item = QTreeWidgetItem(sample_item, [sample_data])
                     item.setFlags(item.flags() | Qt.ItemIsUserCheckable)
                     item.setCheckState(0, i == 0)
