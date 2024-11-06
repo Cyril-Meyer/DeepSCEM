@@ -140,8 +140,10 @@ class Manager:
         sample_ = self.datasets[dataset][sample]
         label_aliases = self.get_datasets_labels_aliases(dataset)
         for imgk in sample_.keys():
-            data.write_image(f'{folder}/{label_aliases.get(imgk, imgk)}', sample_[imgk], extension='tiff')
-
+            name = imgk
+            if imgk in label_aliases.keys():
+                name += f'_{label_aliases.get(imgk)}'
+            data.write_image(f'{folder}/{name}', sample_[imgk], extension='tiff')
 
     def crop_sample(self, name, sample_name, z_min, z_max, y_min, y_max, x_min, x_max, new_name=None):
         """
