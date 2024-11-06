@@ -248,15 +248,18 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 aliases_table = [f'label_{i:04}' for i in range(self.manager.get_datasets_number_labels(dataset_name))]
 
             new_aliases, ok = QInputDialog.getText(self, 'Aliases', 'Labels aliases', text=';'.join(aliases_table))
-            if not ok or len(new_aliases) <= 0:
+            if not ok:
                 return
 
-            aliases_table = new_aliases.split(';')
-            if not all(part.isalpha() and part.islower() for part in aliases_table):
-                QMessageBox.critical(self, 'Warning', f'Error in labels aliases input format.')
-                return
+            if len(new_aliases) == 0:
+                self.manager.remove_labels_aliases(dataset_name)
+            else:
+                aliases_table = new_aliases.split(';')
+                if not all(part.isalnum() for part in aliases_table):
+                    QMessageBox.critical(self, 'Warning', f'Error in labels aliases input format.')
+                    return
+                self.manager.rename_labels_aliases(dataset_name, aliases_table)
 
-            self.manager.rename_labels_aliases(dataset_name, aliases_table)
             self.dataset_update()
 
     def dataset_item_selection_changed(self):
