@@ -144,10 +144,13 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.flag_disable_ui_events = True
         self.treeWidget_dataset.clear()
         for dataset in self.manager.get_datasets_index():
+            label_aliases = self.manager.get_datasets_labels_aliases(dataset)
             dataset_item = QTreeWidgetItem(self.treeWidget_dataset, [dataset])
             for sample, samples_data in self.manager.get_dataset_samples(dataset):
                 sample_item = QTreeWidgetItem(dataset_item, [sample])
                 for i, sample_data in enumerate(samples_data):
+                    if sample_data in label_aliases.keys():
+                        sample_data += f' ({label_aliases.get(sample_data)})'
                     item = QTreeWidgetItem(sample_item, [sample_data])
                     item.setFlags(item.flags() | Qt.ItemIsUserCheckable)
                     item.setCheckState(0, i == 0)
@@ -218,7 +221,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.manager.rename_dataset(dataset_name, new_name)
             self.dataset_update()
         # sample
-        else:
+        elif len(selection) == 2:
             dataset_name = selection[-1].text(0)
             sample_name = selection[-2].text(0)
 
@@ -230,6 +233,32 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 return
 
             self.manager.rename_sample(dataset_name, sample_name, new_name)
+            self.dataset_update()
+        # image / label_xxxx
+        else:
+            dataset_name = selection[-1].text(0)
+            sample_name = selection[-2].text(0)
+            label_name = selection[-3].text(0).split(' ')[0]
+            if label_name == 'image':
+                return
+
+            aliases_table = self.manager.get_datasets_labels_aliases(dataset_name, asdictionary=False)
+            if len(aliases_table) == 0:
+                aliases_table = [f'label_{i:04}' for i in range(self.manager.get_datasets_number_labels(dataset_name))]
+
+            new_aliases, ok = QInputDialog.getText(self, 'Aliases', 'Labels aliases', text=';'.join(aliases_table))
+            if not ok:
+                return
+
+            if len(new_aliases) == 0:
+                self.manager.remove_labels_aliases(dataset_name)
+            else:
+                aliases_table = new_aliases.split(';')
+                if not all(part.isalnum() for part in aliases_table):
+                    QMessageBox.critical(self, 'Warning', f'Error in labels aliases input format.')
+                    return
+                self.manager.rename_labels_aliases(dataset_name, aliases_table)
+
             self.dataset_update()
 
     def dataset_item_selection_changed(self):
@@ -253,7 +282,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
             for i in range(sample.childCount()):
                 if sample.child(i).checkState(0) != 0:
-                    sample_view.append(sample.child(i).text(0))
+                    sample_view.append(sample.child(i).text(0).split(' ')[0])
 
             self.view_selection = (sample_data, sample_view)
         self.mainview_update()

@@ -22,6 +22,15 @@ class Manager:
     def get_datasets_number_labels(self, name):
         return self.datasets[name].attrs['labels']
 
+    def get_datasets_labels_aliases(self, name, asdictionary=True):
+        if 'labels_aliases' in self.datasets[name].attrs.keys():
+            if asdictionary:
+                return {f'label_{i:04}': item for i, item in enumerate(self.datasets[name].attrs['labels_aliases'])} | {
+                        f'prediction_{i:04}': item for i, item in enumerate(self.datasets[name].attrs['labels_aliases'])}
+            else:
+                return self.datasets[name].attrs['labels_aliases']
+        return {} if asdictionary else []
+
     def get_sample(self, dataset, sample):
         return self.datasets[dataset][sample]
 
@@ -95,6 +104,10 @@ class Manager:
         dataset.move(sample_name, new_name)
         dataset.flush()
 
+    def rename_labels_aliases(self, dataset_name, aliases_table):
+        dataset = self.datasets[dataset_name]
+        dataset.attrs['labels_aliases'] = aliases_table
+
     def add_sample(self, name, sample_name, sample_image_filename, sample_labels_filenames):
         """
         add a sample composed of multiple files to an existing dataset.
@@ -125,9 +138,12 @@ class Manager:
 
     def export_sample(self, dataset, sample, folder):
         sample_ = self.datasets[dataset][sample]
+        label_aliases = self.get_datasets_labels_aliases(dataset)
         for imgk in sample_.keys():
-            data.write_image(f'{folder}/{imgk}', sample_[imgk], extension='tiff')
-
+            name = imgk
+            if imgk in label_aliases.keys():
+                name += f'_{label_aliases.get(imgk)}'
+            data.write_image(f'{folder}/{name}', sample_[imgk], extension='tiff')
 
     def crop_sample(self, name, sample_name, z_min, z_max, y_min, y_max, x_min, x_max, new_name=None):
         """
@@ -142,6 +158,10 @@ class Manager:
         self.datasets[name].close()
         del self.datasets[name]
         self.datasets.pop(name, None)
+
+    def remove_labels_aliases(self, name):
+        if 'labels_aliases' in self.datasets[name].attrs.keys():
+            del self.datasets[name].attrs['labels_aliases']
 
     def remove_sample(self, dataset, sample):
         # del self.datasets[dataset][sample]
