@@ -28,7 +28,7 @@ class Manager:
                 return {f'label_{i:04}': item for i, item in enumerate(self.datasets[name].attrs['labels_aliases'])}
             else:
                 return self.datasets[name].attrs['labels_aliases']
-        return {}
+        return {} if asdictionary else []
 
     def get_sample(self, dataset, sample):
         return self.datasets[dataset][sample]
