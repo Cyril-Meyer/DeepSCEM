@@ -149,7 +149,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             for sample, samples_data in self.manager.get_dataset_samples(dataset):
                 sample_item = QTreeWidgetItem(dataset_item, [sample])
                 for i, sample_data in enumerate(samples_data):
-                    sample_data = label_aliases.get(sample_data, sample_data)
+                    alias = label_aliases.get(sample_data, '')
+                    if alias:
+                        sample_data += f' ({alias})'
                     item = QTreeWidgetItem(sample_item, [sample_data])
                     item.setFlags(item.flags() | Qt.ItemIsUserCheckable)
                     item.setCheckState(0, i == 0)
