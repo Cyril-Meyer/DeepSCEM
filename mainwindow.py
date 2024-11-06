@@ -257,7 +257,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
             for i in range(sample.childCount()):
                 if sample.child(i).checkState(0) != 0:
-                    sample_view.append(sample.child(i).text(0))
+                    sample_view.append(sample.child(i).text(0).split(' ')[0])
 
             self.view_selection = (sample_data, sample_view)
         self.mainview_update()
