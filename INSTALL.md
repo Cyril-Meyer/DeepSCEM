@@ -29,7 +29,7 @@ as stated in [Install TensorFlow 2 Documentation](https://www.tensorflow.org/ins
 * Update package installer
   * `pip install -U pip setuptools wheel`
 * Install requirements
-  * `pip install tensorflow==2.10.1 h5py PyQt5 pyqt5-tools tifffile tqdm matplotlib numpy imagecodecs`
+  * `pip install tensorflow==2.10.1 edt h5py imagecodecs PyQt5 pyqt5-tools tifffile tqdm matplotlib numpy`
 * Generate `*_ui.py` files
   * windows `convert_ui_py.bat`
   * linux `./convert_ui_py.sh`
