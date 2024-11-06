@@ -1,0 +1,71 @@
+name: Build PyInstaller
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+    - uses: actions/checkout@v4
+
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.10"
+
+    - name: Install dependencies
+      run: |
+        pip install -U pip setuptools wheel
+        pip install tensorflow==2.10.1 edt h5py imagecodecs PyQt5 pyqt5-tools tifffile tqdm matplotlib numpy
+
+    - name: Convert ui to py
+      run: |
+        chmod +x convert_ui_py.sh
+        ./convert_ui_py.sh
+
+    - name: Build with PyInstaller
+      run: |
+          pip install pyinstaller
+          pyinstaller run.py --name DeepSCEM --workpath DeepSCEM-build --distpath DeepSCEM-bin --contents-directory lib --icon icons/logo.ico --noconfirm
+
+    - name: Upload Artifact (Linux)
+      uses: actions/upload-artifact@v4
+      with:
+        name: DeepSCEM-linux
+        path: DeepSCEM-bin
+
+  build-windows:
+    runs-on: windows-latest
+    steps:
+    - name: Checkout
+    - uses: actions/checkout@v4
+
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.10"
+
+    - name: Install dependencies
+      run: |
+        pip install -U pip setuptools wheel
+        pip install tensorflow==2.10.1 edt h5py imagecodecs PyQt5 pyqt5-tools tifffile tqdm matplotlib numpy
+
+    - name: Convert ui to py
+      run: |
+        .\convert_ui_py.bat
+
+    - name: Build with PyInstaller
+      run: |
+          pip install pyinstaller
+          pyinstaller run.py --name DeepSCEM --workpath DeepSCEM-build --distpath DeepSCEM-bin --contents-directory lib --icon icons/logo.ico --noconfirm
+
+    - name: Upload Artifact (Linux)
+      uses: actions/upload-artifact@v4
+      with:
+        name: DeepSCEM-windows
+        path: DeepSCEM-bin
