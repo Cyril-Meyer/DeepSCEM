@@ -134,8 +134,9 @@ class Manager:
 
     def export_sample(self, dataset, sample, folder):
         sample_ = self.datasets[dataset][sample]
+        label_aliases = self.get_datasets_labels_aliases(dataset)
         for imgk in sample_.keys():
-            data.write_image(f'{folder}/{imgk}', sample_[imgk], extension='tiff')
+            data.write_image(f'{folder}/{label_aliases.get(imgk, imgk)}', sample_[imgk], extension='tiff')
 
 
     def crop_sample(self, name, sample_name, z_min, z_max, y_min, y_max, x_min, x_max, new_name=None):
