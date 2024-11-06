@@ -22,6 +22,11 @@ class Manager:
     def get_datasets_number_labels(self, name):
         return self.datasets[name].attrs['labels']
 
+    def get_datasets_labels_aliases(self, name):
+        if 'labels_aliases' in self.datasets[name].attrs.keys():
+            return {f'label_{i:04}': item for i, item in enumerate(self.datasets[name].attrs['labels_aliases'])}
+        return {}
+
     def get_sample(self, dataset, sample):
         return self.datasets[dataset][sample]
 
@@ -94,6 +99,10 @@ class Manager:
         # https://docs.h5py.org/en/stable/high/group.html#h5py.Group.move
         dataset.move(sample_name, new_name)
         dataset.flush()
+
+    def rename_labels_aliases(self, dataset_name, aliases_table):
+        dataset = self.datasets[dataset_name]
+        dataset.attrs['labels_aliases'] = aliases_table
 
     def add_sample(self, name, sample_name, sample_image_filename, sample_labels_filenames):
         """
