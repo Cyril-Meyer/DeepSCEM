@@ -25,8 +25,8 @@ class Manager:
     def get_datasets_labels_aliases(self, name, asdictionary=True):
         if 'labels_aliases' in self.datasets[name].attrs.keys():
             if asdictionary:
-                return {f'label_{i:04}': item for i, item in enumerate(self.datasets[name].attrs['labels_aliases'])} | {
-                        f'prediction_{i:04}': item for i, item in enumerate(self.datasets[name].attrs['labels_aliases'])}
+                return {**{f'label_{i:04}': item for i, item in enumerate(self.datasets[name].attrs['labels_aliases'])},
+                        **{f'prediction_{i:04}': item for i, item in enumerate(self.datasets[name].attrs['labels_aliases'])}}
             else:
                 return self.datasets[name].attrs['labels_aliases']
         return {} if asdictionary else []
