@@ -99,16 +99,27 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: DeepSCEM-linux
+        path: ./release/DeepSCEM-linux
 
     - name: Download Artifact Windows
       uses: actions/download-artifact@v4
       with:
         name: DeepSCEM-windows
+        path: ./release/DeepSCEM-windows
+
+    - name: List Files for Debugging
+      run: ls -R ./release
 
     - name: Create Release and Upload Artifact
       uses: softprops/action-gh-release@v2
       with:
         tag_name: ${{ github.ref_name }}
-        files: DeepSCEM-linux/** DeepSCEM-windows/**
+        files: release/**
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Cleanup Artifacts
+      run: |
+        gh api -X DELETE /repos/${{ github.repository }}/actions/artifacts --silent
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
