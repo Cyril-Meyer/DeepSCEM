@@ -1,4 +1,4 @@
-name: Build PyInstaller
+name: Build and Release PyInstaller
 
 on:
   pull_request:
@@ -66,8 +66,68 @@ jobs:
           pip install pyinstaller
           pyinstaller run.py --name DeepSCEM --workpath DeepSCEM-build --distpath DeepSCEM-bin --contents-directory lib --icon icons/logo.ico --noconfirm
 
-    - name: Upload Artifact (Linux)
+    - name: Upload Artifact (Windows)
       uses: actions/upload-artifact@v4
       with:
         name: DeepSCEM-windows
         path: DeepSCEM-bin
+
+  create-tag-and-release:
+    needs: [build-linux, build-windows]
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Configure Git
+      run: |
+        git config user.name "github-actions"
+        git config user.email "github-actions@github.com"
+
+    - name: Create Tag
+      run: |
+        TAG_NAME="v$(date +%Y%m%d%H%M%S)"
+        echo "TAG_NAME=$TAG_NAME" >> $GITHUB_ENV
+        git tag $TAG_NAME
+        git push origin $TAG_NAME
+
+    - name: Download Artifact Linux
+      uses: actions/download-artifact@v4
+      with:
+        name: DeepSCEM-linux
+        path: ./release/DeepSCEM-linux
+
+    - name: Download Artifact Windows
+      uses: actions/download-artifact@v4
+      with:
+        name: DeepSCEM-windows
+        path: ./release/DeepSCEM-windows
+
+    - name: Zip Linux Release
+      run: |
+        cd release
+        zip -r DeepSCEM-linux.zip DeepSCEM-linux/
+
+    - name: Zip Windows Release
+      run: |
+        cd release
+        zip -r DeepSCEM-windows.zip DeepSCEM-windows/
+
+    - name: Cleanup Artifacts
+      uses: geekyeggo/delete-artifact@v5
+      with:
+        name: |
+              DeepSCEM-linux
+              DeepSCEM-windows
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Create Release and Upload Artifact
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: ${{ env.TAG_NAME }}
+        files: |
+          release/DeepSCEM-linux.zip
+          release/DeepSCEM-windows.zip
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
