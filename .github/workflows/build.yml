@@ -66,7 +66,7 @@ jobs:
           pip install pyinstaller
           pyinstaller run.py --name DeepSCEM --workpath DeepSCEM-build --distpath DeepSCEM-bin --contents-directory lib --icon icons/logo.ico --noconfirm
 
-    - name: Upload Artifact (Linux)
+    - name: Upload Artifact (Windows)
       uses: actions/upload-artifact@v4
       with:
         name: DeepSCEM-windows
@@ -87,18 +87,18 @@ jobs:
     needs: [create-tag]
     runs-on: ubuntu-latest
     steps:
-	- name: Download Artifact Linux
-	  uses: actions/download-artifact@v4
+    - name: Download Artifact Linux
+      uses: actions/download-artifact@v4
       with:
-		name: DeepSCEM-linux.zip
-	- name: Download Artifact Windows
-	  uses: actions/download-artifact@v4
+        name: DeepSCEM-linux
+    - name: Download Artifact Windows
+      uses: actions/download-artifact@v4
       with:
-		name: DeepSCEM-windows.zip
+        name: DeepSCEM-windows
     - name: Create Release and Upload Artifact
       uses: softprops/action-gh-release@v2
       with:
         tag_name: ${{ github.ref_name }}
-        files: DeepSCEM-linux.zip DeepSCEM-windows.zip
+        files: DeepSCEM-linux/** DeepSCEM-windows/**
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
