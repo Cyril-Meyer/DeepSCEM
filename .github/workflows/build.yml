@@ -110,12 +110,6 @@ jobs:
         name: DeepSCEM-windows
         path: ./release/DeepSCEM-windows
 
-    - name: Cleanup Artifacts
-      run: |
-        gh api -X DELETE /repos/${{ github.repository }}/actions/artifacts --silent
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
     - name: Zip Linux Release
       run: |
         cd release
@@ -125,6 +119,15 @@ jobs:
       run: |
         cd release
         zip -r DeepSCEM-windows.zip DeepSCEM-windows/
+
+    - name: Cleanup Artifacts
+      uses: geekyeggo/delete-artifact@v5
+      with:
+        name: |
+              DeepSCEM-linux
+              DeepSCEM-windows
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Create Release and Upload Artifact
       uses: softprops/action-gh-release@v2
