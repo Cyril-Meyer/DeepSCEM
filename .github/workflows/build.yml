@@ -129,10 +129,16 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+    - name: Test
+      run: |
+        echo $TAG_NAME
+        echo ${{ TAG_NAME }}
+        echo ${{ env.TAG_NAME }}
+
     - name: Create Release and Upload Artifact
       uses: softprops/action-gh-release@v2
       with:
-        tag_name: ${{ env.TAG_NAME }}
+        tag_name: ${{ TAG_NAME }}
         files: |
           release/DeepSCEM-linux.zip
           release/DeepSCEM-windows.zip
