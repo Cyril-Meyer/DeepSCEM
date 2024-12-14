@@ -110,11 +110,11 @@ jobs:
         name: DeepSCEM-windows
         path: ./release/DeepSCEM-windows
 
-    - name: List Files in Release Folder (Linux)
-      run: ls -R ./release/DeepSCEM-linux
-
-    - name: List Files in Release Folder (Windows)
-      run: ls -R ./release/DeepSCEM-windows
+    - name: Cleanup Artifacts
+      run: |
+        gh api -X DELETE /repos/${{ github.repository }}/actions/artifacts --silent
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Zip Linux Release
       run: |
@@ -126,9 +126,6 @@ jobs:
         cd release
         zip -r DeepSCEM-windows.zip DeepSCEM-windows/
 
-    - name: List Files for Debugging
-      run: ls -lh ./release
-
     - name: Create Release and Upload Artifact
       uses: softprops/action-gh-release@v2
       with:
@@ -136,11 +133,5 @@ jobs:
         files: |
           release/DeepSCEM-linux.zip
           release/DeepSCEM-windows.zip
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-    - name: Cleanup Artifacts
-      run: |
-        gh api -X DELETE /repos/${{ github.repository }}/actions/artifacts --silent
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
