@@ -85,9 +85,11 @@ jobs:
         git config user.email "github-actions@github.com"
 
     - name: Create Tag
+      id: create_tag
       run: |
         TAG_NAME="v$(date +%Y%m%d%H%M%S)"
         echo "TAG_NAME=$TAG_NAME" >> $GITHUB_ENV
+        echo "tag_name=$TAG_NAME" >> $GITHUB_OUTPUT
         git tag $TAG_NAME
         git push origin $TAG_NAME
 
@@ -132,13 +134,12 @@ jobs:
     - name: Test
       run: |
         echo $TAG_NAME
-        echo ${{ TAG_NAME }}
         echo ${{ env.TAG_NAME }}
 
     - name: Create Release and Upload Artifact
       uses: softprops/action-gh-release@v2
       with:
-        tag_name: ${{ TAG_NAME }}
+        tag_name: ${{ needs.create-tag.outputs.tag_name }}
         files: |
           release/DeepSCEM-linux.zip
           release/DeepSCEM-windows.zip
