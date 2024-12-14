@@ -85,7 +85,6 @@ jobs:
         git config user.email "github-actions@github.com"
 
     - name: Create Tag
-      id: create_tag
       run: |
         TAG_NAME="v$(date +%Y%m%d%H%M%S)"
         echo "TAG_NAME=$TAG_NAME" >> $GITHUB_ENV
