@@ -10,7 +10,7 @@ but also very efficient and configurable for the most advanced users.
 
 ## Quick links
 
-* Download the latest release (todo)
+### [Download latest release](https://github.com/Cyril-Meyer/DeepSCEM/releases/latest)
 
 
 ## Bug report 🐛 & Feature request ✨
