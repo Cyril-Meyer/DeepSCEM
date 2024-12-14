@@ -99,23 +99,40 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: DeepSCEM-linux
+        path: ./release/DeepSCEM-linux
 
     - name: Download Artifact Windows
       uses: actions/download-artifact@v4
       with:
         name: DeepSCEM-windows
+        path: ./release/DeepSCEM-windows
+
+    - name: List Files in Release Folder (Linux)
+      run: ls -R ./release/DeepSCEM-linux
+
+    - name: List Files in Release Folder (Windows)
+      run: ls -R ./release/DeepSCEM-windows
 
     - name: Zip Linux Release
-      run: zip -r DeepSCEM-linux.zip DeepSCEM-linux
+      run: |
+        cd release
+        zip -r DeepSCEM-linux.zip DeepSCEM-linux/
 
     - name: Zip Windows Release
-      run: zip -r DeepSCEM-windows.zip DeepSCEM-windows
+      run: |
+        cd release
+        zip -r DeepSCEM-windows.zip DeepSCEM-windows/
+
+    - name: List Files for Debugging
+      run: ls -lh ./release
 
     - name: Create Release and Upload Artifact
       uses: softprops/action-gh-release@v2
       with:
         tag_name: ${{ env.tag_name }}
-        files: DeepSCEM-linux.zip DeepSCEM-windows.zip
+        files: |
+          release/DeepSCEM-linux.zip
+          release/DeepSCEM-windows.zip
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
