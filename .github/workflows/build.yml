@@ -87,7 +87,7 @@ jobs:
     - name: Create Tag
       run: |
         TAG_NAME="v$(date +%Y%m%d%H%M%S)"
-        echo "tag_name=$TAG_NAME" >> $GITHUB_ENV
+        echo "TAG_NAME=$TAG_NAME" >> $GITHUB_ENV
         git tag $TAG_NAME
         git push origin $TAG_NAME
 
@@ -95,6 +95,9 @@ jobs:
     needs: [create-tag]
     runs-on: ubuntu-latest
     steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
     - name: Download Artifact Linux
       uses: actions/download-artifact@v4
       with:
@@ -129,7 +132,7 @@ jobs:
     - name: Create Release and Upload Artifact
       uses: softprops/action-gh-release@v2
       with:
-        tag_name: ${{ env.tag_name }}
+        tag_name: ${{ env.TAG_NAME }}
         files: |
           release/DeepSCEM-linux.zip
           release/DeepSCEM-windows.zip
