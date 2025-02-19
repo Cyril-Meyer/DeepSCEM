@@ -47,7 +47,7 @@ For more experienced users who want to run DeepSCEM from their own Python setup:
 Detailed instructions on how to install and set up DeepSCEM are available in the
 [INSTALL](INSTALL.md) guide.
 
-### Tutorials
+### [Tutorials](TUTORIALS)
 
 The tutorials list below will allow you to familiarize yourself
 with the use of DeepSCEM by focusing on the features that interest you.
