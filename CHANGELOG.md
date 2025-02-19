@@ -102,9 +102,14 @@
 
 #### Documentation
 
-* [ ] user manual for gui (list of functionality)
-* [ ] user manual for cli
-* [ ] tutorials
+* [x] user manual for gui (list of functionality)
+* [x] user manual for cli (list of functionality)
+* [x] good practice and how to train models effectively
+* [x] tutorials
+  * [x] Create a dataset
+  * [x] Train your first model
+  * [x] Use your model to produce automatic segmentation
+  * [x] Evaluate your segmentation on a test set
 * [ ] video tutorials
 
 #### Know bugs
