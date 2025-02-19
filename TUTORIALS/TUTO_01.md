@@ -20,6 +20,7 @@ The tutorial has been made with a computer equiped with 32G of RAM.
   <img src="https://github.com/user-attachments/assets/8e7c957d-54e3-4d7b-a2d0-f922f3a232be">
 </details>
 
+
 ### Import data
 
 First, use the "add sample" (or CTRL+B) to add a sample to a dataset.
@@ -89,6 +90,7 @@ In reality, DeepSCEM always works live on the data files.
 This is advantageous because most of the time, the data is not loaded into memory and in case of crash, the data are safe.
 However, this also has disadvantages depending on the use cases
 
+
 ### Transform whole image into train/test
 
 Now  that we have our image loaded, we need to transform it into usable datasets for the training process.
@@ -128,7 +130,31 @@ Now, we can delete the LW4_ALL sample.
 
 ![image](https://github.com/user-attachments/assets/dcc733e7-e69f-45f1-99c5-a4c6184e2304)
 
-And save the current data in a new file.
+And save the current data in a new file. (in our case, create two copy, one for train and one for test).
 
 ![image](https://github.com/user-attachments/assets/2495a06a-a6c0-4c73-bed3-4d7ee08d640e)
 
+Note that the newly created save is lighter than the previous file.
+When deleting samples, the samples data will not be cleaned, but you can solve this by saving into a new file.
+
+![image](https://github.com/user-attachments/assets/3cd28138-74a0-40cc-9df8-53b0e6df058d)
+
+
+### Split to sample in two datasets
+
+Most of time, we want to use datasets with multiple samples, that is why DeepSCEM implement this system of samples and crops.
+But for this tutorial, we want two datasets composed of a single sample.
+
+Splitting a dataset is not straightforward as DeepSCEM always work directly on the data.
+The easiest way to do this is to save multiples copy of the dataset with both samples and to delete the not wanted dataset in each copy.
+
+First unload the dataset.
+
+![image](https://github.com/user-attachments/assets/a3c370d6-8d30-4955-98d9-9e9cdcd852e2)
+
+And load the train copy.
+
+![image](https://github.com/user-attachments/assets/31f5c986-6d37-46e8-95b4-79862e8ec298)
+
+
+![image](https://github.com/user-attachments/assets/30e2207d-2ee4-45a1-b77c-d86760f36380)
