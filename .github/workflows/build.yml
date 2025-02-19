@@ -22,7 +22,7 @@ jobs:
     - name: Install dependencies
       run: |
         pip install -U pip setuptools wheel
-        pip install tensorflow==2.10.1 edt h5py imagecodecs PyQt5 pyqt5-tools tifffile tqdm matplotlib numpy
+        pip install tensorflow==2.10.1 edt h5py imagecodecs PyQt5 pyqt5-tools tifffile tqdm matplotlib numpy==1.26.4
 
     - name: Convert ui to py
       run: |
@@ -55,7 +55,7 @@ jobs:
     - name: Install dependencies
       run: |
         pip install -U pip setuptools wheel
-        pip install tensorflow==2.10.1 edt h5py imagecodecs PyQt5 pyqt5-tools tifffile tqdm matplotlib numpy
+        pip install tensorflow==2.10.1 edt h5py imagecodecs PyQt5 pyqt5-tools tifffile tqdm matplotlib numpy==1.26.4
 
     - name: Convert ui to py
       run: |
