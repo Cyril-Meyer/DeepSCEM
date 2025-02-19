@@ -176,14 +176,32 @@ If you do not have a GPU (or do not have configured it yet) reduce patch size fr
 
 | Before | After |
 |:-:|:-:|
-| ![image](https://github.com/user-attachments/assets/2806db76-42af-4139-a671-e84284494031)| ![image](https://github.com/user-attachments/assets/9785f80d-face-460e-b2eb-94422910d684)
- |
+| ![image](https://github.com/user-attachments/assets/2806db76-42af-4139-a671-e84284494031)| ![image](https://github.com/user-attachments/assets/9785f80d-face-460e-b2eb-94422910d684) |
 
 When you click Ok, the training phase will start.
 
 ![image](https://github.com/user-attachments/assets/4a3a732d-8b06-4fb1-88f6-1ce982f0f5a1)
 
 This phase can be long, check the command line interface for more informations.
+
+![image](https://github.com/user-attachments/assets/6d1a8559-dc20-4f52-b6a3-ceef016151b0)
+
+![image](https://github.com/user-attachments/assets/fe3fa86f-a87c-484f-bbc7-c7aa268d2dfe)
+
+When the training is done, you can see in your directory that the "best on valid" model has been saved, but not your current model.
+
+![image](https://github.com/user-attachments/assets/594d5e99-9daa-4fcd-9941-e45190f87150)
+
+Always remember : DeepSCEM do not save your models automatically.
+
+So now, lets save the model by selecting it and clicking the "save model" button.
+
+![image](https://github.com/user-attachments/assets/52eba7bf-90f8-4d48-9711-03a7994c4300)
+
+And save the model with another name than the "best on valid" model.
+
+![image](https://github.com/user-attachments/assets/575b8308-4e5c-45f6-896f-cdae52bd5fd3)
+
 
 This is the end for this tutorial.
 For the following tutorial, go here: [TUTO_03.md](TUTO_03.md)
