@@ -159,6 +159,7 @@ And load the train copy.
 ![image](https://github.com/user-attachments/assets/30e2207d-2ee4-45a1-b77c-d86760f36380)
 
 Rename the dataset by double clicking the dataset using menu Data > Rename or using CTRL+R.
+Note that a dataset is identified by its name, so you cannot load two datasets with same name.
 
 ![image](https://github.com/user-attachments/assets/422ef520-f5d5-4ab8-b82a-ddb923ff5669)
 
@@ -170,7 +171,9 @@ You are not required to save the dataset but you can if you want to save disk sp
 
 Repeat those operation for the second dataset but renaming it **_test** and removing the other sample.
 
+Now you can load both datasets at the same time.
+
 ![image](https://github.com/user-attachments/assets/3dee759a-3a4a-45d3-b90e-686f37259e55)
 
-And this is the end for this tutorial.
-For the rest of these tutorials, go here: [TUTO_02.md](TUTO_02.md)
+This is the end for this tutorial.
+For the following tutorial, go here: [TUTO_02.md](TUTO_02.md)
