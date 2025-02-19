@@ -90,3 +90,45 @@ This is advantageous because most of the time, the data is not loaded into memor
 However, this also has disadvantages depending on the use cases
 
 ### Transform whole image into train/test
+
+Now  that we have our image loaded, we need to transform it into usable datasets for the training process.
+Our current dataset is composed of missing labels (only some slices are annotated).
+
+In this section, we will transform the dataset into two small dataset.
+We want the following result :
+* Train : slice 0 to 40
+* Test : slice 80 to 120
+
+First, select the sample (select LW4_ALL in the list) and open the crop tool (menu Data > Crop sample or CTRL+C).
+
+![image](https://github.com/user-attachments/assets/ce59deab-5094-4f34-9b97-2b5889722059)
+
+The crop tool will ask where to start and stop along each axis.
+The default value correspond to not cropping anything.
+
+In our case we want to crop only along the Z axis, so we only need to changes thoses values.
+We crop in Z from 0 to 40.
+
+![image](https://github.com/user-attachments/assets/2633eb1c-356d-4c49-a6f3-c89b8b3a3c7e)
+
+After the first crop, a new sample will be created in the dataset.
+
+We do the same for the second crop (Z from 80 to 120)
+
+80 ![image](https://github.com/user-attachments/assets/c52d30ba-bb09-4e1c-b5ad-7f13718942f9) to 120 ![image](https://github.com/user-attachments/assets/d9534021-56cf-4515-aca6-dd282999ac2e)
+
+Now, we have a dataset with 3 samples.
+The sample names give us information about the crops parameters.
+
+![image](https://github.com/user-attachments/assets/6e8bed55-8d7d-4f7f-96b9-7a7ab6d28127)
+
+We can rename any sample by double clicking, using menu Data > Rename or using CTRL+R.x
+
+Now, we can delete the LW4_ALL sample.
+
+![image](https://github.com/user-attachments/assets/dcc733e7-e69f-45f1-99c5-a4c6184e2304)
+
+And save the current data in a new file.
+
+![image](https://github.com/user-attachments/assets/2495a06a-a6c0-4c73-bed3-4d7ee08d640e)
+
