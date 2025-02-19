@@ -120,28 +120,70 @@ of the most important steps to do to.
 1. Default settings are ok to start with but need tuning each time (always do point 2 and 3)
 2. Always check that selected dataset (Train / Valid) are the good ones.
    * If you do not want to use valid, use Train as valid.
-   * **NEVER USE TEST AS VALID**
+   * **NEVER USE TEST AS VALID WITH KEEP BEST**
 3. Use label focus, most of time, 75% is a good value.
 4. Reduce epochs / steps if training is too long for you.
 
 If you want more information, here is an explanation for each parameter and how to "choose" it.
 
-* Model : the model we created in previous step
-* Train : 
-* Valid :
-* Loss function
+* Model
+  * The model we created in previous step
+  * 💡 Check only if you have more than one model loaded.
+* Train
+  * The train dataset will be used as examples used to change the model weights
+  * 💡 Always double check this.
+* Valid
+  * The valid dataset will be used to evaluate the model during the training phase
+    (and to select the best model during this phase) but the network will not have seen this data directly.
+  * 💡 Always double check this.
+* Loss function : Dice / CrossEntropy / MeanSquarredError
+  * The function used to compute the error between the model prediction and the reference segmentation.
+  * 💡 Dice is good most of time
 * Batch size
+  * The number of patches given to the network each step.
+  * 💡 Prefer larger patch size than larger batch size, especially for 2D models.
 * Patch size
+  * The size of patches given to the network each step.
+  * 💡 Avoid non square shapes in 2D.
 * Steps per epoch
+  * The number of batches in one epoch.
 * Epochs
+  * The number of epochs.
 * Validation per epoch
-* Keep best
-* Early stopping
-* Rotation
-* Flip
+  * The number of batches to use to compute validation score at the end of each epoch.
+  * Keep best (checkbox)
+    * Save a copy of the best model weights (best = best score on valid).
+    * 💡 Use it in addition to manually saving the last model to have two model at the end.
+  * Early stopping (checkbox)
+    * Stop after some times if the model does not improve anymore.
+* Augmentation
+  * Apply transformation to train and valid to add more variability and have a more generalized model. 
+  * Rotation (checkbox).
+  * Flip (checkbox).
 * Label focus
+  * Patches are taken randomly from the dataset samples.
+  * Label focus is the percentage of patches that are not taken completely randomly but which
+    are garanted to contains label in the center of the patches.
+  * 💡 Use label focus, most of time, 75% is a good value.
 
+For this tutorial, I made the following changes :
+* Select **_train** dataset as Train and Valid
+* Reduce batch size from 8 to 4 (no really reason to this but to give example of changes)
+* Reduce epochs from 64 to 32 (this will make training a lot faster)
+* Use label focus 75%
 
+If you do not have a GPU (or do not have configured it yet) reduce patch size from 256x256 to 128x128 and epochs to 16.
+
+| Before | After |
+|:-:|:-:|
+| ![image](https://github.com/user-attachments/assets/2806db76-42af-4139-a671-e84284494031)| ![image](https://github.com/user-attachments/assets/9785f80d-face-460e-b2eb-94422910d684)
+ |
+
+When you click Ok, the training phase will start.
+
+![image](https://github.com/user-attachments/assets/4a3a732d-8b06-4fb1-88f6-1ce982f0f5a1)
+
+This phase can be long, check the command line interface for more informations.
 
 This is the end for this tutorial.
 For the following tutorial, go here: [TUTO_03.md](TUTO_03.md)
