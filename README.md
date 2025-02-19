@@ -150,9 +150,10 @@ The tutorials list below will allow you to familiarize yourself
 with the use of DeepSCEM by focusing on the features that interest you.
 For all tutorials, sample data is also provided if you don't have one.
 
-* [Create a dataset and train your first model](TUTORIALS/TUTO_01.md)
-* [Train models and use it to produce automatic segmentation](TUTORIALS/TUTO_02.md)
-* [Evaluate your segmentation on a test set](TUTORIALS/TUTO_03.md)
+* [Create a dataset](TUTORIALS/TUTO_01.md)
+* [Train your first model](TUTORIALS/TUTO_02.md)
+* [Use your model to produce automatic segmentation](TUTORIALS/TUTO_03.md)
+* [Evaluate your segmentation on a test set](TUTORIALS/TUTO_04.md)
 
 #### Keywords
 Definitions for keywords used in this documentation.
