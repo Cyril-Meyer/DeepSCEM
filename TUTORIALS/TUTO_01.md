@@ -12,6 +12,14 @@ You will need to download the following files :
 * Labels_LW4-600_All-Step40_mito.tif (the mitochondria annotations)
 * Labels_LW4-600_1-40_81-120_Reti.tif (the endoplasmic reticulum annotatios)
 
+⚠️ If your computer has not a lot of RAM you may want to crop the images first.  
+The tutorial has been made with a computer equiped with 32G of RAM.
+
+<details> 
+  <summary>For this purpose, you may use ImageJ / Fiji to keep only the 120 first slices.</summary>
+  <img src="https://github.com/user-attachments/assets/8e7c957d-54e3-4d7b-a2d0-f922f3a232be">
+</details>
+
 ### Import data
 
 First, use the "add sample" (or CTRL+B) to add a sample to a dataset.
@@ -60,9 +68,25 @@ Then, we import the label 0 (mitochondria).
 And we do the same for label 1 (ER).
 Note that the label number is "0 based", if you have 5 labels, last one will be label 4.
 
-When the last 
+When the last label is selected, DeepSCEM will load all the data at once.
+This process may be long (depend on the size of the images and label) but also use a lot of the computer memory.
 
 ![image](https://github.com/user-attachments/assets/87317433-27c5-417c-9107-56e086707e93)
 
+When the loading process is done, the window will be unlocked, and you will be able to view the loaded data.
+
+![image](https://github.com/user-attachments/assets/da3d3770-59d5-47d7-a8fe-b66150ce6957)
+
+In our case, we select the two labels to check that everything seems ok.
+
+![image](https://github.com/user-attachments/assets/1a96a8ce-e5ae-4a57-abc9-a2e5843f9bca)
+
+During this process, DeepSCEM automatically saved the current dataset.
+
+![image](https://github.com/user-attachments/assets/d704e52f-a5cb-4070-a788-bdab0e45135c)
+
+In reality, DeepSCEM always works live on the data files.
+This is advantageous because most of the time, the data is not loaded into memory and in case of crash, the data are safe.
+However, this also has disadvantages depending on the use cases
 
 ### Transform whole image into train/test
