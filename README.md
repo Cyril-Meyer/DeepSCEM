@@ -12,6 +12,8 @@ but also very efficient and configurable for the most advanced users.
 
 ### [Download latest release](https://github.com/Cyril-Meyer/DeepSCEM/releases/latest)
 
+### [Tutorials](https://github.com/Cyril-Meyer/DeepSCEM/tree/main/TUTORIALS)
+
 
 ## Bug report 🐛 & Feature request ✨
 
@@ -166,5 +168,3 @@ Definitions for keywords used in this documentation.
 * Architecture : A type of network (e.g. U-Net, FCN)
 * Model : A deep neural network (it's layers and weights)
 * Working dir : The directory from where you have started DeepSCEM
-
-
