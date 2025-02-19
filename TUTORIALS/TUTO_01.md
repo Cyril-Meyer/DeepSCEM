@@ -156,5 +156,21 @@ And load the train copy.
 
 ![image](https://github.com/user-attachments/assets/31f5c986-6d37-46e8-95b4-79862e8ec298)
 
-
 ![image](https://github.com/user-attachments/assets/30e2207d-2ee4-45a1-b77c-d86760f36380)
+
+Rename the dataset by double clicking the dataset using menu Data > Rename or using CTRL+R.
+
+![image](https://github.com/user-attachments/assets/422ef520-f5d5-4ab8-b82a-ddb923ff5669)
+
+Remove the second sample.
+You are not required to save the dataset but you can if you want to save disk space.
+⚠️ You cannot save to the file of a loaded dataset. In other words, you cannot save to the same file.
+
+![image](https://github.com/user-attachments/assets/7adf8957-3ad0-41df-8fe4-8102279256b0)
+
+Repeat those operation for the second dataset but renaming it **_test** and removing the other sample.
+
+![image](https://github.com/user-attachments/assets/3dee759a-3a4a-45d3-b90e-686f37259e55)
+
+And this is the end for this tutorial.
+For the rest of these tutorials, go here: [TUTO_02.md](TUTO_02.md)
