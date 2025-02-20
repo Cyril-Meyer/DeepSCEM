@@ -1,5 +1,8 @@
 # Changelog
 
+**v2025.02.20-17.29**
+* Fixed a pyinstaller build bug for linux causing crash
+
 **v2025.02.19-14.17**
 * Change GitHub build NumPy requirements to specific version to fix a crash when creating a new model.
 
