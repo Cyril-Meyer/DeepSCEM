@@ -41,6 +41,74 @@ jobs:
         name: DeepSCEM-linux
         path: DeepSCEM-bin
 
+  build-ubuntu-22:
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.merged == true
+    runs-on: ubuntu-22.04
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.10"
+
+    - name: Install dependencies
+      run: |
+        pip install -U pip setuptools wheel
+        pip install tensorflow==2.10.1 edt h5py imagecodecs PyQt5 pyqt5-tools tifffile tqdm matplotlib numpy==1.26.4
+
+    - name: Convert ui to py
+      run: |
+        chmod +x convert_ui_py.sh
+        ./convert_ui_py.sh
+
+    - name: Build with PyInstaller
+      run: |
+          pip install pyinstaller
+          python build.py
+          # pyinstaller run.py --name DeepSCEM --workpath DeepSCEM-build --distpath DeepSCEM-bin --contents-directory lib --icon icons/logo.ico --noconfirm
+
+    - name: Upload Artifact (Linux)
+      uses: actions/upload-artifact@v4
+      with:
+        name: DeepSCEM-ubuntu-22
+        path: DeepSCEM-bin
+
+  build-ubuntu-20:
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.merged == true
+    runs-on: ubuntu-20.04
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.10"
+
+    - name: Install dependencies
+      run: |
+        pip install -U pip setuptools wheel
+        pip install tensorflow==2.10.1 edt h5py imagecodecs PyQt5 pyqt5-tools tifffile tqdm matplotlib numpy==1.26.4
+
+    - name: Convert ui to py
+      run: |
+        chmod +x convert_ui_py.sh
+        ./convert_ui_py.sh
+
+    - name: Build with PyInstaller
+      run: |
+          pip install pyinstaller
+          python build.py
+          # pyinstaller run.py --name DeepSCEM --workpath DeepSCEM-build --distpath DeepSCEM-bin --contents-directory lib --icon icons/logo.ico --noconfirm
+
+    - name: Upload Artifact (Linux)
+      uses: actions/upload-artifact@v4
+      with:
+        name: DeepSCEM-ubuntu-20
+        path: DeepSCEM-bin
+
   build-windows:
     if: github.event_name == 'workflow_dispatch' || github.event.pull_request.merged == true
     runs-on: windows-latest
@@ -75,7 +143,7 @@ jobs:
         path: DeepSCEM-bin
 
   create-tag-and-release:
-    needs: [build-linux, build-windows]
+    needs: [build-linux, build-ubuntu-22, build-ubuntu-20, build-windows]
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Repository
@@ -99,6 +167,18 @@ jobs:
         name: DeepSCEM-linux
         path: ./release/DeepSCEM-linux
 
+    - name: Download Artifact Ubuntu 22
+      uses: actions/download-artifact@v4
+      with:
+        name: DeepSCEM-ubuntu-22
+        path: ./release/DeepSCEM-ubuntu-22
+
+    - name: Download Artifact Ubuntu 20
+      uses: actions/download-artifact@v4
+      with:
+        name: DeepSCEM-ubuntu-20
+        path: ./release/DeepSCEM-ubuntu-20
+
     - name: Download Artifact Windows
       uses: actions/download-artifact@v4
       with:
@@ -110,6 +190,16 @@ jobs:
         cd release
         zip -r DeepSCEM-linux.zip DeepSCEM-linux/
 
+    - name: Zip Ubuntu 22 Release
+      run: |
+        cd release
+        zip -r DeepSCEM-ubuntu-22.zip DeepSCEM-ubuntu-22/
+
+    - name: Zip Ubuntu 20 Release
+      run: |
+        cd release
+        zip -r DeepSCEM-ubuntu-20.zip DeepSCEM-ubuntu-20/
+
     - name: Zip Windows Release
       run: |
         cd release
@@ -120,6 +210,8 @@ jobs:
       with:
         name: |
               DeepSCEM-linux
+              DeepSCEM-ubuntu-22
+              DeepSCEM-ubuntu-20
               DeepSCEM-windows
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -130,6 +222,8 @@ jobs:
         tag_name: ${{ env.TAG_NAME }}
         files: |
           release/DeepSCEM-linux.zip
+          release/DeepSCEM-ubuntu-22.zip
+          release/DeepSCEM-ubuntu-20.zip
           release/DeepSCEM-windows.zip
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
