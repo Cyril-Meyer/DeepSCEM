@@ -14,6 +14,8 @@ but also very efficient and configurable for the most advanced users.
 
 ### [Tutorials](https://github.com/Cyril-Meyer/DeepSCEM/tree/main/TUTORIALS)
 
+### [Video](https://youtu.be/uPDRNzlQJr0)
+
 
 ## Bug report 🐛 & Feature request ✨
 
@@ -28,6 +30,7 @@ making your experience with the software as seamless as possible.
 Before we begin, here is a summary of the section
 * [Installation](#installation) - A step-by-step guide to help you install DeepSCEM on your system.
 * [Tutorials](#tutorials)
+  * [Video](#video)
 * [Usage](#usage) - Learn how to use DeepSCEM effectively
   * [Graphical user interface](#graphical-user-interface) - An overview of the GUI features and how to use them
   * [Command line interface](#command-line-interface) - Use DeepSCEM via command-line commands for advanced users.
@@ -59,6 +62,12 @@ For all tutorials, sample data is also provided if you don't have one.
 * [Train your first model](TUTORIALS/TUTO_02.md)
 * [Use your model to produce automatic segmentation](TUTORIALS/TUTO_03.md)
 * [Evaluate your segmentation on a test set](TUTORIALS/TUTO_04.md)
+
+### Video
+
+[Demo : Training & Automatic Segmentation (tuto 01 -> 04)](https://youtu.be/uPDRNzlQJr0)
+
+[![Video](https://img.youtube.com/vi/uPDRNzlQJr0/0.jpg)](https://youtu.be/uPDRNzlQJr0)
 
 ### Usage
 
