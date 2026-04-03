@@ -1,0 +1,28 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "DeepSCEM: A User-Friendly Solution for Deep Learning-Based Image Segmentation in Cellular Electron Microscopy"
+authors:
+  - family-names: Meyer
+    given-names: Cyril
+  - family-names: Hanss
+    given-names: Victor
+  - family-names: Baudrier
+    given-names: Etienne
+  - family-names: Naegel
+    given-names: Benoît
+  - family-names: Schultz
+    given-names: Patrick
+journal: "Biology of the Cell"
+year: 2025
+volume: 117
+issue: 9
+pages: "e70032"
+doi: "10.1111/boc.70032"
+url: "https://onlinelibrary.wiley.com/doi/10.1111/boc.70032"
+keywords:
+  - cellular imaging
+  - deep learning
+  - electron microscopy
+  - organelles
+  - segmentation
+  - software
