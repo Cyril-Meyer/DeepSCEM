@@ -7,6 +7,12 @@ image segmentation.
 The toolkit is developed to be both easy to use and deploy initially,
 but also very efficient and configurable for the most advanced users.
 
+## 📖 Citation
+
+If you use this software in your research, please cite us :  
+Meyer, C., V.Hanss, E.Baudrier, B.Naegel, and P.Schultz. 2025. “DeepSCEM: A User-Friendly Solution for Deep Learning-Based Image Segmentation in Cellular Electron Microscopy.” Biology of the Cell117, no. 9: 117, e70032. https://doi.org/10.1111/boc.70032
+
+Bibtex available in [CITE.md](CITE.md)
 
 ## Quick links
 
